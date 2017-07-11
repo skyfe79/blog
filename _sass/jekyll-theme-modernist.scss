@@ -17,7 +17,7 @@ body {
 .wrapper {
   width:640px;
   margin:0 auto;
-  background:#DEDEDE;
+  background:rgba(#fff, 0.96);
   border-radius: 8px;
   box-shadow: rgba(#000, 0.2) 0 0 0 1px, rgba(#000, 0.45) 0 3px 10px;
 }
@@ -55,7 +55,7 @@ header {
     font-size:24px;
     line-height:1.2;
     color:#069;
-    text-shadow:rgba(#fff, 0.9) 0 1px 0;
+    text-shadow:rgba(#fff, 0.0) 0 1px 0;
   }
 
   &.without-description h1 {
@@ -91,13 +91,13 @@ header {
     position:absolute;
     z-index:1;
     right:20px;
-    top:20px;
-    height:38px;
+    top:25px;
+    height:28px;
     padding:1px 0;
-    background:#5198DF;
-    background: linear_gradient(#77B9FB, #3782CD);
+    background:rgba(#000, 0.0);
+    background:rgba(#000, 0.0);
     border-radius:5px;
-    box-shadow: inset rgba(#fff, 0.45) 0 1px 0, inset rgba(#000, 0.2) 0 -1px 0;
+    box-shadow: inset rgba(#000, 0.0) 0 1px 0, inset rgba(#000, 0.0) 0 -1px 0;
     width:auto;
 
     &:before {
@@ -108,16 +108,16 @@ header {
       top:-4px;
       right:-5px;
       bottom:-6px;
-      background:rgba(#000, 0.1);
+      background:rgba(#000, 0.0);
       border-radius: 8px;
-      box-shadow: rgba(#000, 0.2) 0 -1px 0, inset rgba(#fff, 0.7) 0 -1px 0;
+      box-shadow: rgba(#000, 0.0) 0 -1px 0, inset rgba(#000, 0.0) 0 -1px 0;
     }
 
     li {
-      width:79px;
+      width:48px;
       float:left;
-      border-right:1px solid #3A7CBE;
-      height:38px;
+      border-right:1px solid rgba(#000, 0.0);
+      height:28px;
 
       &.single {
         border:none;
@@ -125,31 +125,31 @@ header {
     }
 
     li + li {
-      width:78px;
-      border-left:1px solid #8BBEF3;
+      width:48px;
+      border-left:1px solid rgba(#000, 0.0);
     }
 
     li + li + li {
       border-right:none;
-      width:79px;
+      width:48px;
     }
 
     a {
       line-height:1;
       font-size:11px;
-      color:#fff;
-      color:rgba(#fff, 0.8);
+      color:#000;
+      color:rgba(#000, 0.8);
       display:block;
       text-align:center;
       font-weight:400;
       padding-top:6px;
-      height:40px;
-      text-shadow:rgba(#000, 0.4) 0 -1px 0;
+      height:28px;
+      text-shadow:rgba(#000, 0.0) 0 -1px 0;
 
       strong {
-        font-size:14px;
+        font-size:11px;
         display:block;
-        color:#fff;
+        color:#000;
         -webkit-font-smoothing:antialiased;
       }
     }

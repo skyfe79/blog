@@ -97,7 +97,7 @@ body {
 .wrapper {
   width: 640px;
   margin: 0 auto;
-  background: #DEDEDE;
+  background: rgba(255, 255, 255, 0.96);
   border-radius: 8px;
   box-shadow: rgba(0, 0, 0, 0.2) 0 0 0 1px, rgba(0, 0, 0, 0.45) 0 3px 10px; }
 
@@ -129,7 +129,7 @@ header {
     font-size: 24px;
     line-height: 1.2;
     color: #069;
-    text-shadow: rgba(255, 255, 255, 0.9) 0 1px 0; }
+    text-shadow: rgba(255, 255, 255, 0) 0 1px 0; }
   header.without-description h1 {
     margin: 10px 0; }
   header p {
@@ -153,13 +153,13 @@ header {
     position: absolute;
     z-index: 1;
     right: 20px;
-    top: 20px;
-    height: 38px;
+    top: 25px;
+    height: 28px;
     padding: 1px 0;
-    background: #5198DF;
-    background: linear_gradient(#77B9FB, #3782CD);
+    background: transparent;
+    background: transparent;
     border-radius: 5px;
-    box-shadow: inset rgba(255, 255, 255, 0.45) 0 1px 0, inset rgba(0, 0, 0, 0.2) 0 -1px 0;
+    box-shadow: inset transparent 0 1px 0, inset transparent 0 -1px 0;
     width: auto; }
     header ul:before {
       content: '';
@@ -169,37 +169,37 @@ header {
       top: -4px;
       right: -5px;
       bottom: -6px;
-      background: rgba(0, 0, 0, 0.1);
+      background: transparent;
       border-radius: 8px;
-      box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 0, inset rgba(255, 255, 255, 0.7) 0 -1px 0; }
+      box-shadow: transparent 0 -1px 0, inset transparent 0 -1px 0; }
     header ul li {
-      width: 79px;
+      width: 48px;
       float: left;
-      border-right: 1px solid #3A7CBE;
-      height: 38px; }
+      border-right: 1px solid transparent;
+      height: 28px; }
       header ul li.single {
         border: none; }
     header ul li + li {
-      width: 78px;
-      border-left: 1px solid #8BBEF3; }
+      width: 48px;
+      border-left: 1px solid transparent; }
     header ul li + li + li {
       border-right: none;
-      width: 79px; }
+      width: 48px; }
     header ul a {
       line-height: 1;
       font-size: 11px;
-      color: #fff;
-      color: rgba(255, 255, 255, 0.8);
+      color: #000;
+      color: rgba(0, 0, 0, 0.8);
       display: block;
       text-align: center;
       font-weight: 400;
       padding-top: 6px;
-      height: 40px;
-      text-shadow: rgba(0, 0, 0, 0.4) 0 -1px 0; }
+      height: 28px;
+      text-shadow: transparent 0 -1px 0; }
       header ul a strong {
-        font-size: 14px;
+        font-size: 11px;
         display: block;
-        color: #fff;
+        color: #000;
         -webkit-font-smoothing: antialiased; }
 
 section {
