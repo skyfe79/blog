@@ -217,8 +217,8 @@ img {
 @media print, screen and (max-width: 740px) {
   .fit-width {
     margin: 0 -20px auto;
-    max-width:calc(100% + 20px);
-    width: calc(100% + 20px);
+    max-width:calc(100% + 40px);
+    width: calc(100% + 40px);
     height: auto;
   }
 }
@@ -226,8 +226,8 @@ img {
 @media print, screen and (max-width: 580px) {
   .fit-width {
     margin: 0 -20px auto;
-    max-width:calc(100% + 20px);
-    width: calc(100% + 20px);
+    max-width:calc(100% + 40px);
+    width: calc(100% + 40px);
     height: auto;
   }
 }
