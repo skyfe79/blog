@@ -1,0 +1,8 @@
+  <div id="recent">
+  <div><b>다음글타래</b></div>
+  <ul class="posts">
+    {% for post in site.posts limit:3 %}
+      <li style='font-size: 13px'><span>{{ post.date | date_to_string }}</span> &raquo; <a href="{{ post.url }}">{{ post.title }}</a></li>
+    {% endfor %}
+  </ul>
+  </div>

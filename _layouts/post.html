@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>{{ site.title | default: site.github.repository_name }} : {{ site.description | default: "" }}</title>
+    <title>{{ page.title | default: "" }} : {{ site.title | default: site.github.repository_name }}</title>
 
     <link href='https://fonts.googleapis.com/css?family=Lato:300italic,700italic,300,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
@@ -30,11 +30,22 @@
       </header>
       <section>
 
+
+		<h1 class="entry-title">
+		{% if page.title %}
+		    <a href="{{ root_url }}{{ page.url }}">{{ page.title }}</a>
+		{% endif %}
+		{% if post.title %}
+		    <a href="{{ root_url }}{{ post.url }}">{{ post.title }}</a>
+		{% endif %}
+		</h1>
+		
       {{ content }}
 
+		{% include prev-next.html %}
+		
       </section>
     </div>
-
     <footer>
      <p></a></p>
      <p>Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>

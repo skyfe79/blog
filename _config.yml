@@ -7,12 +7,14 @@ baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: skyfe79
 github_username:  skyfe79
-about_url: "http://www.daum.net"
-archive_url: "http://www.google.com"
+about_url: "/about"
+archive_url: "/archive"
 
 # Build settings
 markdown: kramdown
 theme: jekyll-theme-modernist
+pygments_options:
+  tabsize: 4
 # plugins:
 #   - jekyll-feed
 
