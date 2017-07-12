@@ -210,8 +210,24 @@ img {
 .fit-width {
   margin: 0 -20px auto;
   max-width:640px;
+  width: 640px;
   height: auto;
-  object-fit: contain;
+}
+
+@media print, screen and (max-width: 740px) {
+  .fit-width {
+    margin: 0 auto;
+    max-width:100%;
+    display: block;
+  }
+}
+
+@media print, screen and (max-width: 580px) {
+  .fit-width {
+    margin: 0 auto;
+    max-width:100%;
+    display: block;
+  }
 }
 
 code, pre {

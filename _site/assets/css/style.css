@@ -247,9 +247,19 @@ img {
 .fit-width {
   margin: 0 -20px auto;
   max-width: 640px;
-  height: auto;
-  object-fit: contain; }
+  width: 640px;
+  height: auto; }
 
+@media print, screen and (max-width: 740px) {
+  .fit-width {
+    margin: 0 auto;
+    max-width: 100%;
+    display: block; } }
+@media print, screen and (max-width: 580px) {
+  .fit-width {
+    margin: 0 auto;
+    max-width: 100%;
+    display: block; } }
 code, pre {
   font-family: Monaco, Bitstream Vera Sans Mono, Lucida Console, Terminal;
   color: #333;
