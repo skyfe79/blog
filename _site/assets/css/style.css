@@ -247,7 +247,8 @@ img {
 .fit-width {
   margin: 0 -20px auto;
   max-width: 640px;
-  height: auto; }
+  height: auto;
+  object-fit: contain; }
 
 code, pre {
   font-family: Monaco, Bitstream Vera Sans Mono, Lucida Console, Terminal;
