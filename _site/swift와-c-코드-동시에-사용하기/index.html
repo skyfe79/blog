@@ -1,0 +1,217 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Swift와 C++ 코드 동시에 사용하기 : Burt.K</title>
+
+    <link href='https://fonts.googleapis.com/css?family=Lato:300italic,700italic,300,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/assets/css/style.css?v=">
+    <script src="/assets/js/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header >
+        <h1><a href="/">Burt.K</a></h1>
+        
+          <p>코코아를 좋아하는 프로그래머입니다 ;)</p>
+        
+
+        <ul>
+          <li><a href="/about"><strong>소개</strong></a></li>
+          <li><a href="/archive"><strong>아카이브</strong></a></li>
+        </ul>        
+
+      </header>
+      <section>
+
+
+		<h1 class="entry-title">
+		
+		    <a href="/swift%ec%99%80-c-%ec%bd%94%eb%93%9c-%eb%8f%99%ec%8b%9c%ec%97%90-%ec%82%ac%ec%9a%a9%ed%95%98%ea%b8%b0/">Swift와 C++ 코드 동시에 사용하기</a>
+		
+		
+		</h1>
+		
+      <p>ObjectiveC는 C언어의 Super Set이라 C코드를 자유롭게 ObjC 파일 내에서 사용할 수 있습니다. C++의 경우 m 확장자를 mm으로 변경해 주면 사용할 수 있습니다. iOS의 개발 언어가 Swift로 변경되고 나서는 C++을 사용하기 위해 약간의 수고를 더 해줘야 합니다. 안드로이드의 JNI에 비하면 아무 것도 아니지만요.</p>
+
+<p>다음 순서로 하면 됩니다.</p>
+
+<ol>
+  <li>C++ 모듈을 만든다 (h/cpp or hpp/cpp)</li>
+  <li>ObjC++ 랩퍼를 만든다. (h/mm)</li>
+  <li>브릿지헤더를 만든다.</li>
+  <li>사용한다.</li>
+</ol>
+
+<p>아주 간단한 예제를 작성해 볼게요.</p>
+
+<h2 id="toc_1">C++ 모듈을 만든다 (h/cpp or hpp/cpp)</h2>
+
+<p>아래와 같은 C++ 클래스를 생성합니다. 그냥 단순하게 ItsCpp라 지었어요. name 속성을 입력 받고 반환하는 메서드가 있습니다.</p>
+
+<pre class="lang:c++ decode:true ">#ifndef ItsCpp_hpp
+#define ItsCpp_hpp
+
+#include &lt;string&gt;
+
+class ItsCpp {
+    
+public:
+    ItsCpp();
+    ItsCpp(const std::string&amp; name);
+    ~ItsCpp();
+    
+public:
+    // set/get name property
+    void name(const std::string&amp; name);
+    const std::string&amp; name();
+    
+private:
+    std::string m_name;
+};
+
+
+
+#endif /* ItsCpp_hpp */</pre>
+
+<p>이제 클래스를 구현합니다.</p>
+
+<pre class="lang:c++ decode:true ">#include "ItsCpp.hpp"
+
+ItsCpp::ItsCpp() {
+    name("");
+}
+
+ItsCpp::ItsCpp(const std::string&amp; name) {
+    this-&gt;name(name);
+}
+
+ItsCpp::~ItsCpp() {
+}
+
+void ItsCpp::name(const std::string &amp;name) {
+    this-&gt;m_name = name;
+}
+
+const std::string&amp; ItsCpp::name() {
+    return this-&gt;m_name;
+}</pre>
+
+<h2 id="toc_2">ObjC++ 랩퍼를 만든다. (h/mm)</h2>
+
+<p>ObjC++랩퍼에스는 데이터의 변환 등을 주의해서 해야 합니다. 특히 문자열은 ObjC가 유니코드 문자인 반면에 C++는 그렇지 않으니까요 UTF로 인코딩해줘야 합니다.</p>
+
+<pre class="lang:objc decode:true ">#import &lt;Foundation/Foundation.h&gt;
+
+@interface ObjCppWrapper : NSObject
+- (instancetype)initWithName:(NSString *)name;
+- (NSString *)getName;
+- (void)setName:(NSString *)name;
+@end</pre>
+
+<p>구현해 줍니다.</p>
+
+<pre class="lang:objc decode:true ">#import "ObjCppWrapper.h"
+#include "ItsCpp.hpp"
+
+@interface ObjCppWrapper()
+@property ItsCpp *itsCpp;
+@end
+
+@implementation ObjCppWrapper
+- (instancetype)initWithName:(NSString *)name {
+    if (self = [super init]) {
+        self.itsCpp = new ItsCpp(std::string([name cStringUsingEncoding:NSUTF8StringEncoding]));
+    }
+    return self;
+}
+
+- (NSString *)getName {
+    return [NSString stringWithUTF8String:self.itsCpp-&gt;name().c_str()];
+}
+
+- (void)setName:(NSString *)name {
+    self.itsCpp-&gt;name(std::string([name cStringUsingEncoding:NSUTF8StringEncoding]));
+}
+
+- (void)dealloc {
+    delete _itsCpp;
+    _itsCpp = nil;
+}
+@end</pre>
+
+<h2 id="toc_3">브릿지헤더를 만든다.</h2>
+
+<pre class="lang:c++ decode:true ">//SwiftAndCpp-Bridging-Header.h
+#import "ObjCppWrapper.h"</pre>
+
+<h2 id="toc_4">사용한다.</h2>
+
+<pre class="lang:swift decode:true ">import UIKit
+
+class ViewController: UIViewController {
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        let itsCppWrapper = ObjCppWrapper(name: "김성철")
+        print(itsCppWrapper.getName())
+        itsCppWrapper.setName("Burt.K")
+        print(itsCppWrapper.getName())
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+    }
+}</pre>
+
+<h2 id="toc_5">디버깅이 편리해요!</h2>
+
+<p>안드로이드에서 NDK 레이어를 디버깅하려면 정말 힘들어요. 이것저것 해줘야 할 것도 많고 ObjC언어가 C언어의 슈퍼셋이라는 이점때문에 XCode에서 아주 쉽게 C,C++코드를 디버깅할 수 있습니다.</p>
+
+<p><img src="/wp-content/uploads/2016/02/debug_cpp.png" alt="" class="fit-width" /></p>
+<h2 id="예제-프로젝트">예제 프로젝트</h2>
+
+<ul>
+  <li><a href="https://github.com/skyfe79/UsingSwiftAndCpp">https://github.com/skyfe79/UsingSwiftAndCpp</a></li>
+</ul>
+
+<h2 id="관련글">관련글</h2>
+
+<ul>
+  <li><a href="http://blog.burt.pe.kr/swift%ec%99%80-c%ec%96%b8%ec%96%b4%ec%9d%98-pointer/">Swift와 C언어의 Pointer</a></li>
+</ul>
+
+
+		<div style='height: 20px'>
+    
+    	<div style='float:left'>
+        <a class="equalize" href="/%eb%a9%8b%ec%9f%81%ec%9d%b4-%ed%97%a4%ec%8a%a4%ec%bc%88-list-comprehension/" title="Previous Post: 멋쟁이 헤스켈, List Comprehension!">
+                <b> ← 멋쟁이 헤스켈, List Comprehension! </b>
+        </a>
+		</div>
+    
+    <div style='float:right'>
+        <a class="equalize" href="/1%eb%b6%80%ed%84%b0-10000%ea%b9%8c%ec%a7%80%ec%9d%98-%ed%95%a9/" title="next Post: 1부터 10000까지의 합">
+                <b> 1부터 10000까지의 합 → </b>
+        </a>
+    </div>
+</div>    
+		
+      </section>
+    </div>
+    <footer>
+     <p></a></p>
+     <p>Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+
+    
+  </body>
+</html>

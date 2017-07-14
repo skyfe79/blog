@@ -1,0 +1,138 @@
+---
+id: 66
+title: 안드로이드에서 Linux 명령문 실행하기
+date: 2014-11-07T05:43:55+00:00
+author: Burt
+layout: post
+guid: http://blog.burt.pe.kr/?p=66
+permalink: '/%ec%95%88%eb%93%9c%eb%a1%9c%ec%9d%b4%eb%93%9c%ec%97%90%ec%84%9c-linux-%eb%aa%85%eb%a0%b9%eb%ac%b8-%ec%8b%a4%ed%96%89%ed%95%98%ea%b8%b0/'
+dsq_thread_id:
+  - "3721095516"
+categories:
+  - Android
+tags:
+  - android
+  - command
+  - linux
+---
+Java의 표준 라이브러리인 Runtime  을 이용해서 실행할 수 있다. Runtime.exec() 를 통해서 Process 를 생성하고 Process 가 stdout에서 Process가 뱉는 결과를 받아 오는 방식이다. 아래의 예제는 ls 명령어를 실행하는 예제이다.<!--more-->
+
+<pre class="lang:xhtml decode:true" title="activity_main.xml">&lt;LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
+    tools:context=".MainActivity"&gt;
+
+    &lt;Button
+        android:id="@+id/mRunButton"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:text="Run ls command"/&gt;
+
+    &lt;ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"&gt;
+        &lt;TextView
+            android:id="@+id/mResult"
+            android:text=""
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" /&gt;
+    &lt;/ScrollView&gt;
+&lt;/LinearLayout&gt;</pre>
+
+<pre class="lang:java decode:true " title="MainActivity.java">package kr.pe.burt.android.executebinary;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+
+public class MainActivity extends Activity implements View.OnClickListener {
+
+    TextView mResult;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        mResult = (TextView)findViewById(R.id.mResult);
+        findViewById(R.id.mRunButton).setOnClickListener(this);
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View v) {
+        try {
+            String result = runProcess();
+            mResult.setText(result);
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+            finish();
+        }
+    }
+
+
+    public String runProcess() throws RuntimeException {
+        try {
+            // 명령문 실행
+            Process process = Runtime.getRuntime().exec("/system/bin/ls ");
+
+            // 결과를 읽는다
+            // 참고 : process.getOutputStream() 을 통해서 명령문의 stdin 에 쓰기를 할 수 있다.
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            int read;
+            char[] buffer = new char[4096];
+            StringBuffer output = new StringBuffer();
+            while ((read = reader.read(buffer)) &gt; 0) {
+                output.append(buffer, 0, read);
+            }
+            reader.close();
+
+            // 명령문이 종료될 때까지 기다린다
+            process.waitFor();
+
+            return output.toString();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+}</pre>
+
+실행결과
+
+[<img class="size-full wp-image-67 aligncenter" src="http://i2.wp.com/blog.burt.pe.kr/wp-content/uploads/2014/11/스크린샷-2014-11-07-오후-2.29.29.png?resize=473%2C765" alt="실행결과" srcset="http://i2.wp.com/burt.pe.kr/wp-content/uploads/2014/11/스크린샷-2014-11-07-오후-2.29.29.png?w=473 473w, http://i2.wp.com/burt.pe.kr/wp-content/uploads/2014/11/스크린샷-2014-11-07-오후-2.29.29.png?resize=185%2C300 185w" sizes="(max-width: 473px) 100vw, 473px" data-recalc-dims="1" />](http://i2.wp.com/blog.burt.pe.kr/wp-content/uploads/2014/11/스크린샷-2014-11-07-오후-2.29.29.png)

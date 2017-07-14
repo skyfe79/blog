@@ -1,0 +1,111 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Yosemite 에서 IntelliJ 13 CE, 실행 Crash 수정하기 : Burt.K</title>
+
+    <link href='https://fonts.googleapis.com/css?family=Lato:300italic,700italic,300,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/assets/css/style.css?v=">
+    <script src="/assets/js/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header >
+        <h1><a href="/">Burt.K</a></h1>
+        
+          <p>코코아를 좋아하는 프로그래머입니다 ;)</p>
+        
+
+        <ul>
+          <li><a href="/about"><strong>소개</strong></a></li>
+          <li><a href="/archive"><strong>아카이브</strong></a></li>
+        </ul>        
+
+      </header>
+      <section>
+
+
+		<h1 class="entry-title">
+		
+		    <a href="/yosemite-%ec%97%90%ec%84%9c-intellij-13-ce-%ec%8b%a4%ed%96%89-crash-%ec%88%98%ec%a0%95%ed%95%98%ea%b8%b0/">Yosemite 에서 IntelliJ 13 CE, 실행 Crash 수정하기</a>
+		
+		
+		</h1>
+		
+      <ol>
+  <li>
+    <p>IntelliJ 의 설정 파일의 JVM 버전과 Yosemite에 설치된 java의 버전이 맞지 않아서 생기는 문제다.</p>
+  </li>
+  <li>응용프로그램으로 이동한다</li>
+  <li>IntelliJ IDEA 13 CE를 마우스로 선택한다</li>
+  <li>마우스 오른쪽 버튼을 눌러 컨텍스트 메뉴가 나오게 한다</li>
+  <li>‘패키지 내용 보기’ 메뉴를 실행한다</li>
+  <li>다음 파일을 연다</li>
+</ol>
+
+<!--more-->
+<ol>
+  <li>다음 파일을 연다</li>
+</ol>
+
+<pre class="lang:default decode:true">Contents &gt; Info.plist</pre>
+
+<ol>
+  <li>Yosemite에 설치된 자바의 버전을 확인한다</li>
+</ol>
+
+<pre class="lang:default decode:true ">$ java -version
+
+java version "1.7.0_65"</pre>
+
+<ol>
+  <li>JVMVersion 항목을 위의 Java 버전으로 설정한다.</li>
+</ol>
+
+<pre class="lang:default decode:true ">&lt;key&gt;JVMVersion&lt;/key&gt;
+&lt;string&gt;1.6*&lt;/string&gt;</pre>
+
+<p>을 아래처럼 수정한다.</p>
+
+<pre class="lang:xhtml decode:true">&lt;key&gt;JVMVersion&lt;/key&gt;
+&lt;string&gt;1.7*&lt;/string&gt;</pre>
+
+<p> </p>
+
+<p> </p>
+
+<p> </p>
+
+
+		<div style='height: 20px'>
+    
+    	<div style='float:left'>
+        <a class="equalize" href="/%ec%9a%b0%eb%b6%84%ed%88%ac14-10%ec%97%90-ffmpeg-2-4-%ec%84%a4%ec%b9%98%ed%95%98%ea%b8%b0/" title="Previous Post: 우분투14.10에 FFmpeg 2.4 설치하기">
+                <b> ← 우분투14.10에 FFmpeg 2.4 설치하기 </b>
+        </a>
+		</div>
+    
+    <div style='float:right'>
+        <a class="equalize" href="/%ec%95%88%eb%93%9c%eb%a1%9c%ec%9d%b4%eb%93%9c-%ec%bb%a4%ec%8a%a4%ed%85%80%eb%b7%b0-%ec%9d%b4%ed%95%b4%ed%95%98%ea%b8%b0/" title="next Post: 안드로이드 커스텀뷰 이해하기">
+                <b> 안드로이드 커스텀뷰 이해하기 → </b>
+        </a>
+    </div>
+</div>    
+		
+      </section>
+    </div>
+    <footer>
+     <p></a></p>
+     <p>Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+
+    
+  </body>
+</html>

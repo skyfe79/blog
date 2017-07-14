@@ -1,0 +1,93 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>NDK 라이브러리 배포 시 java.lang.UnsatisfiedLinkError 에 대해서. : Burt.K</title>
+
+    <link href='https://fonts.googleapis.com/css?family=Lato:300italic,700italic,300,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/assets/css/style.css?v=">
+    <script src="/assets/js/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header >
+        <h1><a href="/">Burt.K</a></h1>
+        
+          <p>코코아를 좋아하는 프로그래머입니다 ;)</p>
+        
+
+        <ul>
+          <li><a href="/about"><strong>소개</strong></a></li>
+          <li><a href="/archive"><strong>아카이브</strong></a></li>
+        </ul>        
+
+      </header>
+      <section>
+
+
+		<h1 class="entry-title">
+		
+		    <a href="/ndk-%eb%9d%bc%ec%9d%b4%eb%b8%8c%eb%9f%ac%eb%a6%ac-%eb%b0%b0%ed%8f%ac-%ec%8b%9c-java-lang-unsatisfiedlinkerror-%ec%97%90-%eb%8c%80%ed%95%b4%ec%84%9c/">NDK 라이브러리 배포 시 java.lang.UnsatisfiedLinkError 에 대해서.</a>
+		
+		
+		</h1>
+		
+      <p>한 프로젝트에서 두 개 이상의 ndk 라이브러리를 사용한다고 가정해 봅시다. 각 라이브러리는 아래와 같이 ABI를 지원한다면 앱을 빌드하고 실행했을 때 잘 실행될까요?</p>
+
+<p>NDK-Library A</p>
+
+<ul>
+  <li>armeabi</li>
+</ul>
+
+<p>NDK-Library B</p>
+
+<ul>
+  <li>arm64-8a</li>
+  <li>armeabi</li>
+  <li>armeabi-v7a</li>
+  <li>mips</li>
+  <li>mips64</li>
+  <li>x86</li>
+  <li>x86_64</li>
+</ul>
+
+<p>즉, NDK-Library B는 모든 ABI를 지원하고 NDK-Library A는 armeabi만 지원합니다. 이럴 경우 앱을 빌드하고 실행하면 NDK-Library A를 찾을 수 없다고 예외를 뿌리며 죽습니다. 즉, java.lang.UnsatisfiedLinkError 가 발생합니다.</p>
+
+<p>이것을 해결하는 방법은 두 라이브러리가 지원 ABI를 동일하게 맞춰주는 수 밖에 없습니다. 즉, 이 경우에는 NDK-Library B를 수정해서 armeabi만 빌드해서 배포해야 합니다.  코드가 있을 경우에는 상관이 없지만 코드가 없을 경우에는 어떻게 해야할지…?</p>
+
+<p> </p>
+
+
+		<div style='height: 20px'>
+    
+    	<div style='float:left'>
+        <a class="equalize" href="/androidchannel/" title="Previous Post: AndroidChannel">
+                <b> ← AndroidChannel </b>
+        </a>
+		</div>
+    
+    <div style='float:right'>
+        <a class="equalize" href="/%ec%95%88%eb%93%9c%eb%a1%9c%ec%9d%b4%eb%93%9c-%ec%bb%a4%ec%8a%a4%ed%85%80%eb%b7%b0-%ed%94%84%eb%a1%9c%ea%b7%b8%eb%9e%98%eb%b0%8d-%ec%bb%a4%ec%8a%a4%ed%85%80%eb%b7%b0%ec%9d%98%ed%81%ac%ea%b8%b0/" title="next Post: 안드로이드 커스텀뷰 프로그래밍 &#8211; 커스텀뷰의 크기 정하기">
+                <b> 안드로이드 커스텀뷰 프로그래밍 &#8211; 커스텀뷰의 크기 정하기 → </b>
+        </a>
+    </div>
+</div>    
+		
+      </section>
+    </div>
+    <footer>
+     <p></a></p>
+     <p>Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+
+    
+  </body>
+</html>

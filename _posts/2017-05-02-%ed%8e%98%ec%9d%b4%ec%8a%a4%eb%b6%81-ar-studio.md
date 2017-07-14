@@ -1,0 +1,36 @@
+---
+id: 754
+title: 페이스북, AR Studio!
+date: 2017-05-02T01:46:29+00:00
+author: Burt
+layout: post
+guid: http://blog.burt.pe.kr/?p=754
+permalink: '/%ed%8e%98%ec%9d%b4%ec%8a%a4%eb%b6%81-ar-studio/'
+dsq_thread_id:
+  - "5776723386"
+categories:
+  - 컴퓨터이야기
+tags:
+  - ar
+  - ar studio
+  - f8
+  - facebook
+---
+
+페이스북 개발자 컨퍼런스 F8 2017에서 아주 흥미로운 SDK를 소개했습니다. MSQRD, SnapChat, Snow Camera 등에서 쓰이는 AR 스티커입니다. 앞에 예로든 서비스가 제공하는 스티커는 기존 스티커와 다르게 얼굴 윤곽선 변형에 맞춰 스티커가 다이나믹하게 렌더링 됩니다. 
+
+겉으로 보기에는 쉬워 보이지만 얼굴 윤곽선을 정확하게 트랙킹하기 위해서 수 많은 얼굴 윤곽선 DB를 바탕으로 머신러닝을 통해 학습해야 하는 등 고난이도 알고리즘과 기술이 필요합니다. 
+
+MSQRD를 인수한 페이스북이 베일에 가려져 있던 기술을 자사 제품에 적용하는 것에 멈추지 않고 AR 플랫폼 SDK로 개발했습니다. 지금은 클로즈 베타 중이라 신청을 통해서 선정된 사람만 AR 플랫폼 및 AR 스튜디오를 사용해 볼 수 있습니다. 
+
+약간은 아쉽지만 조만간 오픈 베타 또는 정식 서비스가 이뤄지면 AR SDK를 통해서 다양한 서비스가 나올 것 같습니다.
+
+![]({{ site.url }}/wp-content/uploads/2017/05/ARStudio-660x373.png){:.fit-width}
+
+[AR Studio](https://developers.facebook.com/videos/f8-2017/intro-to-building-camera-effects-with-the-ar-studio-live-demo/?utm_campaign=This%2BWeek%2Bin%2BSwift&utm_medium=email&utm_source=This_Week_in_Swift_129)를 통해 코드를 모르더라도 AR 스티커를 아주 쉽게 개발할 수 있습니다. 또한 커스텀 스크립트(자바스크립트)를 통해 스티커마다 고유 로직을 적용할 수 있습니다.  이 [데모 영상](https://developers.facebook.com/videos/f8-2017/intro-to-building-camera-effects-with-the-ar-studio-live-demo/?utm_campaign=This%2BWeek%2Bin%2BSwift&utm_medium=email&utm_source=This_Week_in_Swift_129)을 보면 얼굴 트랙킹이 아주 정확하게 이뤄진다는 점과 코드를 모르는 사람도 스티커를 쉽게 개발 할 수 있음을 알 수 있습니다.
+  
+기존 AR SDK는 마커를 인식해 그 위에 그래픽을 렌더링하여 현실을 증강했지만 페이스북이 F8에서 발표한 SDK는 얼굴을 인식하고 트랙킹해 현실을 증강합니다. 즉, 마커가 필요 없는 SDK라는 점에서 의미가 있습니다. 페이스북은 이번 데모에서 스티커를 중심으로 시연했지만 후반에 나오는 나이키 서비스를 보면 조깅을 하면서 라이브 방송 등을 할 때 현재 몇 Km를 뛰었는지 등 부가 정보를 AR로 제공할 수 있습니다. 커스텀 스크립트를 작성할 때, 페이스북의 다채로운 API를 통해서 소셜 데이터를 제공한다고 합니다.
+
+이번 발표는 페이스북이 모바일 AR SDK 트리거가 된 것이라고 생각합니다. 애플과 구글이 페이스북 AR 플랫폼을 보고 그대로 있을 수는 없을테니까요. 앞으로 어떤 AR SDK 들이 나올지 기대됩니다.
+
+  * [페이스북 AR Studio 데모 영상](https://developers.facebook.com/videos/f8-2017/intro-to-building-camera-effects-with-the-ar-studio-live-demo/?utm_campaign=This%2BWeek%2Bin%2BSwift&utm_medium=email&utm_source=This_Week_in_Swift_129)

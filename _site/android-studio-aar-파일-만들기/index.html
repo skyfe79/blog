@@ -1,0 +1,165 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Android Studio AAR 파일 만들기 (1/3) : Burt.K</title>
+
+    <link href='https://fonts.googleapis.com/css?family=Lato:300italic,700italic,300,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/assets/css/style.css?v=">
+    <script src="/assets/js/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header >
+        <h1><a href="/">Burt.K</a></h1>
+        
+          <p>코코아를 좋아하는 프로그래머입니다 ;)</p>
+        
+
+        <ul>
+          <li><a href="/about"><strong>소개</strong></a></li>
+          <li><a href="/archive"><strong>아카이브</strong></a></li>
+        </ul>        
+
+      </header>
+      <section>
+
+
+		<h1 class="entry-title">
+		
+		    <a href="/android-studio-aar-%ed%8c%8c%ec%9d%bc-%eb%a7%8c%eb%93%a4%ea%b8%b0/">Android Studio AAR 파일 만들기 (1/3)</a>
+		
+		
+		</h1>
+		
+      <p>Android Studio 용 라이브러리 패키지인 aar 을 만들고 사용해 보자</p>
+
+<h3 id="android-studio-에서-프로젝트를-생성한다">Android Studio 에서 프로젝트를 생성한다.</h3>
+
+<p><a href="http://i2.wp.com/blog.burt.pe.kr/wp-content/uploads/2015/03/스크린샷-2015-03-09-오후-5.27.38.png"><img class=" size-full wp-image-297 aligncenter" src="http://i2.wp.com/blog.burt.pe.kr/wp-content/uploads/2015/03/스크린샷-2015-03-09-오후-5.27.38.png?resize=665%2C538" alt="스크린샷 2015-03-09 오후 5.27.38" srcset="http://i0.wp.com/burt.pe.kr/wp-content/uploads/2015/03/스크린샷-2015-03-09-오후-5.27.38.png?w=705 705w, http://i0.wp.com/burt.pe.kr/wp-content/uploads/2015/03/스크린샷-2015-03-09-오후-5.27.38.png?resize=300%2C243 300w, http://i0.wp.com/burt.pe.kr/wp-content/uploads/2015/03/스크린샷-2015-03-09-오후-5.27.38.png?resize=660%2C534 660w" sizes="(max-width: 665px) 100vw, 665px" data-recalc-dims="1" /></a></p>
+
+<h3 id="activity는-없는-것으로-한다있어도-되지만-예제용-aar은-없는-것으로-한다">Activity는 없는 것으로 한다.(있어도 되지만 예제용 aar은 없는 것으로 한다)</h3>
+
+<p><a href="http://i2.wp.com/blog.burt.pe.kr/wp-content/uploads/2015/03/스크린샷-2015-03-09-오후-5.28.34.png"><img class=" size-full wp-image-298 aligncenter" src="http://i2.wp.com/blog.burt.pe.kr/wp-content/uploads/2015/03/스크린샷-2015-03-09-오후-5.28.34.png?resize=602%2C867" alt="스크린샷 2015-03-09 오후 5.28.34" srcset="http://i0.wp.com/burt.pe.kr/wp-content/uploads/2015/03/스크린샷-2015-03-09-오후-5.28.34.png?w=602 602w, http://i0.wp.com/burt.pe.kr/wp-content/uploads/2015/03/스크린샷-2015-03-09-오후-5.28.34.png?resize=208%2C300 208w" sizes="(max-width: 602px) 100vw, 602px" data-recalc-dims="1" /></a></p>
+
+<h3 id="코드를-작성한다-say라는-클래스를-만들고-hello메서드를-정의한다-이-메서드는-사용자-장치의-언어-설정에-따른-인사-문자열을-반환한다-인사-문자열의-로컬라이제이션-데이터는-aar에-패키징-할-것이다">코드를 작성한다. Say라는 클래스를 만들고 hello메서드를 정의한다. 이 메서드는 사용자 장치의 언어 설정에 따른 인사 문자열을 반환한다. 인사 문자열의 로컬라이제이션 데이터는 aar에 패키징 할 것이다.</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>package kr.pe.burt.android.mylib;
+
+import android.content.res.Resources;
+
+/**
+ * Created by burt on 15. 3. 9..
+ */
+public class Say {
+    public String hello(Resources res) {
+        return res.getString(R.string.hello);
+    }
+}
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;resources&gt;
+     &lt;string name="hello"&gt;Hello&lt;/string&gt;
+&lt;/resources&gt;
+    
+&lt;resources&gt;
+    &lt;string name="hello"&gt;안녕하세요&lt;/string&gt;
+&lt;/resources&gt;
+</code></pre>
+</div>
+
+<h3 id="buildgradle-설정하기">build.gradle 설정하기</h3>
+
+<ol>
+  <li>플러그인을 com.android.library 로 변경한다</li>
+  <li>defaultConfig의 applicationId 를 삭제한다.</li>
+</ol>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 21
+    buildToolsVersion "21.1.2"
+
+    defaultConfig {
+        applicationId "kr.pe.burt.android.mylib"vmf
+        minSdkVersion 15
+        targetSdkVersion 21
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:appcompat-v7:21.0.3'
+}
+</code></pre>
+</div>
+
+<h3 id="aar-파일-만들기">aar 파일 만들기</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>터미널을 열어서 프로젝트의 gradlew이  있는 곳으로 이동한다. 안드로이드 스튜디오에는 터미널을 쉽게 열 수 있는 터미널 창이 있으니 해당 창을 이용한다. 아래와 같이 빌드한다. 
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>./gradlew clean
+./gradleW aR
+</code></pre>
+</div>
+
+<p>위 명령줄에서 aR는 assembleRelease의 약자이다.</p>
+
+<p><strong>결과물 aar 파일의 위치</strong></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>your-library-project
+|- app
+    |- build
+        |- outputs
+            |- aar
+                |- app-release.aar
+</code></pre>
+</div>
+
+<p>에 존재한다.</p>
+
+
+		<div style='height: 20px'>
+    
+    	<div style='float:left'>
+        <a class="equalize" href="/onedrive-%eb%a7%a5-%ec%82%ac%ec%9a%a9%ec%9e%90%eb%a5%bc-%ec%9c%84%ed%95%9c-%ed%95%84%ec%88%98-%ec%84%9c%eb%b9%84%ec%8a%a4/" title="Previous Post: OneDrive &#8211; 맥 사용자를 위한 필수 서비스!">
+                <b> ← OneDrive &#8211; 맥 사용자를 위한 필수 서비스! </b>
+        </a>
+		</div>
+    
+    <div style='float:right'>
+        <a class="equalize" href="/android-studio-aar-%ed%8c%8c%ec%9d%bc-%eb%a7%8c%eb%93%a4%ea%b8%b0-22/" title="next Post: Android Studio AAR 파일 만들기 (2/3)">
+                <b> Android Studio AAR 파일 만들기 (2/3) → </b>
+        </a>
+    </div>
+</div>    
+		
+      </section>
+    </div>
+    <footer>
+     <p></a></p>
+     <p>Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+
+    
+  </body>
+</html>

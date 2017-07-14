@@ -1,0 +1,89 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Genymotion 의 adb server is out of date. killing&#8230; : Burt.K</title>
+
+    <link href='https://fonts.googleapis.com/css?family=Lato:300italic,700italic,300,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/assets/css/style.css?v=">
+    <script src="/assets/js/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header >
+        <h1><a href="/">Burt.K</a></h1>
+        
+          <p>코코아를 좋아하는 프로그래머입니다 ;)</p>
+        
+
+        <ul>
+          <li><a href="/about"><strong>소개</strong></a></li>
+          <li><a href="/archive"><strong>아카이브</strong></a></li>
+        </ul>        
+
+      </header>
+      <section>
+
+
+		<h1 class="entry-title">
+		
+		    <a href="/genymotion-%ec%9d%98-adb-server-is-out-of-date-killing/">Genymotion 의 adb server is out of date. killing&#8230;</a>
+		
+		
+		</h1>
+		
+      <p>롤리팝으로 SDK를 업데이트한 후 게니모션을 실행시켜서 adb 를 사용하려고 하면 아래와 같은 오류가 발생한다.</p>
+
+<pre class="lang:default decode:true ">$ adb shell
+adb server is out of date.  killing...
+cannot bind 'tcp:5037'
+ADB server didn't ACK
+* failed to start daemon *
+error:</pre>
+
+<p>이것은 시스템에 설치된 안드로이드 SDK tools 와 Genymotion 의 SDK tools의 버전이 서로 달라서 생기는 문제다.  아래와 같이 현재 실행되고 있는 모든 adb 프로세스를 kill 한 다음 Genymotion 을 설정해 준다.</p>
+
+<pre class="lang:default decode:true ">$ killall -9 adb</pre>
+
+<p><a href="http://i1.wp.com/blog.burt.pe.kr/wp-content/uploads/2014/11/스크린샷-2014-11-07-오후-2.17.25.png"><img class="size-full wp-image-64 aligncenter" src="http://i1.wp.com/blog.burt.pe.kr/wp-content/uploads/2014/11/스크린샷-2014-11-07-오후-2.17.25.png?resize=608%2C609" alt="스크린샷 2014-11-07 오후 2.17.25" srcset="http://i0.wp.com/burt.pe.kr/wp-content/uploads/2014/11/스크린샷-2014-11-07-오후-2.17.25.png?w=608 608w, http://i0.wp.com/burt.pe.kr/wp-content/uploads/2014/11/스크린샷-2014-11-07-오후-2.17.25.png?resize=150%2C150 150w, http://i0.wp.com/burt.pe.kr/wp-content/uploads/2014/11/스크린샷-2014-11-07-오후-2.17.25.png?resize=300%2C300 300w" sizes="(max-width: 608px) 100vw, 608px" data-recalc-dims="1" /></a></p>
+
+<p>Genymotion을 재실행한다.</p>
+
+<pre class="lang:default decode:true ">$ adb shell
+root@vbox86p:/ #</pre>
+
+<p> </p>
+
+
+		<div style='height: 20px'>
+    
+    	<div style='float:left'>
+        <a class="equalize" href="/ubuntu-%ec%b4%88%ea%b8%b0-%ec%84%a4%ec%a0%95-%ea%b8%80-%eb%aa%a8%ec%9d%8c/" title="Previous Post: Ubuntu 초기 설정 글 모음">
+                <b> ← Ubuntu 초기 설정 글 모음 </b>
+        </a>
+		</div>
+    
+    <div style='float:right'>
+        <a class="equalize" href="/%ec%95%88%eb%93%9c%eb%a1%9c%ec%9d%b4%eb%93%9c%ec%97%90%ec%84%9c-linux-%eb%aa%85%eb%a0%b9%eb%ac%b8-%ec%8b%a4%ed%96%89%ed%95%98%ea%b8%b0/" title="next Post: 안드로이드에서 Linux 명령문 실행하기">
+                <b> 안드로이드에서 Linux 명령문 실행하기 → </b>
+        </a>
+    </div>
+</div>    
+		
+      </section>
+    </div>
+    <footer>
+     <p></a></p>
+     <p>Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+
+    
+  </body>
+</html>

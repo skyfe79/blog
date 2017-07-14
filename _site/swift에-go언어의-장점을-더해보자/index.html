@@ -1,0 +1,125 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Swift에 Go언어의 장점을 더해보자 : Burt.K</title>
+
+    <link href='https://fonts.googleapis.com/css?family=Lato:300italic,700italic,300,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/assets/css/style.css?v=">
+    <script src="/assets/js/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header >
+        <h1><a href="/">Burt.K</a></h1>
+        
+          <p>코코아를 좋아하는 프로그래머입니다 ;)</p>
+        
+
+        <ul>
+          <li><a href="/about"><strong>소개</strong></a></li>
+          <li><a href="/archive"><strong>아카이브</strong></a></li>
+        </ul>        
+
+      </header>
+      <section>
+
+
+		<h1 class="entry-title">
+		
+		    <a href="/swift%ec%97%90-go%ec%96%b8%ec%96%b4%ec%9d%98-%ec%9e%a5%ec%a0%90%ec%9d%84-%eb%8d%94%ed%95%b4%eb%b3%b4%ec%9e%90/">Swift에 Go언어의 장점을 더해보자</a>
+		
+		
+		</h1>
+		
+      <p>따끈한 오픈소스 소식. <a href="https://github.com/tidwall/goswift">goswift</a>!</p>
+
+<p>Go언어의 장점을 Swift언어에 더해 iOS/Mac 프로젝트에서 Go언어의 장점을 사용할 수 있다. 추가한 Go언어의 기능은 아래와 같다.<!--more--></p>
+
+<ul>
+  <li>Goroutines</li>
+  <li>Defer</li>
+  <li>Panic, Recover</li>
+  <li>Channels
+    <ul>
+      <li>Buffered Channels</li>
+      <li>Select, Case, Default</li>
+      <li>Closing</li>
+    </ul>
+  </li>
+  <li>Sync Package
+    <ul>
+      <li>Mutex, Cond, Once, WaitGroup</li>
+    </ul>
+  </li>
+  <li>Error type</li>
+</ul>
+
+<p>swift로 고루틴과 채널을 사용하는 예제는 아래와 같다.</p>
+
+<pre class="lang:swift decode:true">func main() {
+    var jobs = Chan&lt;Int&gt;(buffer: 5)
+    var done = Chan&lt;Bool&gt;()
+
+    go {
+        for ;; {
+            var (j, more) = &lt;? jobs
+            if more {
+                println("received job \(j!)")
+            } else {
+                println("received all jobs")
+                done &lt;- true
+                return
+            }
+        }
+    }
+
+    for var j = 1; j &lt;= 3; j++ {
+        jobs &lt;- j
+        println("sent job \(j)")
+    }
+    close(jobs)
+    println("sent all jobs")
+
+    &lt;-done
+}</pre>
+
+<p>아래 주소에 좀 더 많은 예제가 있으니 살펴보자.</p>
+
+<ul>
+  <li><a href="https://github.com/tidwall/goswift/tree/master/examples">https://github.com/tidwall/goswift/tree/master/examples</a></li>
+</ul>
+
+
+		<div style='height: 20px'>
+    
+    	<div style='float:left'>
+        <a class="equalize" href="/hellojni/" title="Previous Post: HelloJNI">
+                <b> ← HelloJNI </b>
+        </a>
+		</div>
+    
+    <div style='float:right'>
+        <a class="equalize" href="/%eb%a9%94%ec%84%9c%eb%93%9c-%eb%93%b1%eb%a1%9d/" title="next Post: 메서드 등록">
+                <b> 메서드 등록 → </b>
+        </a>
+    </div>
+</div>    
+		
+      </section>
+    </div>
+    <footer>
+     <p></a></p>
+     <p>Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+
+    
+  </body>
+</html>

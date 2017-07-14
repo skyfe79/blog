@@ -1,0 +1,196 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>AnroidStudio 에서 Kotlin 으로 안드로이드앱 개발하기 : Burt.K</title>
+
+    <link href='https://fonts.googleapis.com/css?family=Lato:300italic,700italic,300,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/assets/css/style.css?v=">
+    <script src="/assets/js/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header >
+        <h1><a href="/">Burt.K</a></h1>
+        
+          <p>코코아를 좋아하는 프로그래머입니다 ;)</p>
+        
+
+        <ul>
+          <li><a href="/about"><strong>소개</strong></a></li>
+          <li><a href="/archive"><strong>아카이브</strong></a></li>
+        </ul>        
+
+      </header>
+      <section>
+
+
+		<h1 class="entry-title">
+		
+		    <a href="/anroidstudio-%ec%97%90%ec%84%9c-kotlin-%ec%9c%bc%eb%a1%9c-%ec%95%88%eb%93%9c%eb%a1%9c%ec%9d%b4%eb%93%9c%ec%95%b1-%ea%b0%9c%eb%b0%9c%ed%95%98%ea%b8%b0/">AnroidStudio 에서 Kotlin 으로 안드로이드앱 개발하기</a>
+		
+		
+		</h1>
+		
+      <p>Kotlin이 M11이 되면서 안드로이드 개발이 수월해 졌다. M11부터 여러개의 생성자를 만들 수 있어 커스텀뷰를 만드는데 아무런 불편함이 없다. 너무나 편리한 Kotlin. AndroidStudio에서 사용하려면 어떻게 해야할까? Kotlin의 개발사인 IntelliJ의 IDE 기반이라서 너무나도 쉽게 Kotlin으로 안드로이드 개발을 시작할 수 있다.</p>
+
+<ol>
+  <li>
+    <p>AndroidStduio를 실행한다.</p>
+  </li>
+  <li>
+    <p>Cofigure -&gt; Plugins 를 선택한다.</p>
+  </li>
+</ol>
+
+<p><a href="http://i1.wp.com/blog.burt.pe.kr/wp-content/uploads/2015/03/kotlin01.png"><img class=" size-full wp-image-358 aligncenter" src="http://i1.wp.com/blog.burt.pe.kr/wp-content/uploads/2015/03/kotlin01.png?resize=665%2C512" alt="kotlin01" srcset="http://i2.wp.com/burt.pe.kr/wp-content/uploads/2015/03/kotlin01.png?w=924 924w, http://i2.wp.com/burt.pe.kr/wp-content/uploads/2015/03/kotlin01.png?resize=300%2C231 300w, http://i2.wp.com/burt.pe.kr/wp-content/uploads/2015/03/kotlin01.png?resize=660%2C509 660w" sizes="(max-width: 665px) 100vw, 665px" data-recalc-dims="1" /></a></p>
+
+<ol>
+  <li>Kotlin Plugin을 설치한다.</li>
+</ol>
+
+<p><a href="http://i0.wp.com/blog.burt.pe.kr/wp-content/uploads/2015/03/kotlin02.png"><img class="alignnone size-full wp-image-360" src="http://i0.wp.com/blog.burt.pe.kr/wp-content/uploads/2015/03/kotlin02.png?resize=665%2C561" alt="kotlin02" srcset="http://i1.wp.com/burt.pe.kr/wp-content/uploads/2015/03/kotlin02.png?w=936 936w, http://i1.wp.com/burt.pe.kr/wp-content/uploads/2015/03/kotlin02.png?resize=300%2C253 300w, http://i1.wp.com/burt.pe.kr/wp-content/uploads/2015/03/kotlin02.png?resize=660%2C557 660w" sizes="(max-width: 665px) 100vw, 665px" data-recalc-dims="1" /></a></p>
+
+<ol>
+  <li>Blank Activity를 갖는 프로젝트를 생성한다.</li>
+</ol>
+
+<p><a href="http://i2.wp.com/blog.burt.pe.kr/wp-content/uploads/2015/03/kotlin03.png"><img class=" size-full wp-image-361 aligncenter" src="http://i2.wp.com/blog.burt.pe.kr/wp-content/uploads/2015/03/kotlin03.png?resize=665%2C525" alt="kotlin03" srcset="http://i2.wp.com/burt.pe.kr/wp-content/uploads/2015/03/kotlin03.png?w=965 965w, http://i2.wp.com/burt.pe.kr/wp-content/uploads/2015/03/kotlin03.png?resize=300%2C237 300w, http://i2.wp.com/burt.pe.kr/wp-content/uploads/2015/03/kotlin03.png?resize=660%2C521 660w" sizes="(max-width: 665px) 100vw, 665px" data-recalc-dims="1" /></a></p>
+
+<ol>
+  <li>
+    <p>app 모듈의 build.gradle 파일로 이동하여 Command + Shift + A 를 누른다.</p>
+  </li>
+  <li>
+    <p>Configure Kotlin in Project 를 선택한다. 그러면 build.gradle 파일을 kotlin을 지원하도록 설정해 준다.</p>
+  </li>
+</ol>
+
+<p><a href="http://i2.wp.com/blog.burt.pe.kr/wp-content/uploads/2015/03/kotlin04.png"><img class=" size-full wp-image-359 aligncenter" src="http://i2.wp.com/blog.burt.pe.kr/wp-content/uploads/2015/03/kotlin04.png?resize=432%2C310" alt="kotlin04" srcset="http://i1.wp.com/burt.pe.kr/wp-content/uploads/2015/03/kotlin04.png?w=432 432w, http://i1.wp.com/burt.pe.kr/wp-content/uploads/2015/03/kotlin04.png?resize=300%2C215 300w" sizes="(max-width: 432px) 100vw, 432px" data-recalc-dims="1" /></a></p>
+
+<pre class="lang:default decode:true">apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+
+android {
+    compileSdkVersion 22
+    buildToolsVersion "21.1.2"
+
+    defaultConfig {
+        applicationId "kr.pe.burt.hellomykotlin"
+        minSdkVersion 14
+        targetSdkVersion 22
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:appcompat-v7:22.0.0'
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+}
+buildscript {
+    ext.kotlin_version = '0.11.91'
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+repositories {
+    mavenCentral()
+}</pre>
+
+<ol>
+  <li>MainActivity.java 파일로 이동한다. Code 메뉴에서 Convert Java file to Kotlin file 을 선택해 실행한다.</li>
+</ol>
+
+<p><a href="http://i1.wp.com/blog.burt.pe.kr/wp-content/uploads/2015/03/kotlin05.png"><img class=" size-full wp-image-357 aligncenter" src="http://i1.wp.com/blog.burt.pe.kr/wp-content/uploads/2015/03/kotlin05.png?resize=339%2C532" alt="kotlin05" srcset="http://i1.wp.com/burt.pe.kr/wp-content/uploads/2015/03/kotlin05.png?w=339 339w, http://i1.wp.com/burt.pe.kr/wp-content/uploads/2015/03/kotlin05.png?resize=191%2C300 191w" sizes="(max-width: 339px) 100vw, 339px" data-recalc-dims="1" /></a></p>
+
+<p> </p>
+
+<pre class="lang:default decode:true">package kr.pe.burt.hellomykotlin
+
+import android.support.v7.app.ActionBarActivity
+import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
+
+
+public class MainActivity : ActionBarActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        val id = item!!.getItemId()
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
+}</pre>
+
+<ol>
+  <li>앱을 빌드하고 실행한다.</li>
+</ol>
+
+<p>Kotlin이 M11 버전이 되면서 kotlin 파일을 kotlin 디렉토리로 옮기지 않아도 된다. 하지만 관례상 kotlin 폴더를 만들고  옮겨주는 것이 좋다.</p>
+
+
+		<div style='height: 20px'>
+    
+    	<div style='float:left'>
+        <a class="equalize" href="/i-love-kotlin/" title="Previous Post: I love Kotlin!">
+                <b> ← I love Kotlin! </b>
+        </a>
+		</div>
+    
+    <div style='float:right'>
+        <a class="equalize" href="/from-left-to-the-right/" title="next Post: From Left To The Right">
+                <b> From Left To The Right → </b>
+        </a>
+    </div>
+</div>    
+		
+      </section>
+    </div>
+    <footer>
+     <p></a></p>
+     <p>Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+
+    
+  </body>
+</html>

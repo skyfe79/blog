@@ -1,0 +1,182 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Android Studio AAR 파일 만들기 (2/3) : Burt.K</title>
+
+    <link href='https://fonts.googleapis.com/css?family=Lato:300italic,700italic,300,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/assets/css/style.css?v=">
+    <script src="/assets/js/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header >
+        <h1><a href="/">Burt.K</a></h1>
+        
+          <p>코코아를 좋아하는 프로그래머입니다 ;)</p>
+        
+
+        <ul>
+          <li><a href="/about"><strong>소개</strong></a></li>
+          <li><a href="/archive"><strong>아카이브</strong></a></li>
+        </ul>        
+
+      </header>
+      <section>
+
+
+		<h1 class="entry-title">
+		
+		    <a href="/android-studio-aar-%ed%8c%8c%ec%9d%bc-%eb%a7%8c%eb%93%a4%ea%b8%b0-22/">Android Studio AAR 파일 만들기 (2/3)</a>
+		
+		
+		</h1>
+		
+      <p>만들어진 aar 파일을 사용해 보자.<!--more--></p>
+
+<h3 id="프로젝트를-새로-생성하고-텍스트뷰가-있는-액티비티를-만든다">프로젝트를 새로 생성하고 텍스트뷰가 있는 액티비티를 만든다.</h3>
+
+<pre class="lang:default decode:true" title="activity_main.xml">&lt;RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity"&gt;
+
+    &lt;TextView
+        android:id="@+id/tvHello"
+        android:text="@string/hello_world"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" /&gt;
+
+&lt;/RelativeLayout&gt;
+</pre>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>package kr.pe.burt.android.testmylib;
+
+import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+import android.widget.TextView;
+
+import kr.pe.burt.android.mylib.Say;
+
+
+public class MainActivity extends ActionBarActivity {
+
+    TextView tvHello;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        tvHello = (TextView)findViewById(R.id.tvHello);
+
+        Say say = new Say();
+        tvHello.setText(say.hello(getResources()));
+    }
+}
+</code></pre>
+</div>
+
+<h3 id="mylibaar-파일을-libs-폴더에-복사한다">mylib.aar 파일을 libs 폴더에 복사한다.</h3>
+
+<p><a href="http://i0.wp.com/blog.burt.pe.kr/wp-content/uploads/2015/03/스크린샷-2015-03-09-오후-6.13.02.png"><img class=" fit-width size-full wp-image-303 aligncenter" src="http://i0.wp.com/blog.burt.pe.kr/wp-content/uploads/2015/03/스크린샷-2015-03-09-오후-6.13.02.png?resize=602%2C386" alt="스크린샷 2015-03-09 오후 6.13.02" srcset="http://i0.wp.com/burt.pe.kr/wp-content/uploads/2015/03/스크린샷-2015-03-09-오후-6.13.02.png?w=602 602w, http://i0.wp.com/burt.pe.kr/wp-content/uploads/2015/03/스크린샷-2015-03-09-오후-6.13.02.png?resize=300%2C192 300w" sizes="(max-width: 602px) 100vw, 602px" data-recalc-dims="1" /></a></p>
+
+<h3 id="buildgradle-파일을-작성한다">build.gradle 파일을 작성한다.</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>...
+repositories {
+    mavenCentral()
+    flatDir {
+        dirs 'libs' //이렇게 해야 libs 폴더에서 aar 파일을 찾을 수 있다 
+    }
+}
+
+...
+
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:appcompat-v7:21.0.3'
+    compile 'kr.pe.burt.android.mylib:mylib:1.0@aar'
+}
+
+</code></pre>
+</div>
+
+<p>아래는 build.gradle 파일의 전문이다.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>apply plugin: 'com.android.application'
+
+repositories {
+    mavenCentral()
+    flatDir {
+        dirs 'libs'
+    }
+}
+
+android {
+    compileSdkVersion 21
+    buildToolsVersion "21.1.2"
+
+    defaultConfig {
+        applicationId "kr.pe.burt.android.testmylib"
+        minSdkVersion 15
+        targetSdkVersion 21
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:appcompat-v7:21.0.3'
+    compile 'kr.pe.burt.android.mylib:mylib:1.0@aar'
+}
+</code></pre>
+</div>
+
+<h3 id="결과화면">결과화면</h3>
+
+<p><img class="  wp-image-304 aligncenter" src="http://i0.wp.com/blog.burt.pe.kr/wp-content/uploads/2015/03/KakaoTalk_Photo_2015-03-09-18-17-10.jpeg?resize=337%2C449" alt="KakaoTalk_Photo_2015-03-09-18-17-10" srcset="http://i2.wp.com/burt.pe.kr/wp-content/uploads/2015/03/KakaoTalk_Photo_2015-03-09-18-17-10.jpeg?w=720 720w, http://i2.wp.com/burt.pe.kr/wp-content/uploads/2015/03/KakaoTalk_Photo_2015-03-09-18-17-10.jpeg?resize=225%2C300 225w, http://i2.wp.com/burt.pe.kr/wp-content/uploads/2015/03/KakaoTalk_Photo_2015-03-09-18-17-10.jpeg?resize=660%2C880 660w" sizes="(max-width: 337px) 100vw, 337px" data-recalc-dims="1" /></p>
+
+
+		<div style='height: 20px'>
+    
+    	<div style='float:left'>
+        <a class="equalize" href="/android-studio-aar-%ed%8c%8c%ec%9d%bc-%eb%a7%8c%eb%93%a4%ea%b8%b0/" title="Previous Post: Android Studio AAR 파일 만들기 (1/3)">
+                <b> ← Android Studio AAR 파일 만들기 (1/3) </b>
+        </a>
+		</div>
+    
+    <div style='float:right'>
+        <a class="equalize" href="/android-studio-aar-%ed%8c%8c%ec%9d%bc-%eb%a7%8c%eb%93%a4%ea%b8%b0-33/" title="next Post: Android Studio AAR 파일 만들기 (3/3)">
+                <b> Android Studio AAR 파일 만들기 (3/3) → </b>
+        </a>
+    </div>
+</div>    
+		
+      </section>
+    </div>
+    <footer>
+     <p></a></p>
+     <p>Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+
+    
+  </body>
+</html>

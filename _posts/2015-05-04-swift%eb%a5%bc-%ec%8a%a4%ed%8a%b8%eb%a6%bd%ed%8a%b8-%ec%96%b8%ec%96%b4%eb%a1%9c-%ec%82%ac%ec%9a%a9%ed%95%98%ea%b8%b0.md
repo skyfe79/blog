@@ -1,0 +1,205 @@
+---
+id: 402
+title: Swift를 스트립트 언어로 사용하기
+date: 2015-05-04T21:21:56+00:00
+author: Burt
+layout: post
+guid: http://blog.burt.pe.kr/?p=402
+permalink: '/swift%eb%a5%bc-%ec%8a%a4%ed%8a%b8%eb%a6%bd%ed%8a%b8-%ec%96%b8%ec%96%b4%eb%a1%9c-%ec%82%ac%ec%9a%a9%ed%95%98%ea%b8%b0/'
+dsq_thread_id:
+  - "3734980219"
+categories:
+  - Cocoa
+  - Mac OS X
+  - Swift
+tags:
+  - swift
+---
+<p class="p1">
+  <span class="s1">Swift는 컴파일형 언어이지만 스트립트 언어로 사용하는 일도 가능하다. 아래처럼 파일을 만들고 스크립트 파일을 실행해 한다.</span>
+</p>
+
+<pre class="lang:default decode:true">$ vi hello.swift</pre>
+
+<pre class="lang:default decode:true">#!/usr/bin/env xcrun swift
+println("Hello world")</pre>
+
+<pre class="lang:default decode:true ">$ chmod +x hello.swift
+./hello.swift
+Hello world</pre>
+
+실행해 보면  Hello world 문자열이 화면에 출력된 것을 볼 수 있다.
+
+<p class="p1">
+  Swift 스크립트 프로그램이 커맨드라인 인자를 받을 수 있다면 좀 더 유용할 것이다. Swift에는 아래와 같은 커맨드라인 인자를 위한 변수를 제공한다.
+</p>
+
+<li class="p1">
+  C_ARGC : 전달되는 인자의 갯수
+</li>
+<li class="p1">
+  C_ARGV : 전달되는 인자의 배열
+</li>
+
+iOS 8.3 부터는 위의 변수는 제거 되었고 Process 의 멤버 변수를 사용해야 한다.
+
+  * Process.argc : 전달되는 인자의 갯수
+  * Process.arguments : 전달되는 인자의 배열
+
+<p class="p1">
+  <span class="s1">커맨드라인 인자를 받는 예제를 작성해 보자.</span>
+</p>
+
+<pre class="lang:default decode:true">$ vi cmd.swift</pre>
+
+<pre class="lang:default decode:true">#!/usr/bin/env xcrun swift
+
+var name = "World"
+if( Process.argc &gt; 1 ) {
+  if let arg1 = String.fromCString(Process.arguments[1]) {
+    name = arg1
+  }
+}
+
+println("Hello \(name)")</pre>
+
+<pre class="lang:default decode:true ">$ chmod +x cmd.swift
+$ ./cmd.swift Burt
+Hello Burt</pre>
+
+모든 커맨드라인 인자를 출력하는 스크립트를 작성해 보자
+
+<pre class="lang:default decode:true ">$ vi allcmd.swift</pre>
+
+<pre class="lang:default decode:true ">#!/usr/bin/env xcrun swift
+
+var c = 0
+for arg in Process.arguments {
+    println("arguments \(c) is : \(arg)")
+    c++
+}</pre>
+
+<pre class="lang:default decode:true ">$ chmod +x allcmd.swift
+$ ./allcmd.swift 1 2 3 4 5
+arguments 0 is : ./allcmd.swift
+arguments 1 is : 1
+arguments 2 is : 2
+arguments 3 is : 3
+arguments 4 is : 4
+arguments 5 is : 5</pre>
+
+이번에는 파일을 읽어서 파일의 내용을 출력하는 스크립트를 작성해 보자.
+
+<pre class="lang:default decode:true ">$ vi cat.swift</pre>
+
+<pre class="lang:default decode:true">#!/usr/bin/env xcrun swift
+
+import Foundation
+
+if(Process.argc &gt; 1) {
+
+    if let file = String.fromCString(Process.arguments[1]) {
+      if let fileContent = NSString(contentsOfFile: file, encoding: NSUTF8StringEncoding, error: nil) {
+
+        println(fileContent)
+
+      }
+    }
+
+
+} else {
+    println("[USAGE] cat.swift filename")
+}</pre>
+
+<pre class="lang:default decode:true">$ chmod +x cat.swift
+$ ./cat.swift cat.swift
+#!/usr/bin/env xcrun swift
+
+import Foundation
+
+if(Process.argc &gt; 1) {
+
+    if let file = String.fromCString(Process.arguments[1]) {
+      if let fileContent = NSString(contentsOfFile: file, encoding: NSUTF8StringEncoding, error: nil) {
+
+        println(fileContent)
+
+      }
+    }
+
+
+} else {
+    println("[USAGE] cat.swift filename")
+}
+</pre>
+
+<pre class="lang:default decode:true ">$ vi ls.swift</pre>
+
+<pre class="lang:default decode:true ">#!/usr/bin/env xcrun swift
+
+import Foundation
+
+
+
+if(Process.argc &gt; 1) {
+    let task = NSTask()
+    task.launchPath = "/bin/ls"
+    task.arguments = [Process.arguments[1]]
+
+    let pipe = NSPipe()
+    task.standardOutput = pipe
+    task.launch()
+
+    let data = pipe.fileHandleForReading.readDataToEndOfFile()
+    let output = NSString(data: data, encoding: NSUTF8StringEncoding)
+
+    print(output!)
+} else {
+  println("[USAGE] ls.swift path")
+}</pre>
+
+<pre class="lang:default decode:true ">$ chmod +x ls.swift
+$ ./ls.swift /
+Applications
+Downloads
+Library
+Network
+System
+Users
+Volumes
+...</pre>
+
+<p class="p1">
+  <span class="s1">정말 멋지게 동작한다. NSTask와 NSPipe는 개발문서를 참고한다.  </span>이번에는 이미지를 바탕화면 월페이퍼로 설정하는 스크립트를 작성해 보자.
+</p>
+
+<pre class="lang:default decode:true">$ vi changewallpager.swift</pre>
+
+<pre class="lang:default decode:true">#!/usr/bin/env xcrun swift
+
+import Cocoa
+import AppKit
+
+if(Process.argc &gt; 1) {
+    let imgname : String? = String.fromCString(Process.arguments[1])    
+    let imgurl : NSURL? = NSURL.fileURLWithPath(imgname!)
+    var error : NSError?
+    let workspace = NSWorkspace.sharedWorkspace()
+    let screen = NSScreen.mainScreen()
+
+    let result : Bool = workspace.setDesktopImageURL(imgurl!, forScreen: screen!, options: nil, error: &error)
+
+    if result {
+      println("Wallpaper set!")
+    }
+
+} else {
+    println("[USAGE] show_image.swift imagepath")
+}</pre>
+
+<pre class="lang:default decode:true">$ chmod +x changewallpager.swift
+$ ./changewallpager.swift ./apple.png
+Wallpager set!
+</pre>
+
+위에서는 apple.png 를 바탕화면에 설정했다. 마음에 드는 이미지로 배경화면을 바꿔 보자.

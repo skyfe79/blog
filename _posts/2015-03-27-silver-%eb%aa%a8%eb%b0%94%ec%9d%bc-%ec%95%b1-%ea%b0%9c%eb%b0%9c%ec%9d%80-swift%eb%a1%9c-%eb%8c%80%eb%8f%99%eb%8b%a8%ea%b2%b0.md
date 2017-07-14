@@ -1,0 +1,24 @@
+---
+id: 347
+title: Silver! 모바일 앱 개발은 Swift로 대동단결!
+date: 2015-03-27T12:28:31+00:00
+author: Burt
+layout: post
+guid: http://blog.burt.pe.kr/?p=347
+permalink: '/silver-%eb%aa%a8%eb%b0%94%ec%9d%bc-%ec%95%b1-%ea%b0%9c%eb%b0%9c%ec%9d%80-swift%eb%a1%9c-%eb%8c%80%eb%8f%99%eb%8b%a8%ea%b2%b0/'
+dsq_thread_id:
+  - "3708044765"
+categories:
+  - Android
+  - iOS
+tags:
+  - silver
+---
+[<img class=" fit-width size-full wp-image-348 aligncenter" src="http://i0.wp.com/blog.burt.pe.kr/wp-content/uploads/2015/03/silver.png?resize=665%2C182" alt="silver" srcset="http://i2.wp.com/burt.pe.kr/wp-content/uploads/2015/03/silver.png?w=901 901w, http://i2.wp.com/burt.pe.kr/wp-content/uploads/2015/03/silver.png?resize=300%2C82 300w, http://i2.wp.com/burt.pe.kr/wp-content/uploads/2015/03/silver.png?resize=660%2C180 660w" sizes="(max-width: 665px) 100vw, 665px" data-recalc-dims="1" />](http://i0.wp.com/blog.burt.pe.kr/wp-content/uploads/2015/03/silver.png)
+
+RemObjects 사에서 Silver 라는 것을 내 놓았다. Xamarin 과 같은 방식으로 크로프플랫폼 앱 개발 도구 Silver를 내 놓았다. Xamarin 과 다른 점은 Apple의 Swift로 코드를 작성해서 iOS, Android, Windows Mobile App 등을 작성할 수 있다는 점이다. Silver용 전용 IDE도 제공한다.
+
+  * <http://elementscompiler.com/elements/silver/> 에서 베타 버전 Silver를 받아 앱을 작성해 볼 수 있다.
+  * <https://medium.com/@rom1_ubidreams/a-first-look-at-remobjects-silver-how-to-write-a-crossplatform-ios-android-app-in-swift-56fc358ebc37> 에서 swift 로 iOS와 Android용 계산기를 만드는 튜토리얼을 볼 수 있다.
+
+아직 베타라서 Silver가 유용한 도구가 되기 위해선 많은 시간이 필요할 것 같다. 각 언어의 바인딩은 잘 되는지 궁금하기도 하고 안드로이드는 NDK 개발이 필요할 때가 있는데 어떻게 지원하는지 궁금하기도 하다. 그렇지만 Swift를 통해서 크로스플랫폼 앱을 만들 수 있는 것은 멋진 일인것 같다.

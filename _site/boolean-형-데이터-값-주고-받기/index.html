@@ -1,0 +1,145 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Boolean 형 데이터 값 주고 받기 : Burt.K</title>
+
+    <link href='https://fonts.googleapis.com/css?family=Lato:300italic,700italic,300,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/assets/css/style.css?v=">
+    <script src="/assets/js/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header >
+        <h1><a href="/">Burt.K</a></h1>
+        
+          <p>코코아를 좋아하는 프로그래머입니다 ;)</p>
+        
+
+        <ul>
+          <li><a href="/about"><strong>소개</strong></a></li>
+          <li><a href="/archive"><strong>아카이브</strong></a></li>
+        </ul>        
+
+      </header>
+      <section>
+
+
+		<h1 class="entry-title">
+		
+		    <a href="/boolean-%ed%98%95-%eb%8d%b0%ec%9d%b4%ed%84%b0-%ea%b0%92-%ec%a3%bc%ea%b3%a0-%eb%b0%9b%ea%b8%b0/">Boolean 형 데이터 값 주고 받기</a>
+		
+		
+		</h1>
+		
+      <p class="p1">
+  <span class="s1">Boolean 데이터를 주고 받는 예제를 작성한다. </span><!--more-->
+</p>
+
+<pre class="lang:default decode:true ">$ vi PassAndReturnBool.cpp</pre>
+
+<pre class="lang:default decode:true ">#include &lt;jni.h&gt;
+
+jboolean toggle
+(
+	JNIEnv		*env,
+	jobject		thiz,
+	jboolean		value
+)
+{
+	return !value;
+}
+
+JNIEXPORT jint JNICALL JNI_OnLoad
+(
+	JavaVM		*vm,
+	void		*reserved
+)
+{
+	JNIEnv *env;
+	if(vm-&gt;GetEnv(reinterpret_cast&lt;void**&gt;(&amp;env), JNI_VERSION_1_6)) {
+		return -1;
+	}
+	
+	JNINativeMethod	nm[1];
+	nm[0].name = const_cast&lt;char *&gt;("toggle");
+	nm[0].signature = const_cast&lt;char *&gt;("(Z)Z"); // boolean을 받고 boolean을 반환하는 함수 시그니쳐
+	nm[0].fnPtr = reinterpret_cast&lt;void *&gt;(toggle);
+	
+	jclass cls = env-&gt;FindClass("Client");
+	env-&gt;RegisterNatives(cls, nm, 1);
+	return JNI_VERSION_1_6;
+}</pre>
+
+<p>위의 코드에서 함수 시그니쳐에 대한 내용은 <a href="http://blog.burt.pe.kr/%eb%a9%94%ec%84%9c%eb%93%9c-%eb%93%b1%eb%a1%9d/">“메서드등록”</a> 글을 참고한다.  <span class="s1">컴파일해서 libparbool.jnilib 파일을 만든다.</span></p>
+
+<pre class="lang:default decode:true ">$ g++ "-I/System/Library/Frameworks/JavaVM.framework/Versions/Current/Headers/" -c PassAndReturnBool.cpp
+$ g++ -dynamiclib -o libparbool.jnilib passandreturnbool.o</pre>
+
+<p class="p1">
+  <span class="s1">위 네이티브 라이브러리를 사용하는 Java클래스를 작성한다.</span>
+</p>
+
+<pre class="lang:default decode:true ">$ vi Client.java</pre>
+
+<pre class="lang:default decode:true ">public class Client {
+
+    private native boolean toggle(boolean value);
+
+    public static void main(String[] args) {
+        
+        Client client = new Client();
+
+        System.out.println("toggle(true) is " + client.toggle(true));
+        System.out.println("toggle(false) is " + client.toggle(false));
+    }
+
+    static {
+        System.loadLibrary("parbool");
+    }
+}</pre>
+
+<p class="p1">
+  <span class="s1">Java코드를 컴파일하고 실행한다.</span>
+</p>
+
+<pre class="lang:default decode:true ">$ javac Client.java
+$ java Client
+toggle(true) is false
+toggle(false) is true</pre>
+
+<p> </p>
+
+
+		<div style='height: 20px'>
+    
+    	<div style='float:left'>
+        <a class="equalize" href="/int-%eb%8d%b0%ec%9d%b4%ed%84%b0-%ea%b0%92-%ec%a3%bc%ea%b3%a0-%eb%b0%9b%ea%b8%b0/" title="Previous Post: Int 데이터 값 주고 받기">
+                <b> ← Int 데이터 값 주고 받기 </b>
+        </a>
+		</div>
+    
+    <div style='float:right'>
+        <a class="equalize" href="/double-%ed%98%95-%eb%8d%b0%ec%9d%b4%ed%84%b0-%ec%a3%bc%ea%b3%a0-%eb%b0%9b%ea%b8%b0/" title="next Post: Double 형 데이터 주고 받기">
+                <b> Double 형 데이터 주고 받기 → </b>
+        </a>
+    </div>
+</div>    
+		
+      </section>
+    </div>
+    <footer>
+     <p></a></p>
+     <p>Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+
+    
+  </body>
+</html>

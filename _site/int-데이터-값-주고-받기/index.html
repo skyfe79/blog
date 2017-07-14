@@ -1,0 +1,145 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Int 데이터 값 주고 받기 : Burt.K</title>
+
+    <link href='https://fonts.googleapis.com/css?family=Lato:300italic,700italic,300,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/assets/css/style.css?v=">
+    <script src="/assets/js/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header >
+        <h1><a href="/">Burt.K</a></h1>
+        
+          <p>코코아를 좋아하는 프로그래머입니다 ;)</p>
+        
+
+        <ul>
+          <li><a href="/about"><strong>소개</strong></a></li>
+          <li><a href="/archive"><strong>아카이브</strong></a></li>
+        </ul>        
+
+      </header>
+      <section>
+
+
+		<h1 class="entry-title">
+		
+		    <a href="/int-%eb%8d%b0%ec%9d%b4%ed%84%b0-%ea%b0%92-%ec%a3%bc%ea%b3%a0-%eb%b0%9b%ea%b8%b0/">Int 데이터 값 주고 받기</a>
+		
+		
+		</h1>
+		
+      <p class="p1">
+  <span class="s1">앞으로 몇 개의 튜토리얼을 통해서 데이터를 자바 레이어에서 네이티브 레이어로 전달하고 어떤 연산을 거친 후 되돌려 받는 예제를 작성할 것이다. 우선 Int 형을 주고 받는 예제를 작성해 보자.</span><!--more-->
+</p>
+
+<p class="p1">
+  <span class="s1">PassAndReturnInt.cpp 파일을 생성하고 작성한다.</span>
+</p>
+
+<pre class="lang:default decode:true  ">$ vi PassAndReturnInt.cpp</pre>
+
+<pre class="lang:default decode:true ">#include &lt;jni.h&gt;
+
+jint PassAndReturnInt
+(
+	JNIEnv		*env,
+	jobject		 thiz,
+	jint			 data
+)
+{
+	return data * data;
+}
+
+JNIEXPORT jint JNICALL JNI_OnLoad
+(
+	JavaVM		*vm,
+	void		*reserved
+)
+{
+	JNIEnv *env;
+	if(vm-&gt;GetEnv(reinterpret_cast&lt;void **&gt;(&amp;env), JNI_VERSION_1_6)) {
+		return -1;
+	}
+	
+	JNINativeMethod nm[1];
+	nm[0].name = const_cast&lt;char *&gt;("PassAndReturnInt");
+	nm[0].signature = const_cast&lt;char *&gt;("(I)I");
+	nm[0].fnPtr = reinterpret_cast&lt;void *&gt;(PassAndReturnInt);
+	
+	jclass cls = env-&gt;FindClass("Client");
+	env-&gt;RegisterNatives(cls, nm, 1);
+	return JNI_VERSION_1_6;
+}</pre>
+
+<p class="p1">
+  <span class="s1">이제 이 코드를 libpassandreturnint.jnilib으로 만든다.</span>
+</p>
+
+<pre class="lang:default decode:true ">$ g++ "-I/System/Library/Frameworks/JavaVM.framework/Versions/Current/Headers/" -c PassAndReturnInt.cpp
+$ g++ -dynamiclib -o libpassandreturnint.jnilib passandreturnint.o</pre>
+
+<p>이제 이 네이티브 라이브러리를 사용하는 Java클래스를 작성한다.</p>
+
+<pre class="lang:default decode:true ">$ vi Client.java</pre>
+
+<pre class="lang:default decode:true ">public class Client {
+    private native int PassAndReturnInt(int data);
+
+    public static void main(String[] args) {
+        
+        Client c = new Client();
+        System.out.println("pass 10 and return = " + c.PassAndReturnInt(10));
+    }
+
+    static {
+        System.loadLibrary("passandreturnint");
+    }
+}</pre>
+
+<p class="p1">
+  <span class="s1">위의 Java코드를 컴파일하고 실행해 보자</span>
+</p>
+
+<pre class="lang:default decode:true ">$ javac Client.java
+$ java Client
+pass 10 and return = 100</pre>
+
+<p> </p>
+
+
+		<div style='height: 20px'>
+    
+    	<div style='float:left'>
+        <a class="equalize" href="/%ec%9e%90%eb%b0%94-8-%eb%9e%8c%eb%8b%a4%ec%9d%98-%ed%9e%98-2/" title="Previous Post: 자바 8 람다의 힘">
+                <b> ← 자바 8 람다의 힘 </b>
+        </a>
+		</div>
+    
+    <div style='float:right'>
+        <a class="equalize" href="/boolean-%ed%98%95-%eb%8d%b0%ec%9d%b4%ed%84%b0-%ea%b0%92-%ec%a3%bc%ea%b3%a0-%eb%b0%9b%ea%b8%b0/" title="next Post: Boolean 형 데이터 값 주고 받기">
+                <b> Boolean 형 데이터 값 주고 받기 → </b>
+        </a>
+    </div>
+</div>    
+		
+      </section>
+    </div>
+    <footer>
+     <p></a></p>
+     <p>Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+
+    
+  </body>
+</html>

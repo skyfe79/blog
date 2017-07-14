@@ -1,0 +1,199 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>XCode 에서 GLFW 사용하기 : Burt.K</title>
+
+    <link href='https://fonts.googleapis.com/css?family=Lato:300italic,700italic,300,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/assets/css/style.css?v=">
+    <script src="/assets/js/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header >
+        <h1><a href="/">Burt.K</a></h1>
+        
+          <p>코코아를 좋아하는 프로그래머입니다 ;)</p>
+        
+
+        <ul>
+          <li><a href="/about"><strong>소개</strong></a></li>
+          <li><a href="/archive"><strong>아카이브</strong></a></li>
+        </ul>        
+
+      </header>
+      <section>
+
+
+		<h1 class="entry-title">
+		
+		    <a href="/xcode-%ec%97%90%ec%84%9c-glfw-%ec%82%ac%ec%9a%a9%ed%95%98%ea%b8%b0/">XCode 에서 GLFW 사용하기</a>
+		
+		
+		</h1>
+		
+      <p>Mac OS X 에서 GLFW 라이브러리를 사용하는 방법을 알아본다. <a href="http://www.glfw.org/">GLFW</a>의 자세한 내용은 <a href="http://www.glfw.org/">링크</a>를 참고한다. GLFW을 XCode에서 사용하기 위해 해야할 일은 GLFW라이브러리를 컴파일하고 설치하는 것이다.<!--more--></p>
+
+<ul>
+  <li>http://www.glfw.org/download.html 에서 GLFW 최신 버전을 다운로드한다.</li>
+  <li>압축을 해제한다. GLFW 를 푼 폴더로 이동한다. <glfw-root-dir> 이라고 가정.</glfw-root-dir></li>
+</ul>
+
+<pre class="lang:default decode:true ">cd &lt;glfw-root-dir&gt;</pre>
+
+<ul>
+  <li> out-of-tree 빌드를 하기 위해서 build 폴더를 생성한다. build 폴더로 이동한 다음에 cmake를 수행한다. 참고로 맥에는 cmake가 없기 때문에 설치해야 한다.</li>
+</ul>
+
+<pre class="lang:default decode:true">mkdir build
+cd build
+cmake ..</pre>
+
+<ul>
+  <li> cmake 가 끝나면 make 하고 설치한다.</li>
+</ul>
+
+<pre class="lang:default decode:true ">make
+make install</pre>
+
+<ul>
+  <li> 아래와 같이 설치된다.</li>
+</ul>
+
+<pre class="lang:default mark:3,4,11 decode:true ">Install the project...
+-- Install configuration: ""
+-- Installing: /usr/local/include/GLFW
+-- Installing: /usr/local/include/GLFW/glfw3.h
+-- Installing: /usr/local/include/GLFW/glfw3native.h
+-- Installing: /usr/local/lib/cmake/glfw/glfwConfig.cmake
+-- Installing: /usr/local/lib/cmake/glfw/glfwConfigVersion.cmake
+-- Installing: /usr/local/lib/cmake/glfw/glfwTargets.cmake
+-- Installing: /usr/local/lib/cmake/glfw/glfwTargets-noconfig.cmake
+-- Installing: /usr/local/lib/pkgconfig/glfw3.pc
+-- Installing: /usr/local/lib/libglfw3.a</pre>
+
+<ul>
+  <li> 위의 결과물 중 libglfw3.a 라이브러리를 <glfw-root-dir>/lib 폴더에 복사한다. XCode는 custom static library를 타겟에 직접 포함해서 빌드해야 하기 때문에 편의성을 위해서 복사해 놓는다.</glfw-root-dir></li>
+  <li>GLFW를 사용하는 앱을 생성한다. OS X의 Command Line Tool 프로젝트를 생성한다.</li>
+</ul>
+
+<p><a href="http://i2.wp.com/blog.burt.pe.kr/wp-content/uploads/2014/11/스크린샷-2014-11-18-오전-10.40.57.png"><img class="size-full wp-image-172 aligncenter" src="http://i2.wp.com/blog.burt.pe.kr/wp-content/uploads/2014/11/스크린샷-2014-11-18-오전-10.40.57.png?resize=665%2C393" alt="" srcset="http://i1.wp.com/burt.pe.kr/wp-content/uploads/2014/11/스크린샷-2014-11-18-오전-10.40.57.png?w=732 732w, http://i1.wp.com/burt.pe.kr/wp-content/uploads/2014/11/스크린샷-2014-11-18-오전-10.40.57.png?resize=300%2C177 300w" sizes="(max-width: 665px) 100vw, 665px" data-recalc-dims="1" /></a> <a href="http://i2.wp.com/blog.burt.pe.kr/wp-content/uploads/2014/11/스크린샷-2014-11-18-오전-10.42.04.png"><img class="size-full wp-image-173 aligncenter" src="http://i2.wp.com/blog.burt.pe.kr/wp-content/uploads/2014/11/스크린샷-2014-11-18-오전-10.42.04.png?resize=665%2C394" alt="" srcset="http://i0.wp.com/burt.pe.kr/wp-content/uploads/2014/11/스크린샷-2014-11-18-오전-10.42.04.png?w=731 731w, http://i0.wp.com/burt.pe.kr/wp-content/uploads/2014/11/스크린샷-2014-11-18-오전-10.42.04.png?resize=300%2C177 300w" sizes="(max-width: 665px) 100vw, 665px" data-recalc-dims="1" /></a></p>
+
+<p> </p>
+
+<ul>
+  <li>타겟의 Build Setting 에서 Include Search Path를 추가한다.</li>
+</ul>
+
+<pre class="lang:default decode:true">/usr/local/include</pre>
+
+<p>위에서는 /usr/local/include를 추가했는데 <glfw-root-dir>/include 를 추가해도 되며, 프로젝트 자체에 include 파일을 포함하고서 그 경로를 추가해도 된다.</glfw-root-dir></p>
+
+<ul>
+  <li>libglfw3.a 라이브러리 파일을 타게읫 Build Phases 에서 추가한다.</li>
+  <li>Cocoa와 OpenGL을 사용하기 위해서 필요한 프레임워크를 추가한다.
+    <ul>
+      <li>OpenGL.framework</li>
+      <li>Cocoa.framework</li>
+      <li>QuartzCore.framework</li>
+      <li>IOKit.framework</li>
+    </ul>
+  </li>
+</ul>
+
+<p> </p>
+
+<p><a href="http://i1.wp.com/blog.burt.pe.kr/wp-content/uploads/2014/11/스크린샷-2014-11-18-오전-11.16.26.png"><img class="size-full wp-image-174 aligncenter" src="http://i1.wp.com/blog.burt.pe.kr/wp-content/uploads/2014/11/스크린샷-2014-11-18-오전-11.16.26.png?resize=665%2C325" alt="" srcset="http://i2.wp.com/burt.pe.kr/wp-content/uploads/2014/11/스크린샷-2014-11-18-오전-11.16.26.png?w=698 698w, http://i2.wp.com/burt.pe.kr/wp-content/uploads/2014/11/스크린샷-2014-11-18-오전-11.16.26.png?resize=300%2C146 300w" sizes="(max-width: 665px) 100vw, 665px" data-recalc-dims="1" /></a></p>
+
+<p> </p>
+
+<ul>
+  <li>아래의 코드를 입력하여 빌드하고 실행한다.</li>
+</ul>
+
+<pre class="lang:c++ decode:true ">//
+//  main.cpp
+//  HelloGLFW
+//
+//  Created by burt on 2014. 11. 18..
+//  Copyright (c) 2014년 burt. All rights reserved.
+//
+
+#include &lt;GLFW/glfw3.h&gt;
+
+int main(int argc, const char * argv[]) {
+	GLFWwindow* window;
+	
+	/* Initialize the library */
+	if (!glfwInit())
+		return -1;
+	
+	/* Create a windowed mode window and its OpenGL context */
+	window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
+	if (!window)
+	{
+		glfwTerminate();
+		return -1;
+	}
+	
+	/* Make the window's context current */
+	glfwMakeContextCurrent(window);
+	
+	/* Loop until the user closes the window */
+	while (!glfwWindowShouldClose(window))
+	{
+		/* Render here */
+		glClear(GL_COLOR_BUFFER_BIT);
+		glClearColor(0, 0, 0, 0);
+		
+		/* Swap front and back buffers */
+		glfwSwapBuffers(window);
+		
+		/* Poll for and process events */
+		glfwPollEvents();
+	}
+	
+	glfwTerminate();
+	return 0;
+}
+</pre>
+
+<ul>
+  <li> 아래와 같은 창이 생성된다.</li>
+</ul>
+
+<p><a href="http://i0.wp.com/blog.burt.pe.kr/wp-content/uploads/2014/11/스크린샷-2014-11-18-오전-11.20.30.png"><img class="size-full wp-image-175 aligncenter" src="http://i0.wp.com/blog.burt.pe.kr/wp-content/uploads/2014/11/스크린샷-2014-11-18-오전-11.20.30.png?resize=665%2C543" alt="" srcset="http://i0.wp.com/burt.pe.kr/wp-content/uploads/2014/11/스크린샷-2014-11-18-오전-11.20.30.png?w=752 752w, http://i0.wp.com/burt.pe.kr/wp-content/uploads/2014/11/스크린샷-2014-11-18-오전-11.20.30.png?resize=300%2C244 300w" sizes="(max-width: 665px) 100vw, 665px" data-recalc-dims="1" /></a></p>
+
+
+		<div style='height: 20px'>
+    
+    	<div style='float:left'>
+        <a class="equalize" href="/ndk-build%eb%a5%bc-android-studio%ec%97%90%ec%84%9c-%ec%82%ac%ec%9a%a9%ed%95%98%ea%b8%b0/" title="Previous Post: ndk-build를 Android Studio에서 사용하기">
+                <b> ← ndk-build를 Android Studio에서 사용하기 </b>
+        </a>
+		</div>
+    
+    <div style='float:right'>
+        <a class="equalize" href="/glew-%eb%b9%8c%eb%93%9c%ed%95%98%ea%b8%b0/" title="next Post: GLEW 빌드하기">
+                <b> GLEW 빌드하기 → </b>
+        </a>
+    </div>
+</div>    
+		
+      </section>
+    </div>
+    <footer>
+     <p></a></p>
+     <p>Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+
+    
+  </body>
+</html>

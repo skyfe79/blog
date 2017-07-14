@@ -1,0 +1,107 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Filter Chain 사용하기 : Burt.K</title>
+
+    <link href='https://fonts.googleapis.com/css?family=Lato:300italic,700italic,300,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/assets/css/style.css?v=">
+    <script src="/assets/js/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header >
+        <h1><a href="/">Burt.K</a></h1>
+        
+          <p>코코아를 좋아하는 프로그래머입니다 ;)</p>
+        
+
+        <ul>
+          <li><a href="/about"><strong>소개</strong></a></li>
+          <li><a href="/archive"><strong>아카이브</strong></a></li>
+        </ul>        
+
+      </header>
+      <section>
+
+
+		<h1 class="entry-title">
+		
+		    <a href="/filter-chain-%ec%82%ac%ec%9a%a9%ed%95%98%ea%b8%b0/">Filter Chain 사용하기</a>
+		
+		
+		</h1>
+		
+      <p>ffmpeg의 필터 체인을 사용하면 여러 필터를 동시에 적용할 수 있다. 필터 체인은 단일 라인 체인과 멀티 라인 체인이 있다.  예를 들어 단일 라인 체인으로 비디오 파일에 회전과 크롭을 동시에 적용할 수 있다. 멀티 라인 체인을 사용하면 동영상을 두 개의 소스로 나눈 다음에 각각의 소스에 필터를 적용할 수 있다.<!--more--></p>
+
+<p>ffmpeg의 단일 필터체인 문법은 아래와 같다.</p>
+
+<pre class="lang:default decode:true">ffmpeg -i &lt;INPUT&gt; -vf "filter1, filter2" &lt;OUTPUT&gt;</pre>
+
+<p>콤마로 필터를 구분지어 쭉 나열해 주면 된다. 크롭과 회전을 적용해 보자.</p>
+
+<pre class="lang:default decode:true ">ffmpeg -i video.mp4 -vf "crop=640:256:0:0, transpose=2" -acodec copy crop_tr_video.mp4</pre>
+
+<p>사실 위의 결과를 멀티 라인 체인으로 구성해 똑같이 할 수 있다.  멀티 라인 체인은 세미 콜론으로 구분한다.</p>
+
+<pre class="lang:default decode:true">ffmpeg -i &lt;INPUT&gt; -vf "filter1 &lt;result&gt;; &lt;result&gt; filter2" &lt;OUTPUT&gt;</pre>
+
+<p>filter1 에 쓰인 result은 filter1의 출력 결과물이며 filter2에 쓰인 result은 filter2의 입력이 된다. 그럼 크롭과 회전을 동시에 처리하는 필터 체인을 구성해 보자.</p>
+
+<pre class="lang:default decode:true">ffmpeg -i video.mp4 -vf "crop=640:256:0:0 [crop_result]; [crop_result] transpose=2" -acodec copy crop_tr_video.mp4
+</pre>
+
+<p>멀티 라인 체인을 위처럼 사용하는 경우는 드물다. 단지 이해를 쉽게 하기 위해서 든 예일 뿐이다. 아래의 경우를 살펴보자.</p>
+
+<pre class="lang:default decode:true ">[main]
+           input --&gt; split ---------------------&gt; overlay --&gt; output
+                       |                             ^
+                       |[tmp]                  [flip]|
+                       +-----&gt; crop --&gt; vflip -------+</pre>
+
+<ol>
+  <li>input을 split 필터를 사용하여 main과 tmp 로 나눈다.</li>
+  <li>main은 그대로 둔다,</li>
+  <li>tmp 에는 crop과 vflip을 적용한다.</li>
+  <li>그리고 2, 3 의 결과를 합치면서 overlay를 적용해 output으로 출력한다.</li>
+</ol>
+
+<p>이를 적용한 명령문은 아래와 같다.</p>
+
+<pre class="lang:default decode:true ">ffmpeg -i INPUT -vf "split [main][tmp]; [tmp] crop=iw:ih/2:0:0, vflip [flip]; [main][flip] overlay=0:H/2" OUTPUT</pre>
+
+<p>참고 :<a href="http://stackoverflow.com/questions/26336234/ffmpeg-no-such-filter-filter-empty-how-to-know-it"> http://stackoverflow.com/questions/26336234/ffmpeg-no-such-filter-filter-empty-how-to-know-it</a></p>
+
+
+		<div style='height: 20px'>
+    
+    	<div style='float:left'>
+        <a class="equalize" href="/cc-%ec%97%90%ec%84%9c-glsl-%ec%bd%94%eb%93%9c%eb%a5%bc-%ec%89%bd%ea%b2%8c-%ed%8f%ac%ed%95%a8%ed%95%b4-%eb%b3%b4%ec%9e%90/" title="Previous Post: C/C++ 에서 GLSL 코드를 쉽게 포함해 보자.">
+                <b> ← C/C++ 에서 GLSL 코드를 쉽게 포함해 보자. </b>
+        </a>
+		</div>
+    
+    <div style='float:right'>
+        <a class="equalize" href="/long-%eb%8d%b0%ec%9d%b4%ed%84%b0-%ec%a3%bc%ea%b3%a0-%eb%b0%9b%ea%b8%b0/" title="next Post: Long 데이터 주고 받기">
+                <b> Long 데이터 주고 받기 → </b>
+        </a>
+    </div>
+</div>    
+		
+      </section>
+    </div>
+    <footer>
+     <p></a></p>
+     <p>Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+
+    
+  </body>
+</html>

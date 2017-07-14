@@ -1,0 +1,273 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Android Studio 코드 네비게이션 : Burt.K</title>
+
+    <link href='https://fonts.googleapis.com/css?family=Lato:300italic,700italic,300,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/assets/css/style.css?v=">
+    <script src="/assets/js/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header >
+        <h1><a href="/">Burt.K</a></h1>
+        
+          <p>코코아를 좋아하는 프로그래머입니다 ;)</p>
+        
+
+        <ul>
+          <li><a href="/about"><strong>소개</strong></a></li>
+          <li><a href="/archive"><strong>아카이브</strong></a></li>
+        </ul>        
+
+      </header>
+      <section>
+
+
+		<h1 class="entry-title">
+		
+		    <a href="/android-studio-code-navigation/">Android Studio 코드 네비게이션</a>
+		
+		
+		</h1>
+		
+      <p>코딩을 할 때 코드 네비게이션이 쉬워야 한다. 코드 네비게이션을 위해서 마우스를 사용해야 한다면 그것처럼 작업의 흐름을 끊는 것이 따로 없다. 이 글에서는 Android Studio 의 코드 네비게이션을 정리해 보려고 한다.<!--more--></p>
+
+<p>이 글은 Mac OS X 를 기준으로 하며 Android Studio의 keymap 을 Mac OS X 10.5+ 기준으로 설명한다.</p>
+
+<p><a href="http://i1.wp.com/blog.burt.pe.kr/wp-content/uploads/2015/01/스크린샷-2015-01-17-오후-3.14.29.png"><img class="alignnone size-full wp-image-236" src="http://i1.wp.com/blog.burt.pe.kr/wp-content/uploads/2015/01/스크린샷-2015-01-17-오후-3.14.29.png?resize=665%2C396" alt="스크린샷 2015-01-17 오후 3.14.29" srcset="http://i0.wp.com/burt.pe.kr/wp-content/uploads/2015/01/스크린샷-2015-01-17-오후-3.14.29.png?w=718 718w, http://i0.wp.com/burt.pe.kr/wp-content/uploads/2015/01/스크린샷-2015-01-17-오후-3.14.29.png?resize=300%2C179 300w" sizes="(max-width: 665px) 100vw, 665px" data-recalc-dims="1" /></a></p>
+
+<p> </p>
+
+<h5 id="클래스-열기">클래스 열기</h5>
+
+<blockquote>
+  <p>Cmd + o</p>
+</blockquote>
+
+<p>MainActivity.java 파일로 이동하고 싶을 경우에 Cmd + o 를 누르고 MainA 정도까지만 치면 파일이름이 목록으로 나온다. 이름을 선택하면 해당 파일로 이동한다. 아주 빈번하게 사용되는 단축키이다.</p>
+
+<h5 id="파일-열기">파일 열기</h5>
+
+<blockquote>
+  <p>Cmd + Shift + o</p>
+</blockquote>
+
+<p>클래스 열기와 비슷하지만 리소스의  xml 파일 등을 열 때는 이 단축키를 사용해야 한다.</p>
+
+<h5 id="심볼-열기">심볼 열기</h5>
+
+<blockquote>
+  <p>Cmd + Alt + o</p>
+</blockquote>
+
+<p>심볼을 찾아서 열 때 사용한다. 변수나 메서드의 이름을 입력하면 해당 변수나 메서드가 선언된 곳이로 이동할 수 있다.</p>
+
+<h5 id="파일을-열어-특정-줄로-이동하기">파일을 열어 특정 줄로 이동하기</h5>
+
+<p>Cmd + o 를 누른 다음 나오는 다이얼로그에서 ma:23 을 치면 MainActivity.java의 23번째 줄로 이동한다. (ma 로 시작하는 클래스가 MainActivity 만 있다고 가정)</p>
+
+<h5 id="최종-편집-위치로-이동하기">최종 편집 위치로 이동하기</h5>
+
+<blockquote>
+  <p>Cmd + Shift + backspace</p>
+</blockquote>
+
+<p>정말 많이 사용하는 단축키! 최종 편집 위치로 이동한다. 파일 파일 내에서도 가능하다.</p>
+
+<h5 id="코드-네비게이션-히스토리-뒤로--앞으로-이동하기">코드 네비게이션 히스토리 뒤로 / 앞으로 이동하기</h5>
+
+<blockquote>
+  <p>Cmd + Alt + Left or Right</p>
+</blockquote>
+
+<p>웹브라우져의 뒤로, 앞으로 이동하기 버튼처럼 코드 네비게이션 히스토리의 앞, 뒤로 움직인다.</p>
+
+<h5 id="심볼이-사용된-곳-검색하기">심볼이 사용된 곳 검색하기</h5>
+
+<blockquote>
+  <p>Alt + F7</p>
+</blockquote>
+
+<p>Find 패널 내에서 심볼이 사용된 곳을 검색하여 보여준다.</p>
+
+<blockquote>
+  <p>Cmd + Alt + F7</p>
+</blockquote>
+
+<p>코드 편집기 내에서 심볼이 사용된 곳을 검색하여 보여준다.</p>
+
+<h5 id="심볼이-선언된-곳으로-이동하기">심볼이 선언된 곳으로 이동하기</h5>
+
+<blockquote>
+  <p>Cmd + b</p>
+</blockquote>
+
+<h5 id="심볼이-구현된-곳으로-이동하기">심볼이 구현된 곳으로 이동하기</h5>
+
+<blockquote>
+  <p>Cmd + Alt + b</p>
+</blockquote>
+
+<h5 id="타입이-선언된-곳으로-이동하기">타입이 선언된 곳으로 이동하기</h5>
+
+<blockquote>
+  <p>Cmd + Shift + b</p>
+</blockquote>
+
+<h5 id="super로-이동하기">Super로 이동하기</h5>
+
+<blockquote>
+  <p>Cmd + u</p>
+</blockquote>
+
+<p class="table-caption">
+  <p class="table-caption">
+    아래 표는 구글 문서에서 발췌 ( 원문 : <a href="https://developer.android.com/sdk/installing/studio-tips.html">https://developer.android.com/sdk/installing/studio-tips.html</a> )
+  </p>
+  
+  <p class="table-caption">
+    <strong>Table 1.</strong> Programming key commands
+  </p>
+  
+  <table>
+    <tr>
+      <th>
+        Action
+      </th>
+      
+      <th>
+        Android Studio Key Command
+      </th>
+    </tr>
+    
+    <tr>
+      <td>
+        <strong>Command look-up (autocomplete command name)</strong>
+      </td>
+      
+      <td>
+        CMD + SHIFT + A
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        Project quick fix
+      </td>
+      
+      <td>
+        ALT + ENTER
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        Reformat code
+      </td>
+      
+      <td>
+        OPTION + CMD + L (Mac)
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        Show docs for selected API
+      </td>
+      
+      <td>
+        F1 (Mac)
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        Show parameters for selected method
+      </td>
+      
+      <td>
+        CTRL + P
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        Generate method
+      </td>
+      
+      <td>
+        CMD + N (Mac)
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        Jump to source
+      </td>
+      
+      <td>
+        CMD + down-arrow (Mac)
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        Delete line
+      </td>
+      
+      <td>
+        CMD + Backspace (Mac)
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        Search by symbol name
+      </td>
+      
+      <td>
+        OPTION + CMD + O (Mac)
+      </td>
+    </tr>
+  </table>
+  
+  <p>
+    &nbsp;
+  </p>
+</p>
+
+
+		<div style='height: 20px'>
+    
+    	<div style='float:left'>
+        <a class="equalize" href="/65k-%eb%a9%94%ec%84%9c%eb%93%9c-%ec%a0%9c%ed%95%9c-%ed%95%b4%ea%b2%b0%ed%95%98%ea%b8%b0/" title="Previous Post: 65K 메서드 제한 해결하기">
+                <b> ← 65K 메서드 제한 해결하기 </b>
+        </a>
+		</div>
+    
+    <div style='float:right'>
+        <a class="equalize" href="/%ec%95%88%eb%93%9c%eb%a1%9c%ec%9d%b4%eb%93%9c-%ed%94%84%eb%9e%98%ea%b7%b8%eb%a8%bc%ed%8a%b8/" title="next Post: 안드로이드 프래그먼트">
+                <b> 안드로이드 프래그먼트 → </b>
+        </a>
+    </div>
+</div>    
+		
+      </section>
+    </div>
+    <footer>
+     <p></a></p>
+     <p>Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+
+    
+  </body>
+</html>

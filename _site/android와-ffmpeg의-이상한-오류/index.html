@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Android와 FFmpeg의 이상한 오류 : Burt.K</title>
+
+    <link href='https://fonts.googleapis.com/css?family=Lato:300italic,700italic,300,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/assets/css/style.css?v=">
+    <script src="/assets/js/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header >
+        <h1><a href="/">Burt.K</a></h1>
+        
+          <p>코코아를 좋아하는 프로그래머입니다 ;)</p>
+        
+
+        <ul>
+          <li><a href="/about"><strong>소개</strong></a></li>
+          <li><a href="/archive"><strong>아카이브</strong></a></li>
+        </ul>        
+
+      </header>
+      <section>
+
+
+		<h1 class="entry-title">
+		
+		    <a href="/android%ec%99%80-ffmpeg%ec%9d%98-%ec%9d%b4%ec%83%81%ed%95%9c-%ec%98%a4%eb%a5%98/">Android와 FFmpeg의 이상한 오류</a>
+		
+		
+		</h1>
+		
+      <p>ffmpeg을 안드로이드에 포팅해서 사용할 경우, 비디오 필터를 적용할 때(예를 들어 크롭 필터) 아래와 같은 이상한 오류가 발생할 때가 있다.</p>
+
+<pre class="lang:default decode:true ">Error while decoding stream #0:0: Invalid data found when processing input</pre>
+
+<p>이 오류로 여러 mp4 연결이나 크롭에 오류가 생겨서 몇시간을 삽질을 했다. 구글링을 해보면 해당 오류에 대한 질문이 많은데 딱히 해결책은 찾을 수 없었다. 그러다 혹시나 하는 마음에 해본 것이 해결 방법이 될 줄이야…</p>
+
+<p>해결 방법이 너무나 이상했는데 그 이유는 비디오 파일을 안드로이드의 내부 스토리지에 생성하면 위의 에러가 발생하고 외부 스토리지에 생성하면 전혀 발생하지 않았다! 너무나 황당한 해결책이다.</p>
+
+<p>외부 스토리지의 DCIM 이나 PICTURES에 동영상을 생성해서 사용하는게 안드로이드에서는 제일 안전한 방법인 것 같다.</p>
+
+<p>참고로 mp4parser 로 내장 스토리지에 비디오 파일을 생성했을 경우에도 같은 현상이 발생했으며 외부 스토리지에 생성했을 경우에 문제가 발생하지 않았다.</p>
+
+
+		<div style='height: 20px'>
+    
+    	<div style='float:left'>
+        <a class="equalize" href="/image-processing%ec%9d%84-%ec%89%bd%ea%b2%8c-%eb%b0%b0%ec%9a%b0%ec%9e%90/" title="Previous Post: Image Processing을 쉽게 배우자.">
+                <b> ← Image Processing을 쉽게 배우자. </b>
+        </a>
+		</div>
+    
+    <div style='float:right'>
+        <a class="equalize" href="/hello-percentlayout/" title="next Post: Hello, PercentLayout!">
+                <b> Hello, PercentLayout! → </b>
+        </a>
+    </div>
+</div>    
+		
+      </section>
+    </div>
+    <footer>
+     <p></a></p>
+     <p>Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+
+    
+  </body>
+</html>

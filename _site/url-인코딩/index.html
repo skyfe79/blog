@@ -1,0 +1,83 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>URL 인코딩 : Burt.K</title>
+
+    <link href='https://fonts.googleapis.com/css?family=Lato:300italic,700italic,300,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/assets/css/style.css?v=">
+    <script src="/assets/js/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header >
+        <h1><a href="/">Burt.K</a></h1>
+        
+          <p>코코아를 좋아하는 프로그래머입니다 ;)</p>
+        
+
+        <ul>
+          <li><a href="/about"><strong>소개</strong></a></li>
+          <li><a href="/archive"><strong>아카이브</strong></a></li>
+        </ul>        
+
+      </header>
+      <section>
+
+
+		<h1 class="entry-title">
+		
+		    <a href="/url-%ec%9d%b8%ec%bd%94%eb%94%a9/">URL 인코딩</a>
+		
+		
+		</h1>
+		
+      <p>URL을 인코딩할 때 아래와 같이 URLEncoder를 많이 사용한다. 그러나 귀차니즘으로 전체 URL 을 한번에 인코딩할 때 아래와 같이 http:// 등이 인코딩되어 원하는 결과가 아닐 경우가 있다.<!--more--></p>
+
+<pre class="lang:default decode:true  ">$ kotlinc
+&gt;&gt;&gt; import java.net.URLEncoder
+&gt;&gt;&gt; URLEncoder.encode("http://www.google.com", "UTF-8")
+http%3A%2F%2Fwww.google.com</pre>
+
+<p>이럴 경우에는 Android 의 Uri 클래스를 사용하면 원하는 결과를 얻을 수 있다. Uri의 encode 메서드를 사용할 때, 인코딩에서 제외할 문자를 정해줄 수 있기 때문이다.</p>
+
+<pre class="lang:default decode:true  ">import android.net.Uri;
+private static final String ALLOWED_URI_CHARS = "@#&amp;=*+-_.,:!?()/~'%";
+String encodedUri = Uri.("http://www.google.com", ALLOWED_URI_CHARS);
+http://www.google.com</pre>
+
+<p> </p>
+
+
+		<div style='height: 20px'>
+    
+    	<div style='float:left'>
+        <a class="equalize" href="/double-%ed%98%95-%eb%8d%b0%ec%9d%b4%ed%84%b0-%ec%a3%bc%ea%b3%a0-%eb%b0%9b%ea%b8%b0/" title="Previous Post: Double 형 데이터 주고 받기">
+                <b> ← Double 형 데이터 주고 받기 </b>
+        </a>
+		</div>
+    
+    <div style='float:right'>
+        <a class="equalize" href="/float-%eb%8d%b0%ec%9d%b4%ed%84%b0-%ec%a3%bc%ea%b3%a0-%eb%b0%9b%ea%b8%b0/" title="next Post: Float 데이터 주고 받기">
+                <b> Float 데이터 주고 받기 → </b>
+        </a>
+    </div>
+</div>    
+		
+      </section>
+    </div>
+    <footer>
+     <p></a></p>
+     <p>Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+
+    
+  </body>
+</html>

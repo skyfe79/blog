@@ -1,0 +1,163 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>JNI 문자열 &#8211; 3/3 : Burt.K</title>
+
+    <link href='https://fonts.googleapis.com/css?family=Lato:300italic,700italic,300,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/assets/css/style.css?v=">
+    <script src="/assets/js/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header >
+        <h1><a href="/">Burt.K</a></h1>
+        
+          <p>코코아를 좋아하는 프로그래머입니다 ;)</p>
+        
+
+        <ul>
+          <li><a href="/about"><strong>소개</strong></a></li>
+          <li><a href="/archive"><strong>아카이브</strong></a></li>
+        </ul>        
+
+      </header>
+      <section>
+
+
+		<h1 class="entry-title">
+		
+		    <a href="/jni-%eb%ac%b8%ec%9e%90%ec%97%b4-33/">JNI 문자열 &#8211; 3/3</a>
+		
+		
+		</h1>
+		
+      <p class="p1">
+  <span class="s1">자바 문자열을 받아서 해당 문자열에 다른 문자열을 붙여서 반환하는 예제를 작성해 보자.</span><!--more-->
+</p>
+
+<pre class="lang:default decode:true ">$ vi Greeting.cpp</pre>
+
+<pre class="lang:default decode:true ">#include &lt;jni.h&gt;
+#include &lt;string&gt;
+
+jstring greeting
+(
+    JNIEnv      *env,
+    jobject     thiz,
+    jstring     name
+)
+{
+    //convert java-string to c-string
+    const char *cName = env-&gt;GetStringUTFChars(name, nullptr);
+    
+    std::string msg = "Hello, " + std::string(cName);
+    
+    env-&gt;ReleaseStringUTFChars(name, cName);
+    
+    //convert c-string to java-string
+    jstring ret = env-&gt;NewStringUTF(msg.c_str());
+    return ret;
+}
+
+JNIEXPORT jint JNICALL JNI_OnLoad
+(
+    JavaVM      *vm,
+    void        *reserved
+)
+{
+    JNIEnv      *env;
+    if(vm-&gt;GetEnv(reinterpret_cast&lt;void**&gt;(&amp;env), JNI_VERSION_1_6)) {
+        return -1;
+    }
+    
+    JNINativeMethod nm {
+        const_cast&lt;char*&gt;("greeting"),
+        const_cast&lt;char*&gt;("(Ljava/lang/String;)Ljava/lang/String;"),
+        reinterpret_cast&lt;void*&gt;(greeting)
+    };
+    
+    jclass cls = env-&gt;FindClass("Client");
+    env-&gt;RegisterNatives(cls, &amp;nm, 1);
+    return JNI_VERSION_1_6;
+}</pre>
+
+<p class="p1">
+  <span class="s1">위 코드는 이름을 담은 자바 문자열 앞에 Hello 문자열을 붙이는 예제다. 문자열 연산을 쉽게 하기 위해서 STL string 클래스를 사용했다. 코드를 컴파일하고 라이브러리로 만든다.</span>
+</p>
+
+<pre class="lang:default decode:true ">$ g++ "-I/System/Library/Java/JavaVirtualMachines/Current/" -std=c++11 -c Greeting.cpp
+$ g++ -dynamiclib -o libgreeting.jnilib greeting.o</pre>
+
+<p class="p1">
+  <span class="s1">이제 라이브러리를 사용하는 자바 코드를 작성한다.</span>
+</p>
+
+<pre class="lang:default decode:true ">$ vi Client.java</pre>
+
+<pre class="lang:default decode:true ">public class Client {
+    
+    public native String greeting(String name);
+    
+    public static void main(String[] args) {
+        
+        
+        Client client = new Client();
+        
+
+        System.out.println(client.greeting("Robin"));
+        System.out.println(client.greeting("Batman"));
+        System.out.println(client.greeting("토르"));
+        
+    }
+    
+    static {
+        System.loadLibrary("greeting");
+    }
+}</pre>
+
+<p class="p1">
+  <span class="s1">자바 코드를 컴파일하고 실행한다.</span>
+</p>
+
+<pre class="lang:default decode:true ">$ javac Client.java
+$ java Client
+Hello, Robin
+Hello, Batman
+Hello, 토르</pre>
+
+<p> </p>
+
+
+		<div style='height: 20px'>
+    
+    	<div style='float:left'>
+        <a class="equalize" href="/jni-%eb%ac%b8%ec%9e%90%ec%97%b4-23/" title="Previous Post: JNI 문자열 &#8211; 2/3">
+                <b> ← JNI 문자열 &#8211; 2/3 </b>
+        </a>
+		</div>
+    
+    <div style='float:right'>
+        <a class="equalize" href="/stdvector-%eb%a5%bc-c%ec%96%b8%ec%96%b4-%eb%b0%b0%ec%97%b4%eb%a1%9c-%eb%b3%80%ea%b2%bd%ed%95%98%ea%b8%b0/" title="next Post: std::vector 를 C언어 배열로 변경하기">
+                <b> std::vector 를 C언어 배열로 변경하기 → </b>
+        </a>
+    </div>
+</div>    
+		
+      </section>
+    </div>
+    <footer>
+     <p></a></p>
+     <p>Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+
+    
+  </body>
+</html>

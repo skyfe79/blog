@@ -1,0 +1,88 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Macbook Air(2013 mid)에 우분투 설치하기 : Burt.K</title>
+
+    <link href='https://fonts.googleapis.com/css?family=Lato:300italic,700italic,300,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/assets/css/style.css?v=">
+    <script src="/assets/js/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header >
+        <h1><a href="/">Burt.K</a></h1>
+        
+          <p>코코아를 좋아하는 프로그래머입니다 ;)</p>
+        
+
+        <ul>
+          <li><a href="/about"><strong>소개</strong></a></li>
+          <li><a href="/archive"><strong>아카이브</strong></a></li>
+        </ul>        
+
+      </header>
+      <section>
+
+
+		<h1 class="entry-title">
+		
+		    <a href="/macbook-air2013-mid%ec%97%90-%ec%9a%b0%eb%b6%84%ed%88%ac-%ec%84%a4%ec%b9%98%ed%95%98%ea%b8%b0/">Macbook Air(2013 mid)에 우분투 설치하기</a>
+		
+		
+		</h1>
+		
+      <p>리눅스 머신을 갖기 위해 맥북에어 2013 mid 에 우분투를 설치했다. 설치하다 만난 문제점과 해결 방법을 정리한다.</p>
+
+<ul>
+  <li>Prepare to install 에서 멈추는 현상
+    <ul>
+      <li>우분투를 설치할 때 14.04 LTS 버전을 바로 설치하면 설치 준비 중 화면에서 무한 대기를 한다.</li>
+      <li>우분투 12.04 버전을 설치한 다음 14.04 로 업그레이드 한다. 이 방법이 가장 확실하다</li>
+    </ul>
+  </li>
+  <li>틸드(`) 키가 &lt; 키로 맵핑되는 버그
+    <ul>
+      <li>
+        <p>터미널을 열고 아래와 같이 입력한 후 실행한다. &lt;pre class="lang:default decode:true "&gt;&gt;&gt; sudo su -
+&gt;&gt; echo 0 &gt; /sys/module/hid_apple/parameters/iso_layout&lt;/pre&gt;</p>
+
+        <p> &lt;/li&gt; &lt;/ul&gt; &lt;/li&gt; &lt;/ul&gt;</p>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+
+		<div style='height: 20px'>
+    
+    	<div style='float:left'>
+        <a class="equalize" href="/imagemagick/" title="Previous Post: ImageMagick">
+                <b> ← ImageMagick </b>
+        </a>
+		</div>
+    
+    <div style='float:right'>
+        <a class="equalize" href="/onedrive-%eb%a7%a5-%ec%82%ac%ec%9a%a9%ec%9e%90%eb%a5%bc-%ec%9c%84%ed%95%9c-%ed%95%84%ec%88%98-%ec%84%9c%eb%b9%84%ec%8a%a4/" title="next Post: OneDrive &#8211; 맥 사용자를 위한 필수 서비스!">
+                <b> OneDrive &#8211; 맥 사용자를 위한 필수 서비스! → </b>
+        </a>
+    </div>
+</div>    
+		
+      </section>
+    </div>
+    <footer>
+     <p></a></p>
+     <p>Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+
+    
+  </body>
+</html>

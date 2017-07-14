@@ -1,0 +1,88 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>TypedArray의 getDrawable()이 null을 반환한다면? : Burt.K</title>
+
+    <link href='https://fonts.googleapis.com/css?family=Lato:300italic,700italic,300,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/assets/css/style.css?v=">
+    <script src="/assets/js/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header >
+        <h1><a href="/">Burt.K</a></h1>
+        
+          <p>코코아를 좋아하는 프로그래머입니다 ;)</p>
+        
+
+        <ul>
+          <li><a href="/about"><strong>소개</strong></a></li>
+          <li><a href="/archive"><strong>아카이브</strong></a></li>
+        </ul>        
+
+      </header>
+      <section>
+
+
+		<h1 class="entry-title">
+		
+		    <a href="/typedarray%ec%9d%98-getdrawable%ec%9d%b4-null%ec%9d%84-%eb%b0%98%ed%99%98%ed%95%9c%eb%8b%a4%eb%a9%b4/">TypedArray의 getDrawable()이 null을 반환한다면?</a>
+		
+		
+		</h1>
+		
+      <pre class="lang:xhtml decode:true">&lt;declare-styleable name="WatermarkButton"&gt;
+    &lt;attr name="watermarkImage" format="reference" /&gt;
+&lt;/declare-styleable&gt;</pre>
+
+<p>위처럼 속성을 선언하고 아래 코드처럼 접근할 때, null을 반환한다면</p>
+
+<pre class="lang:java mark:1 decode:true">TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.WatermarkButton);
+watermarkDrawable = typedArray.getDrawable(R.styleable.WatermarkButton_watermarkImage);
+typedArray.recycle();
+</pre>
+
+<p>해당 커스텀뷰를 선언한 xml로 이동하여 xml 네임스페이스를 제대로 적었는지 확인한다.</p>
+
+<pre class="lang:default decode:true ">xmlns:watermark="http://schemas.android.com/apk/res-auto"</pre>
+
+<p>이렇게 적어야 하는데 가끔 인텔리센스에 의해서</p>
+
+<pre class="lang:default decode:true ">xmlns:watermark="http://schemas.android.com/tools"</pre>
+
+<p>로 쓰여질 경우가 있다. 길고긴 삽질;</p>
+
+
+		<div style='height: 20px'>
+    
+    	<div style='float:left'>
+        <a class="equalize" href="/hello-percentlayout/" title="Previous Post: Hello, PercentLayout!">
+                <b> ← Hello, PercentLayout! </b>
+        </a>
+		</div>
+    
+    <div style='float:right'>
+        <a class="equalize" href="/%eb%82%98%ec%9d%b4%ec%8a%a4/" title="next Post: 나이스!">
+                <b> 나이스! → </b>
+        </a>
+    </div>
+</div>    
+		
+      </section>
+    </div>
+    <footer>
+     <p></a></p>
+     <p>Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+
+    
+  </body>
+</html>

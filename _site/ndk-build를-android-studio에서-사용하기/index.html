@@ -1,0 +1,124 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>ndk-build를 Android Studio에서 사용하기 : Burt.K</title>
+
+    <link href='https://fonts.googleapis.com/css?family=Lato:300italic,700italic,300,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/assets/css/style.css?v=">
+    <script src="/assets/js/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header >
+        <h1><a href="/">Burt.K</a></h1>
+        
+          <p>코코아를 좋아하는 프로그래머입니다 ;)</p>
+        
+
+        <ul>
+          <li><a href="/about"><strong>소개</strong></a></li>
+          <li><a href="/archive"><strong>아카이브</strong></a></li>
+        </ul>        
+
+      </header>
+      <section>
+
+
+		<h1 class="entry-title">
+		
+		    <a href="/ndk-build%eb%a5%bc-android-studio%ec%97%90%ec%84%9c-%ec%82%ac%ec%9a%a9%ed%95%98%ea%b8%b0/">ndk-build를 Android Studio에서 사용하기</a>
+		
+		
+		</h1>
+		
+      <p><a href="http://blog.burt.pe.kr/?p=142">javah를 Android Studio에서 사용하기</a> 를 참고해서 같은 방식으로 ndk-build를 외부 도구로 등록해서 사용하면 된다.<!--more--></p>
+
+<p><a href="http://i1.wp.com/blog.burt.pe.kr/wp-content/uploads/2014/11/스크린샷-2014-11-13-오후-5.52.13.png"><img class="size-full wp-image-153 aligncenter" src="http://i1.wp.com/blog.burt.pe.kr/wp-content/uploads/2014/11/스크린샷-2014-11-13-오후-5.52.13.png?resize=665%2C476" alt="" srcset="http://i0.wp.com/burt.pe.kr/wp-content/uploads/2014/11/스크린샷-2014-11-13-오후-5.52.13.png?w=673 673w, http://i0.wp.com/burt.pe.kr/wp-content/uploads/2014/11/스크린샷-2014-11-13-오후-5.52.13.png?resize=300%2C214 300w" sizes="(max-width: 665px) 100vw, 665px" data-recalc-dims="1" /></a></p>
+
+<pre class="lang:default decode:true ">program:
+ndk-build
+
+Working directory:
+$SourcepathEntry$/../jni</pre>
+
+<p>주의할 점은 ndk-build에서 출력 디렉토리를 설정할 수가 없기 때문에 결과 파일이 src-&gt;main-&gt;libs 에 생긴다는 점이다. 만들어지 so 파일을 apk 에 담으려면  gradle 파일을 설정하면된다. 아래처럼 적어준다.</p>
+
+<pre class="lang:default decode:true ">android {
+    ...
+    sourceSets.main {
+        jniLibs.srcDir 'src/main/libs'
+        jni.srcDirs = [] //important!!!! disable automatic ndk-build call
+    }
+    ...
+}</pre>
+
+<p>전체 gradle 파일 내용은 아래와 같다.</p>
+
+<pre class="lang:default decode:true  ">apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 21
+    buildToolsVersion "20.0.0"
+
+    defaultConfig {
+        applicationId "kr.pe.burt.android.hellondk"
+        minSdkVersion 14
+        targetSdkVersion 21
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            runProguard false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    sourceSets.main {
+        //
+        jniLibs.srcDir 'src/main/libs'
+        //jni.srcDirs = [] //important!!!! disable automatic ndk-build call
+    }
+
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+}</pre>
+
+<p> </p>
+
+
+		<div style='height: 20px'>
+    
+    	<div style='float:left'>
+        <a class="equalize" href="/javah%eb%a5%bc-androidstudio%ec%97%90%ec%84%9c-%ec%82%ac%ec%9a%a9%ed%95%98%ea%b8%b0/" title="Previous Post: Javah를 AndroidStudio에서 사용하기">
+                <b> ← Javah를 AndroidStudio에서 사용하기 </b>
+        </a>
+		</div>
+    
+    <div style='float:right'>
+        <a class="equalize" href="/xcode-%ec%97%90%ec%84%9c-glfw-%ec%82%ac%ec%9a%a9%ed%95%98%ea%b8%b0/" title="next Post: XCode 에서 GLFW 사용하기">
+                <b> XCode 에서 GLFW 사용하기 → </b>
+        </a>
+    </div>
+</div>    
+		
+      </section>
+    </div>
+    <footer>
+     <p></a></p>
+     <p>Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+
+    
+  </body>
+</html>

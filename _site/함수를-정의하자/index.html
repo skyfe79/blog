@@ -1,0 +1,188 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>함수를 정의하자. : Burt.K</title>
+
+    <link href='https://fonts.googleapis.com/css?family=Lato:300italic,700italic,300,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/assets/css/style.css?v=">
+    <script src="/assets/js/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header >
+        <h1><a href="/">Burt.K</a></h1>
+        
+          <p>코코아를 좋아하는 프로그래머입니다 ;)</p>
+        
+
+        <ul>
+          <li><a href="/about"><strong>소개</strong></a></li>
+          <li><a href="/archive"><strong>아카이브</strong></a></li>
+        </ul>        
+
+      </header>
+      <section>
+
+
+		<h1 class="entry-title">
+		
+		    <a href="/%ed%95%a8%ec%88%98%eb%a5%bc-%ec%a0%95%ec%9d%98%ed%95%98%ec%9e%90/">함수를 정의하자.</a>
+		
+		
+		</h1>
+		
+      <h2 id="toc_0">수학적 함수표기와 Haskell 함수표기의 차이점</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Mathematics</th>
+      <th>Haskell</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>f(x)</td>
+      <td>f x</td>
+    </tr>
+    <tr>
+      <td>f(x,y)</td>
+      <td>f x y</td>
+    </tr>
+    <tr>
+      <td>f(g(x))</td>
+      <td>f (g x)</td>
+    </tr>
+    <tr>
+      <td>f(x,g(y))</td>
+      <td>f x (g y)</td>
+    </tr>
+    <tr>
+      <td>f(x)g(y)</td>
+      <td>f x * g y</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="toc_2">조건 표현식으로 함수 정의하기</h2>
+
+<div>
+  <pre class="lang:haskell decode:true ">abs :: Int -&gt; Int
+abs n = if n &gt;= 0 then n else -n</pre>
+</div>
+
+<h3 id="toc_3">조건 표현식 중첩하기</h3>
+
+<div>
+  <pre class="lang:haskell decode:true">signum :: Int -&gt; Int
+signum n = if n &lt; 0 then -1 else
+            if n == 0 then 0 else 1</pre>
+</div>
+
+<p><code class="highlighter-rouge">주의</code> Haskell에서 <code class="highlighter-rouge">if</code> 조건 표현식은 항상 <code class="highlighter-rouge">else</code> 문이 있어야 한다.</p>
+
+<h2 id="toc_4">Guard를 사용하여 함수 정의하기</h2>
+
+<div>
+  <pre class="lang:haskell decode:true">abs n | n &gt;= 0    = n
+      | otherwise = -n</pre>
+</div>
+
+<div>
+  <pre class="lang:haskell decode:true">signum n | n &lt; 0     = -1
+         | n == 0    = 0
+         | otherwise = 1</pre>
+</div>
+
+<p>아주 깔끔하다.</p>
+
+<h2 id="toc_5">패턴매칭을 사용하여 함수 정의하기</h2>
+
+<div>
+  <pre class="lang:haskell decode:true">not :: Bool -&gt; Bool
+not False = True
+not True  = False</pre>
+</div>
+
+<div>
+  <pre class="lang:haskell decode:true">(&amp;&amp;) :: Bool -&gt; Bool -&gt; Bool
+True  &amp;&amp; True       = True
+True  &amp;&amp; False      = False
+False &amp;&amp; True       = False
+False &amp;&amp; False      = False</pre>
+</div>
+
+<p>좀 더 간단하게</p>
+
+<div>
+  <pre class="lang:haskell decode:true">(&amp;&amp;) :: Bool -&gt; Bool -&gt; Bool
+True &amp;&amp; True = True
+_    &amp;&amp; _    = False</pre>
+</div>
+
+<p>좀 더 성능 좋게, 첫번째 인자를 평가해서 False이면 두 번째 인자를 평가하지 않기 때문이다.</p>
+
+<div>
+  <pre class="lang:haskell decode:true">(&amp;&amp;) :: Bool -&gt; Bool -&gt; Bool
+True  &amp;&amp; b = b
+False &amp;&amp; _ = False</pre>
+</div>
+
+<h2 id="toc_6">함수 정의에 나타나는 리스트 패턴</h2>
+
+<ul>
+  <li><code class="highlighter-rouge">:</code> 은 cons라 부른다.</li>
+  <li><code class="highlighter-rouge">[1,2,3,4]</code> 는 <code class="highlighter-rouge">1:(2:(3:(4:[])))</code> 를 의미한다.</li>
+  <li><code class="highlighter-rouge">:</code>는 존재하는 리스트의 앞쪽에 요소를 삽입하는 연산자이다.</li>
+  <li>xs 처럼 s 가 붙은 표기를 리스트로 보는 관례가 있다.</li>
+  <li>(x:xs) 는 첫 요소가 x이고 나머지가 xs인 리스트이다.</li>
+</ul>
+
+<div>
+  <pre class="lang:haskell decode:true">head :: [a] -&gt; a
+head (x:_) = x
+
+ * 리스트를 받아 첫 요소를 반환하는 함수</pre>
+</div>
+
+<div>
+  <pre class="lang:haskell decode:true  ">tail :: [a] -&gt; a
+tail (_::xs) = xs
+
+ * 리스트를 받아 첫요소를 제외한 나머지 목록을 반환하는 함수</pre>
+</div>
+
+
+		<div style='height: 20px'>
+    
+    	<div style='float:left'>
+        <a class="equalize" href="/%ed%83%80%ec%9e%85%ec%9d%84-%ec%9d%bd%ec%9e%90/" title="Previous Post: 타입을 읽자.">
+                <b> ← 타입을 읽자. </b>
+        </a>
+		</div>
+    
+    <div style='float:right'>
+        <a class="equalize" href="/%eb%8c%80%ec%88%98%ec%a0%81-%eb%8d%b0%ec%9d%b4%ed%84%b0-%ed%83%80%ec%9e%85%ea%b3%bc-enum/" title="next Post: 대수적 데이터 타입과 Enum">
+                <b> 대수적 데이터 타입과 Enum → </b>
+        </a>
+    </div>
+</div>    
+		
+      </section>
+    </div>
+    <footer>
+     <p></a></p>
+     <p>Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+
+    
+  </body>
+</html>

@@ -1,0 +1,157 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Double 형 데이터 주고 받기 : Burt.K</title>
+
+    <link href='https://fonts.googleapis.com/css?family=Lato:300italic,700italic,300,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/assets/css/style.css?v=">
+    <script src="/assets/js/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header >
+        <h1><a href="/">Burt.K</a></h1>
+        
+          <p>코코아를 좋아하는 프로그래머입니다 ;)</p>
+        
+
+        <ul>
+          <li><a href="/about"><strong>소개</strong></a></li>
+          <li><a href="/archive"><strong>아카이브</strong></a></li>
+        </ul>        
+
+      </header>
+      <section>
+
+
+		<h1 class="entry-title">
+		
+		    <a href="/double-%ed%98%95-%eb%8d%b0%ec%9d%b4%ed%84%b0-%ec%a3%bc%ea%b3%a0-%eb%b0%9b%ea%b8%b0/">Double 형 데이터 주고 받기</a>
+		
+		
+		</h1>
+		
+      <p class="p1">
+  <span class="s1">Double 형 데이터를 주고 받는 예제를 작성해 보자. double 형 수치값을 전달하면 해당 수치의 제곱근값을 반환하는 함수를 작성한다.</span><!--more-->
+</p>
+
+<pre class="lang:default decode:true ">#include &lt;jni.h&gt;
+#include &lt;cmath&gt;
+
+jdouble square
+(
+    JNIEnv      *env,
+    jobject     thiz,
+    jdouble     value
+)
+{
+    return std::sqrt(value);
+}
+
+JNIEXPORT jint JNICALL JNI_OnLoad
+(
+    JavaVM      *vm,
+    void        *reserved
+)
+{
+    JNIEnv  *env;
+    if(vm-&gt;GetEnv(reinterpret_cast&lt;void**&gt;(&amp;env), JNI_VERSION_1_6)) {
+        return -1;
+    }
+
+    //c++11
+    //Brace-Initialization
+    JNINativeMethod nm {
+                const_cast&lt;char *&gt;("square"),
+                const_cast&lt;char *&gt;("(D)D"),
+                reinterpret_cast&lt;void*&gt;(square) };
+
+    jclass cls = env-&gt;FindClass("Client");
+    env-&gt;RegisterNatives(cls, &amp;nm, 1);
+    return JNI_VERSION_1_6;
+}</pre>
+
+<p class="p1">
+  <span class="s1">이번 예제에서는 JNINativeMethod 구조체 초기화를 C++11 에서 새롭게 소개된 초기화 방법을 사용했다. 자세한 내용은 C++11의 문법책을 참고하길 바란다.</span>
+</p>
+
+<p class="p1">
+  <span class="s1">이제 코드를 컴파일해서 네이티브 라이브러리를 만들어보자.</span>
+</p>
+
+<pre class="lang:default decode:true ">$ g++ "-I/System/Library/Frameworks/JavaVM.framework/Versions/Current/Headers/" -std=c++11 -c PassAndReturnDouble.cpp
+$ g++ -dynamiclib -o libpardouble.jnilib passandreturndouble.o</pre>
+
+<p class="p1">
+  <span class="s1">c++11 기능을 사용하려면 -std 옵션에 c++11 을 주어야 한다.</span>
+</p>
+
+<p class="p1">
+  <span class="s1">이제 네이티브 라이브러리를 사용하는 자바 파일을 작성한다.</span>
+</p>
+
+<pre class="lang:default decode:true ">$ vi Client.java</pre>
+
+<pre class="lang:default decode:true">public class Client {
+
+        private native double square(double value);
+
+        public static void main(String[] args) {
+
+                Client client = new Client();
+
+                System.out.println("The square of 2 is " + client.square(2));
+                System.out.println("The square of 9 is " + client.square(9));
+        }
+
+        static {
+                System.loadLibrary("pardouble");
+        }
+}
+</pre>
+
+<p class="p1">
+  <span class="s1">자바 코드를 컴파일하고 실행해 보자.</span>
+</p>
+
+<pre class="lang:default decode:true ">$ javac Client.java
+$ java Client
+The square of 2 is 1.4142135623730951
+The square of 9 is 3.0</pre>
+
+<p> </p>
+
+
+		<div style='height: 20px'>
+    
+    	<div style='float:left'>
+        <a class="equalize" href="/boolean-%ed%98%95-%eb%8d%b0%ec%9d%b4%ed%84%b0-%ea%b0%92-%ec%a3%bc%ea%b3%a0-%eb%b0%9b%ea%b8%b0/" title="Previous Post: Boolean 형 데이터 값 주고 받기">
+                <b> ← Boolean 형 데이터 값 주고 받기 </b>
+        </a>
+		</div>
+    
+    <div style='float:right'>
+        <a class="equalize" href="/url-%ec%9d%b8%ec%bd%94%eb%94%a9/" title="next Post: URL 인코딩">
+                <b> URL 인코딩 → </b>
+        </a>
+    </div>
+</div>    
+		
+      </section>
+    </div>
+    <footer>
+     <p></a></p>
+     <p>Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+
+    
+  </body>
+</html>

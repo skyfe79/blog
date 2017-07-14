@@ -1,0 +1,111 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>안드로이드 커스텀뷰 프로그래밍 &#8211; 커스텀뷰의 크기 정하기 : Burt.K</title>
+
+    <link href='https://fonts.googleapis.com/css?family=Lato:300italic,700italic,300,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/assets/css/style.css?v=">
+    <script src="/assets/js/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header >
+        <h1><a href="/">Burt.K</a></h1>
+        
+          <p>코코아를 좋아하는 프로그래머입니다 ;)</p>
+        
+
+        <ul>
+          <li><a href="/about"><strong>소개</strong></a></li>
+          <li><a href="/archive"><strong>아카이브</strong></a></li>
+        </ul>        
+
+      </header>
+      <section>
+
+
+		<h1 class="entry-title">
+		
+		    <a href="/%ec%95%88%eb%93%9c%eb%a1%9c%ec%9d%b4%eb%93%9c-%ec%bb%a4%ec%8a%a4%ed%85%80%eb%b7%b0-%ed%94%84%eb%a1%9c%ea%b7%b8%eb%9e%98%eb%b0%8d-%ec%bb%a4%ec%8a%a4%ed%85%80%eb%b7%b0%ec%9d%98%ed%81%ac%ea%b8%b0/">안드로이드 커스텀뷰 프로그래밍 &#8211; 커스텀뷰의 크기 정하기</a>
+		
+		
+		</h1>
+		
+      <p class="comments-section">
+  뷰를 생각해 봅시다. 뷰는 하나의 사각형으로 화면에 무엇인가를 그리는 객체입니다. 그리고 사용자로부터 터치 이벤트를 받는 인터렉션의 주체이기도 합니다.
+</p>
+
+<p class="comments-section">
+  뷰를 생각할 때 가장 중요한 것은 하나의 사각형입니다. 우리가 뷰에 무엇을 그려야 하거나 어떤 뷰에 인터렉션이 발생했는지 알기 위해서는 뷰를 구분지을 영역이 필요하기 때문입니다.
+</p>
+
+<p class="comments-section">
+  커스텀뷰를 만들 때, 가장 먼저 해야할 일도 뷰의 사각형 영역을 정하는 것입니다. 보통 뷰의 기하 혹은 좌표계를 정의하는 단계라고 생각하면 됩니다. 절대좌표계를 사용하는 시스템에서는 이 과정이 무척 쉽습니다. 원하는 대로 내가 어디서부터 어디까지 사용하겠다고 정하기만 하면 되니까요.
+</p>
+
+<p class="comments-section">
+  안드로이드 뷰에서는 어떻게 사각형 영역을 설정할까요?<!--more-->
+</p>
+
+<h3 id="기억해야할-두-단계">기억해야할 두 단계</h3>
+
+<p class="comments-section">
+  안드로이드 뷰는 뷰의 영역을 설정하고 사용하는 두 단계가 있습니다. 하나는 뷰의 좌표계를 설정하는 단계이고 나머지 하나는 설정된 뷰의 좌표계를 사용하는 단계입니다.
+</p>
+
+<p class="comments-section">
+  뷰의 좌표계를 설정하는 단계는 measure단계입니다. 측정단계라고 할 수 있는데 무엇인가를 측정해서 뷰의 좌표계를 정하는 것입니다. 무엇을 측정하는 것일까요?
+</p>
+
+<p class="comments-section">
+  뷰의 좌표계를 사용하는 단계는 layout단계 또는 draw단계입니다. 이 단계에서 가장 중요하게 기억할 점은 이 단계에서는 이미 뷰의 좌표계가 정의되어 있다는 것입니다. 마치 절대 좌표계에서 코드를 작성하듯 이 단계에서는 그렇게 할 수 가 있습니다.
+</p>
+
+<h3 id="측정">측정</h3>
+
+<p class="comments-section">
+  안드로이드 뷰의 측정 단계를 이해하기 위해서는 안드로이드 뷰가 어떻게 존재하는지 알아야 합니다. 안드로이드 뷰는 그 홀로 존재할 수 없습니다. 반드시 뷰그룹(ViewGroup)에 담겨야 합니다. 그래서 측정이라는 단계가 필요합니다. 뷰가 자기 자신의 크기를 결정하기 위해서 자기 자신을 담고 있는 뷰그룹의 크기를 알아야 하고 뷰그릅에서 사용할 수 있는 영역의 크기도 알아야 할 것입니다. 그리고 자기가 사용할 영역의 크기도 알아야 하겠지요. 즉, 측정단계에서는 자신의 주변 환경과 자기 자신의 정보를 측정하는 것입니다. 측정한 내용을 바탕으로 자신의 크기를 결정하는 것입니다.
+</p>
+
+<p class="comments-section">
+  이제 코드를 작성해 가며 좀 더 실질적으로 살펴 보도록 하겠습니다. ...
+</p>
+
+<p class="comments-section">
+  <a href="https://skyfe79.gitbooks.io/android-custom-view-programming/content/chapter01.html">Gitbook에서 계속읽을 수 있습니다. 링크를 클릭하면 Gitbook으로 이동합니다 🙂</a>
+</p>
+
+
+		<div style='height: 20px'>
+    
+    	<div style='float:left'>
+        <a class="equalize" href="/ndk-%eb%9d%bc%ec%9d%b4%eb%b8%8c%eb%9f%ac%eb%a6%ac-%eb%b0%b0%ed%8f%ac-%ec%8b%9c-java-lang-unsatisfiedlinkerror-%ec%97%90-%eb%8c%80%ed%95%b4%ec%84%9c/" title="Previous Post: NDK 라이브러리 배포 시 java.lang.UnsatisfiedLinkError 에 대해서.">
+                <b> ← NDK 라이브러리 배포 시 java.lang.UnsatisfiedLinkError 에 대해서. </b>
+        </a>
+		</div>
+    
+    <div style='float:right'>
+        <a class="equalize" href="/intel-multi-os-engine%ec%99%80-kotlin/" title="next Post: Intel Multi OS Engine와 Kotlin">
+                <b> Intel Multi OS Engine와 Kotlin → </b>
+        </a>
+    </div>
+</div>    
+		
+      </section>
+    </div>
+    <footer>
+     <p></a></p>
+     <p>Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+
+    
+  </body>
+</html>

@@ -1,0 +1,30 @@
+---
+id: 550
+title: Android와 FFmpeg의 이상한 오류
+date: 2015-08-20T16:54:12+00:00
+author: Burt
+layout: post
+guid: http://blog.burt.pe.kr/?p=550
+permalink: '/android%ec%99%80-ffmpeg%ec%9d%98-%ec%9d%b4%ec%83%81%ed%95%9c-%ec%98%a4%eb%a5%98/'
+dsq_thread_id:
+  - "4049592758"
+categories:
+  - Android
+  - FFmpeg
+  - 프로젝트이야기
+tags:
+  - android
+  - 'Error while decoding stream #0:0: Invalid data found when processing input'
+  - ffmpeg
+---
+ffmpeg을 안드로이드에 포팅해서 사용할 경우, 비디오 필터를 적용할 때(예를 들어 크롭 필터) 아래와 같은 이상한 오류가 발생할 때가 있다.
+
+<pre class="lang:default decode:true ">Error while decoding stream #0:0: Invalid data found when processing input</pre>
+
+이 오류로 여러 mp4 연결이나 크롭에 오류가 생겨서 몇시간을 삽질을 했다. 구글링을 해보면 해당 오류에 대한 질문이 많은데 딱히 해결책은 찾을 수 없었다. 그러다 혹시나 하는 마음에 해본 것이 해결 방법이 될 줄이야&#8230;
+
+해결 방법이 너무나 이상했는데 그 이유는 비디오 파일을 안드로이드의 내부 스토리지에 생성하면 위의 에러가 발생하고 외부 스토리지에 생성하면 전혀 발생하지 않았다! 너무나 황당한 해결책이다.
+
+외부 스토리지의 DCIM 이나 PICTURES에 동영상을 생성해서 사용하는게 안드로이드에서는 제일 안전한 방법인 것 같다.
+
+참고로 mp4parser 로 내장 스토리지에 비디오 파일을 생성했을 경우에도 같은 현상이 발생했으며 외부 스토리지에 생성했을 경우에 문제가 발생하지 않았다.

@@ -1,0 +1,98 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>안드로이드 스튜디오 폴더 그룹화하기 : Burt.K</title>
+
+    <link href='https://fonts.googleapis.com/css?family=Lato:300italic,700italic,300,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/assets/css/style.css?v=">
+    <script src="/assets/js/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header >
+        <h1><a href="/">Burt.K</a></h1>
+        
+          <p>코코아를 좋아하는 프로그래머입니다 ;)</p>
+        
+
+        <ul>
+          <li><a href="/about"><strong>소개</strong></a></li>
+          <li><a href="/archive"><strong>아카이브</strong></a></li>
+        </ul>        
+
+      </header>
+      <section>
+
+
+		<h1 class="entry-title">
+		
+		    <a href="/%ec%95%88%eb%93%9c%eb%a1%9c%ec%9d%b4%eb%93%9c-%ec%8a%a4%ed%8a%9c%eb%94%94%ec%98%a4-%ed%8f%b4%eb%8d%94-%ea%b7%b8%eb%a3%b9%ed%99%94%ed%95%98%ea%b8%b0/">안드로이드 스튜디오 폴더 그룹화하기</a>
+		
+		
+		</h1>
+		
+      <p>안드로이드 스튜디오를 사용하다 보면 리소스 폴더(예를 들어layout) 내에 하위 폴더를 생성할 수 없어서 리소스 파일을 관리하기가 약간 어려웠습니다. <a href="https://github.com/dmytrodanylyk/folding-plugin">Android File Grouping</a> 플러그인을 사용하면 가상의 그룹을 만들 수가 있어서 리소스 파일 관리의 어려움을 해결할 수 있습니다.</p>
+
+<!--more-->
+
+<p><a href="http://i0.wp.com/blog.burt.pe.kr/wp-content/uploads/2015/07/Preview.png"><img class=" fit-width size-full wp-image-532 aligncenter" src="http://i0.wp.com/blog.burt.pe.kr/wp-content/uploads/2015/07/Preview.png?resize=665%2C360" alt="" srcset="http://i2.wp.com/burt.pe.kr/wp-content/uploads/2015/07/Preview.png?w=1200 1200w, http://i2.wp.com/burt.pe.kr/wp-content/uploads/2015/07/Preview.png?resize=300%2C163 300w, http://i2.wp.com/burt.pe.kr/wp-content/uploads/2015/07/Preview.png?resize=1024%2C555 1024w, http://i2.wp.com/burt.pe.kr/wp-content/uploads/2015/07/Preview.png?resize=660%2C358 660w" sizes="(max-width: 665px) 100vw, 665px" data-recalc-dims="1" /></a></p>
+
+<p> </p>
+
+<p>안드로이드 스튜디오 공식 플러그인 레파지토리에 <a href="https://github.com/dmytrodanylyk/folding-plugin">Android File Grouping</a> 가 아직 등록되지 않았기 때문에 파일을 직접 받아서 설치해야 합니다. 설치 방법은 아래와 같습니다.</p>
+
+<ol>
+  <li><a href="https://github.com/dmytrodanylyk/folding-plugin/releases">Android File Grouping 압축(zip)파일</a>을 받습니다.</li>
+  <li>Android Studio를 실행하고 <code class="highlighter-rouge">Settings(맥은 Preferences) &gt;</code>  <code class="highlighter-rouge">Plugins 을 선택합니다.</code></li>
+  <li><code class="highlighter-rouge">&lt;span style="font-family: Georgia, 'Times New Roman', 'Bitstream Charter', Times, serif;"&gt;'&lt;/span&gt;Install from disk</code> ‘ 버튼을 눌러  <code class="highlighter-rouge">Android File Grouping.zip 파일을 선택합니다.</code></li>
+  <li>Android Studio를 재시작합니다.</li>
+</ol>
+
+<p>설치 후 리소스 폴더를 선택한 다음, 마우스 오른쪽 버튼을 누르면 메뉴 제일 위에 Group 메뉴가 있습니다. Group메뉴를 선택하면 하위 파일들이 자동으로 그룹화 됩니다.</p>
+
+<p>한가지 단점은 Group명을 임의로 짓지 못 합니다. 리소스 파일의 접두사를 그룹명으로 짓습니다.</p>
+
+<ul>
+  <li>home_activity.xml</li>
+  <li>home_fragment_sign_in.xml</li>
+  <li>gome_fragment_sign_out.xml</li>
+</ul>
+
+<p>이렇게 파일이 있으면 그룹명은 home이 됩니다.</p>
+
+<p> </p>
+
+
+		<div style='height: 20px'>
+    
+    	<div style='float:left'>
+        <a class="equalize" href="/%ec%95%88%eb%93%9c%eb%a1%9c%ec%9d%b4%eb%93%9c-%ec%95%b1-%ed%81%ac%eb%9e%98%ec%89%ac%eb%a5%bc-%ec%9a%b0%ec%95%84%ed%95%98%ea%b2%8c-%ed%95%b4%ea%b2%b0%ed%95%98%ea%b8%b0/" title="Previous Post: 안드로이드 앱 크래쉬를 우아하게 해결하기">
+                <b> ← 안드로이드 앱 크래쉬를 우아하게 해결하기 </b>
+        </a>
+		</div>
+    
+    <div style='float:right'>
+        <a class="equalize" href="/%ec%95%88%eb%93%9c%eb%a1%9c%ec%9d%b4%eb%93%9c-ndk-%eb%94%94%eb%b2%84%ea%b9%85%ed%95%98%ea%b8%b0/" title="next Post: 안드로이드 NDK 디버깅하기">
+                <b> 안드로이드 NDK 디버깅하기 → </b>
+        </a>
+    </div>
+</div>    
+		
+      </section>
+    </div>
+    <footer>
+     <p></a></p>
+     <p>Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+
+    
+  </body>
+</html>

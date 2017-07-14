@@ -1,0 +1,26 @@
+---
+id: 271
+title: '미움받을 용기 &#8211; 내 마음 속에 철학자를 모셔라'
+date: 2015-02-17T11:51:58+00:00
+author: Burt
+layout: post
+guid: http://blog.burt.pe.kr/?p=271
+permalink: '/%eb%af%b8%ec%9b%80%eb%b0%9b%ec%9d%84-%ec%9a%a9%ea%b8%b0-%eb%82%b4-%eb%a7%88%ec%9d%8c-%ec%86%8d%ec%97%90-%ec%b2%a0%ed%95%99%ec%9e%90%eb%a5%bc-%eb%aa%a8%ec%85%94%eb%9d%bc/'
+dsq_thread_id:
+  - "3718666128"
+categories:
+  - 책 읽는 즐거움
+---
+<div style="width: 284px" class="wp-caption aligncenter">
+  <img src="http://image.yes24.com/goods/15058512/L" alt="" width="274" height="400" />
+  
+  <p class="wp-caption-text">
+    출처 : YES24(http://image.yes24.com/goods/15058512/L)
+  </p>
+</div>
+
+우연찮게 읽게 된 책. 그러나 많은 도움이 된 책. 이 책을 읽고 나서 나는 내 마음 속에 철학자 한 분을 모시게 된 것 같다. 아들러 심리학을 플라톤의 대화형식을 빌려 아주 쉽게 설명한다. 이 책 속에 등장하는 청년은 나의 모습과도 너무 닮았고 오늘도 고통스러워할 당신과도 닮았을지 모른다.
+
+내가 생각해 온 &#8216;자유&#8217;에는 인간관계가 없었지만 사회적 동물인 우리에게 인간관계 없이 자유를 정의할 수 없다. 그렇다면 인간관계 속에서 자유란 무엇인가? 아들러는 아주 명쾌하게 답한다. 그 답을 읽는 순간 헉! 이라는 감탄사가 나와버렸다.
+
+책을 읽을 수 있는 눈과 시간과 지혜가 있어 행복하다.

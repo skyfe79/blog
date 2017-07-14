@@ -1,0 +1,101 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>배열로 vector를 초기화하기 : Burt.K</title>
+
+    <link href='https://fonts.googleapis.com/css?family=Lato:300italic,700italic,300,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/assets/css/style.css?v=">
+    <script src="/assets/js/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header >
+        <h1><a href="/">Burt.K</a></h1>
+        
+          <p>코코아를 좋아하는 프로그래머입니다 ;)</p>
+        
+
+        <ul>
+          <li><a href="/about"><strong>소개</strong></a></li>
+          <li><a href="/archive"><strong>아카이브</strong></a></li>
+        </ul>        
+
+      </header>
+      <section>
+
+
+		<h1 class="entry-title">
+		
+		    <a href="/%eb%b0%b0%ec%97%b4%eb%a1%9c-vector%eb%a5%bc-%ec%b4%88%ea%b8%b0%ed%99%94%ed%95%98%ea%b8%b0/">배열로 vector를 초기화하기</a>
+		
+		
+		</h1>
+		
+      <p>배열로 vector를 초기화 해보자.<!--more--></p>
+
+<pre class="lang:default decode:true">$ vi printVector.cpp</pre>
+
+<pre class="lang:default decode:true">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;algorithm&gt;
+
+void printVector(std::vector&lt;int&gt;&amp; v);
+
+int main() {
+
+    int a[5] { 1, 2, 3, 4, 5 };
+
+    std::vector&lt;int&gt; v;
+
+    v.assign(a, a+5);
+
+
+    printVector(v);
+}
+
+
+void printVector(std::vector&lt;int&gt;&amp; v) {
+    std::for_each(v.begin(), v.end(), [](int e) { std::cout &lt;&lt; e &lt;&lt; ", "; });
+}
+</pre>
+
+<pre class="lang:default decode:true ">$ g++ printVector.cpp -std=c++11 -o printVector
+./printVector
+1, 2, 3, 4, 5,</pre>
+
+<p> </p>
+
+
+		<div style='height: 20px'>
+    
+    	<div style='float:left'>
+        <a class="equalize" href="/stdvector-%eb%a5%bc-c%ec%96%b8%ec%96%b4-%eb%b0%b0%ec%97%b4%eb%a1%9c-%eb%b3%80%ea%b2%bd%ed%95%98%ea%b8%b0/" title="Previous Post: std::vector 를 C언어 배열로 변경하기">
+                <b> ← std::vector 를 C언어 배열로 변경하기 </b>
+        </a>
+		</div>
+    
+    <div style='float:right'>
+        <a class="equalize" href="/jni-%ed%8a%9c%ed%86%a0%eb%a6%ac%ec%96%bc%ec%9d%84-gitbook%ec%9c%bc%eb%a1%9c-%eb%a7%8c%eb%93%a4%ec%96%b4-%eb%b3%b4%ec%95%98%ec%8a%b5%eb%8b%88%eb%8b%a4/" title="next Post: JNI 튜토리얼을 Gitbook으로 만들어 보았습니다.">
+                <b> JNI 튜토리얼을 Gitbook으로 만들어 보았습니다. → </b>
+        </a>
+    </div>
+</div>    
+		
+      </section>
+    </div>
+    <footer>
+     <p></a></p>
+     <p>Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+
+    
+  </body>
+</html>

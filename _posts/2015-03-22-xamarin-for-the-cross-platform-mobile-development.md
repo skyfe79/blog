@@ -1,0 +1,44 @@
+---
+id: 335
+title: Xamarin for the Cross-Platform Mobile Development
+date: 2015-03-22T17:08:19+00:00
+author: Burt
+layout: post
+guid: http://blog.burt.pe.kr/?p=335
+permalink: /xamarin-for-the-cross-platform-mobile-development/
+dsq_thread_id:
+  - "3729791829"
+categories:
+  - Android
+  - iOS
+  - Mac OS X
+tags:
+  - xamarin
+---
+Android, iOS 앱을 동시에 개발 할 수 있는 방법은 없을까? 고민하던 차에 Xamarin 3.0 이 나온지 얼마 안되었길래 살펴보았다. 주말 내내 문서를 읽어보며 맥에서 Xamarin Studio 를 가지고 놀아 보았는데 정말 만족스럽다. C# 언어를 바탕으로 펼쳐지는 멋진 권법을 배우는 듯한 느낌이었다.
+
+  * PCL &#8211; Portable Class Library
+  * Xamarin.Forms ( 아직 얼마 되지 않았지만 앞으로 발전 가능성이 무궁무진해 보인다 )
+  * NuGet 을 통해 배포되는 멋진 PCL 들!
+  * Objective-C 바인딩
+  * Java 바인딩
+  * MvvmCross!
+  * Sqlite.NET
+  * C#의 async, await!
+
+PCL은 다른 플랫폼에서 모두 사용가능한 공유 라이브러리 개념으로 iOS와 Android 프로젝트에서 사용가능한 코드를 관리할 수 있다. Xamarin.Forms 는 개발된지 얼마 안되는 기술이기 때문에 아직 프로젝트에는 활용할 수 없을 것 같았다. 그래서 아래처럼 Xamarin 프로젝트를 구성하면 좋을 것 같다.
+
+  * PCL 을 바탕으로 Model, ViewModel, 네트워킹, REST-API 등의 모델 비지니스 로직을 작성하고 iOS와 Android에서 사용한다.
+  * iOS와 Android 에서는 뷰와 네비게이션 코드 등과 같은 플랫폼에 종속적인 코드를 작성한다.
+  * DB는 Sqlite.NET 등을 바탕으로 iOS와 Android에 통일된 인터페이스를 제공할 수 있다.
+  * MvvmCross 는 정말 멋지다.
+
+아무튼 좋은 점이 많은 것 같다. 하지만 아래의 점 때문에 Xamarin 사용을 좀 더 미루기로 했다.
+
+  * XamarinStudio 가 무척 불안정하다. 코드 인텔리센스 등을 위해서 버벅거릴 경우가 무척 많다. 맥에서는 XamarinStudio 없이 Xamarin 개발이 불가능하다.
+  * 너무 비싸다. 인디를 구매한다고 해도 iOS, Android를 위해서 월간 $50를 지불해야 하고 월간-인디는 Mac 개발을 할 수 없다. 인디를 하려고 했지만 XamarinStudio 때문에 할 수가 없었다.
+  * Business 를 구매하면 윈도우즈에서 Visual Studio를 사용해 Xamarin을 개발할 수 있다. 무척 쾌적하다고 한다 ㅠㅠ 그러나 가격이 나에게는 너무 비싸게 다가 왔다. ( 년간 $**1,798.20** )** **
+  * 공용으로 쓸 라이브러리를 위해서 삽질이 필요할 것 같은 느낌이 든다. .NET 라이브러리에서 Android, iOS 모두에 사용가능한 라이브러리를 선정하는데 삽질이 필요할 것 같다. 물론 Xamarin Store 가 있어서 어느 정도 해소는 되지만&#8230; 물론 공용코드를 GUI는 전혀 사용하지 않고 모델과 Rest API를 컨슘 하는 코드만 공유한다면 상관 없지만&#8230;
+  * 라이브러리 디펜던시 관리를 gradle 이나 cocoapod 처럼 쉽게 할 수 있는 방법이 없다. 이건 안드로이드나 iOS를 라이브러리를 C#으로 바인딩하는 과정을 거져야해서 당연한 것이지만 파일 복붙으로 관리하는 것은 너무 힘들 것 같다는 생각이&#8230;
+
+아&#8230; 회사에 말해볼까?

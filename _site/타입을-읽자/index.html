@@ -1,0 +1,96 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>타입을 읽자. : Burt.K</title>
+
+    <link href='https://fonts.googleapis.com/css?family=Lato:300italic,700italic,300,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/assets/css/style.css?v=">
+    <script src="/assets/js/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header >
+        <h1><a href="/">Burt.K</a></h1>
+        
+          <p>코코아를 좋아하는 프로그래머입니다 ;)</p>
+        
+
+        <ul>
+          <li><a href="/about"><strong>소개</strong></a></li>
+          <li><a href="/archive"><strong>아카이브</strong></a></li>
+        </ul>        
+
+      </header>
+      <section>
+
+
+		<h1 class="entry-title">
+		
+		    <a href="/%ed%83%80%ec%9e%85%ec%9d%84-%ec%9d%bd%ec%9e%90/">타입을 읽자.</a>
+		
+		
+		</h1>
+		
+      <p class="p1">
+  <span class="s1">Haskell 에서 타입을 지정할 때 :: 를 사용한다.</span>
+</p>
+
+<pre class="lang:haskell decode:true">fst :: (a, b) -&gt; a
+
+ * 튜플을 받아서 첫 번째 요소를 반환하는 함수 타입</pre>
+
+<pre class="lang:haskell decode:true">head :: [a] -&gt; a
+
+ * 리스트를 받아서 첫 요소를 반환하는 함수 타입</pre>
+
+<pre class="lang:haskell decode:true">take :: Int -&gt; [a] -&gt; [a]
+
+ * 정수와 리스트를 받고 리스트를 반환하는 함수 타입</pre>
+
+<pre class="lang:haskell decode:true">zip :: [a] -&gt; [b] -&gt; [(a,b)] 
+
+ * 타입이 같거나 다른 두 개의 리스트를 받고 각각의 리스트에서 요소를 조합해 튜플의 리스트를 반환하는 함수 타입</pre>
+
+<p class="p1">
+  <strong style="line-height: 1.5;"><span class="s1">Class Constraints. Java, C# 등에서 Interface라고 생각하면 이해하기 쉽다.</span></strong>
+</p>
+
+<pre class="lang:haskell decode:true ">sum :: Num a =&gt; [a] -&gt; a
+
+ * 'Num a =&gt;' 의 뜻 Num 인터페이스를 준수하는 a 타입
+ * Num 인터페이스를 준수하는 a 타입의 리스트를 받아서 a 타입 값을 반환하는 함수 타입</pre>
+
+
+		<div style='height: 20px'>
+    
+    	<div style='float:left'>
+        <a class="equalize" href="/why-we-need-currying-function" title="Previous Post: 커링(currying) 함수가 왜 필요한가?">
+                <b> ← 커링(currying) 함수가 왜 필요한가? </b>
+        </a>
+		</div>
+    
+    <div style='float:right'>
+        <a class="equalize" href="/%ed%95%a8%ec%88%98%eb%a5%bc-%ec%a0%95%ec%9d%98%ed%95%98%ec%9e%90/" title="next Post: 함수를 정의하자.">
+                <b> 함수를 정의하자. → </b>
+        </a>
+    </div>
+</div>    
+		
+      </section>
+    </div>
+    <footer>
+     <p></a></p>
+     <p>Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+
+    
+  </body>
+</html>

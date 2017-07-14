@@ -1,0 +1,110 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>안드로이드 앱 크래쉬를 우아하게 해결하기 : Burt.K</title>
+
+    <link href='https://fonts.googleapis.com/css?family=Lato:300italic,700italic,300,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/assets/css/style.css?v=">
+    <script src="/assets/js/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header >
+        <h1><a href="/">Burt.K</a></h1>
+        
+          <p>코코아를 좋아하는 프로그래머입니다 ;)</p>
+        
+
+        <ul>
+          <li><a href="/about"><strong>소개</strong></a></li>
+          <li><a href="/archive"><strong>아카이브</strong></a></li>
+        </ul>        
+
+      </header>
+      <section>
+
+
+		<h1 class="entry-title">
+		
+		    <a href="/%ec%95%88%eb%93%9c%eb%a1%9c%ec%9d%b4%eb%93%9c-%ec%95%b1-%ed%81%ac%eb%9e%98%ec%89%ac%eb%a5%bc-%ec%9a%b0%ec%95%84%ed%95%98%ea%b2%8c-%ed%95%b4%ea%b2%b0%ed%95%98%ea%b8%b0/">안드로이드 앱 크래쉬를 우아하게 해결하기</a>
+		
+		
+		</h1>
+		
+      <p>안드로이드 앱 크래쉬가 발생할 경우, 앱이 죽었다는 메시지박스를 화면에 보여주는데 사용자에게 불쾌감을 줄 정도로 예쁘지 않죠. 며칠전 오픈소스로 <a href="https://github.com/Ereza/CustomActivityOnCrash">CustomActivityOnCrash</a> 라는 프로젝트가 오픈되었는데요. <a href="https://github.com/Ereza/CustomActivityOnCrash">CustomActivityOnCrash</a>를 사용하면 앱 크래쉬가 발생할 경우 커스텀 액티비티를 화면에 띄울 수 있어 아주 우아하게 앱 크래쉬를 해결할 수 있습니다.</p>
+
+<!--more-->
+
+<p><a href="http://i2.wp.com/blog.burt.pe.kr/wp-content/uploads/2015/07/frontpage.png"><img class=" size-full wp-image-528 aligncenter" src="http://i2.wp.com/blog.burt.pe.kr/wp-content/uploads/2015/07/frontpage.png?resize=665%2C473" alt="CustomActivityOnCrash" srcset="http://i1.wp.com/burt.pe.kr/wp-content/uploads/2015/07/frontpage.png?w=675 675w, http://i1.wp.com/burt.pe.kr/wp-content/uploads/2015/07/frontpage.png?resize=300%2C213 300w, http://i1.wp.com/burt.pe.kr/wp-content/uploads/2015/07/frontpage.png?resize=660%2C469 660w" sizes="(max-width: 665px) 100vw, 665px" data-recalc-dims="1" /></a></p>
+
+<p> </p>
+
+<p>사용하는 방법도 아주 간편합니다. 우선 build.gradle 에 디펜던시를 추가해 줍니다.</p>
+
+<pre class="lang:default decode:true ">dependencies {
+    compile 'cat.ereza:customactivityoncrash:1.1.0'
+}</pre>
+
+<p>그리고 Application을 상속받은 커스텀 Application 클래스를 만들고 CustomActivityOnCrash 를 설정해 주면 됩니다.</p>
+
+<pre class="lang:default decode:true">public class MyApp extends Application {
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+
+        //CustomActivityOnCrash 설치
+        CustomActivityOnCrash.install(this);
+    }
+}</pre>
+
+<p>CustomActivityOnCrash 에는 앱 크래쉬가 발생할 경우 실행할 기본 액티비티가 있습니다. 에러 로그등을 볼 수 있어 개발할 경우에도 많이 편할 것 같네요. 만약 이 기본 액티비티를 다른 것으로 바꾸고자 할 경우에는 아래처럼 설정해 주면 됩니다.</p>
+
+<pre class="lang:default decode:true ">public class MyApp extends Application {
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+
+        //CustomActivityOnCrash 설치
+        CustomActivityOnCrash.setErrorActivityClass(MyErrorActivity.class)
+        CustomActivityOnCrash.install(this);
+    }
+}</pre>
+
+<p><a href="https://github.com/Ereza/CustomActivityOnCrash">CustomActivityOnCrash 의 문서</a>를 보면 이 밖에도 여러가지 설정을 할 수 있습니다.</p>
+
+
+		<div style='height: 20px'>
+    
+    	<div style='float:left'>
+        <a class="equalize" href="/jni-%ed%8a%9c%ed%86%a0%eb%a6%ac%ec%96%bc%ec%9d%84-gitbook%ec%9c%bc%eb%a1%9c-%eb%a7%8c%eb%93%a4%ec%96%b4-%eb%b3%b4%ec%95%98%ec%8a%b5%eb%8b%88%eb%8b%a4/" title="Previous Post: JNI 튜토리얼을 Gitbook으로 만들어 보았습니다.">
+                <b> ← JNI 튜토리얼을 Gitbook으로 만들어 보았습니다. </b>
+        </a>
+		</div>
+    
+    <div style='float:right'>
+        <a class="equalize" href="/%ec%95%88%eb%93%9c%eb%a1%9c%ec%9d%b4%eb%93%9c-%ec%8a%a4%ed%8a%9c%eb%94%94%ec%98%a4-%ed%8f%b4%eb%8d%94-%ea%b7%b8%eb%a3%b9%ed%99%94%ed%95%98%ea%b8%b0/" title="next Post: 안드로이드 스튜디오 폴더 그룹화하기">
+                <b> 안드로이드 스튜디오 폴더 그룹화하기 → </b>
+        </a>
+    </div>
+</div>    
+		
+      </section>
+    </div>
+    <footer>
+     <p></a></p>
+     <p>Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+
+    
+  </body>
+</html>
