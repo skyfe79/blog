@@ -253,6 +253,12 @@ img {
   width: 640px;
   height: auto; }
 
+iframe {
+  margin: 0 -20px auto;
+  max-width: 640px;
+  width: 640px;
+  height: 480px; }
+
 @media print, screen and (max-width: 740px) {
   .fit-width {
     margin: 0 -20px auto;
@@ -350,6 +356,6 @@ footer {
     width: 100%; } }
 @media print {
   header p.view a small:before {
-    content: 'at https://github.com/'; } }
+    content: 'at https://blog.burt.pe.kr'; } }
 pre {
   tab-size: 4; }

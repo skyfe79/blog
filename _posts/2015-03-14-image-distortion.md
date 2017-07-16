@@ -14,6 +14,7 @@ tags:
   - distortion
   - image
 ---
-이번에 진행하는 프로젝트에 Image Distortion 이 필요해서 프로토타입을 만들어 보고 있다.<!--more-->
+이번에 진행하는 프로젝트에 Image Distortion 이 필요해서 프로토타입을 만들어 보고 있다.
 
-[![](https://www.youtube.com/watch?v=aTZqorVulC4/0.jpg){:.fit-width}](https://www.youtube.com/watch?v=aTZqorVulC4)
+<iframe width="640" height="480" src="http://www.youtube.com/embed/aTZqorVulC4" frameborder="0"> </iframe>
+
