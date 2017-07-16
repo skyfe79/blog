@@ -18,6 +18,6 @@ permalink: /archive/
 			{% if forloop.index != 1 %}</ul>{% endif %}
 			<b>{{ post.date | date: '%B %Y' }}</b><ul>
 		{% endif %}
-	<li style="font-size: 14px"><span>{{ post.date | date: "%e" }}</span> &raquo; <a href="{{ post.url }}">{{ post.title }}</a></li>
+	<li style="font-size: 14px"><span>{{ post.date | date: "%d" }}</span> &raquo; <a href="{{ post.url }}">{{ post.title }}</a></li>
 {% endfor %}
 </ul>
