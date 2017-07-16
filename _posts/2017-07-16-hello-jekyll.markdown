@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "블로그 변경"
+title:  "Hello Jekyll"
 date:   2017-07-16 09:01:51 +0900
 categories: jekyll
 ---

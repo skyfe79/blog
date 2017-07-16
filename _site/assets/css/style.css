@@ -173,18 +173,21 @@ header {
       border-radius: 8px;
       box-shadow: transparent 0 -1px 0, inset transparent 0 -1px 0; }
     header ul li {
-      width: 48px;
+      width: 60px;
       float: left;
       border-right: 1px solid transparent;
       height: 28px; }
       header ul li.single {
         border: none; }
     header ul li + li {
-      width: 48px;
+      width: 60px;
       border-left: 1px solid transparent; }
     header ul li + li + li {
+      border-left: 1px solid transparent;
+      width: 60px; }
+    header ul li + li + li + li {
       border-right: none;
-      width: 48px; }
+      width: 60px; }
     header ul a {
       line-height: 1;
       font-size: 11px;

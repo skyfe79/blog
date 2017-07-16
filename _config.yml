@@ -9,6 +9,8 @@ twitter_username: skyfe79
 github_username:  skyfe79
 about_url: "/about"
 archive_url: "/archive"
+opensources_url: "/opensources"
+books_url: "/books"
 
 # Build settings
 markdown: kramdown
