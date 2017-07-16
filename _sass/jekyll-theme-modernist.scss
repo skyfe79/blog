@@ -233,6 +233,13 @@ iframe {
     width: calc(100% + 40px);
     height: auto;
   }
+
+  iframe {
+    margin: 0 -20px auto;
+    max-width:calc(100% + 40px);
+    width: calc(100% + 40px);
+    height: calc((100% + 40px) * 0.75);
+  }
 }
 
 @media print, screen and (max-width: 580px) {
@@ -241,6 +248,13 @@ iframe {
     max-width:calc(100% + 40px);
     width: calc(100% + 40px);
     height: auto;
+  }
+  
+  iframe {
+    margin: 0 -20px auto;
+    max-width:calc(100% + 40px);
+    width: calc(100% + 40px);
+    height: calc((100% + 40px) * 0.75);
   }
 }
 

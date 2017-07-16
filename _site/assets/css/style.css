@@ -264,13 +264,25 @@ iframe {
     margin: 0 -20px auto;
     max-width: calc(100% + 40px);
     width: calc(100% + 40px);
-    height: auto; } }
+    height: auto; }
+
+  iframe {
+    margin: 0 -20px auto;
+    max-width: calc(100% + 40px);
+    width: calc(100% + 40px);
+    height: calc((100% + 40px) * 0.75); } }
 @media print, screen and (max-width: 580px) {
   .fit-width {
     margin: 0 -20px auto;
     max-width: calc(100% + 40px);
     width: calc(100% + 40px);
-    height: auto; } }
+    height: auto; }
+
+  iframe {
+    margin: 0 -20px auto;
+    max-width: calc(100% + 40px);
+    width: calc(100% + 40px);
+    height: calc((100% + 40px) * 0.75); } }
 code, pre {
   font-family: Monaco, Bitstream Vera Sans Mono, Lucida Console, Terminal;
   color: #333;
