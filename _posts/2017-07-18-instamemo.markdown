@@ -1,6 +1,7 @@
 ---
 layout: post
 title:  "Instamemo"
+permalink: /instamemo/
 date:   2017-07-18 00:00:00 +0900
 categories: projects
 ---
