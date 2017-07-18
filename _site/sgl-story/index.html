@@ -1,0 +1,141 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>SGL:소프트웨어 3D 렌러러 이야기 : Burt.K</title>
+
+    <link href='https://fonts.googleapis.com/css?family=Lato:300italic,700italic,300,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/assets/css/style.css?v=">
+    <script src="/assets/js/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header >
+        <h1><a href="/archive">Burt.K</a></h1>
+        
+          <p>코코아를 좋아하는 프로그래머입니다 ;)</p>
+        
+
+        <ul>
+          <li><a href="/about"><strong>소개</strong></a></li>
+          <li><a href="/archive"><strong>아카이브</strong></a></li>
+          <li><a href="/opensources"><strong>오픈소스</strong></a></li>
+          <li><a href="/books"><strong>책모음</strong></a></li>
+        </ul>    
+
+      </header>
+      <section>
+
+
+		<h1 class="entry-title">
+		
+		    <a href="/sgl-story/">SGL:소프트웨어 3D 렌러러 이야기</a>
+		
+		
+		</h1>
+		
+      <blockquote>
+  <p><code class="highlighter-rouge">알림</code> 이 글은 제 <a href="http://blog.naver.com/softdna">네이버 블로그</a> 에서 아카이빙을 위해 가져온 글입니다. 그 당시 svn 같은 소스 관리툴을 사용하지 않아서 코드 히스토리를 남기지 못한게 아쉽네요.</p>
+</blockquote>
+
+<p>소프트웨어렌더러를 만들어 보자고 생각한 건 1년 전 쯤이었습니다. 게임 엔진 개발자를 꿈꾸는 저에게 소프트웨어 렌더러는 반드시 넘어야 할 첫 관문이라고 여겼기 때문이죠. 1년여의 시간동안 시간날 때마다 틈틈히 만들어 온 것이 구현하고자 했던 목표를 다 구현하게 되었습니다. 1년동안 프로젝트를 하면서 많은 정이 든 프로젝트이고 (도대체 갈아 엎기를 몇 번 ? ㅋㅋㅋ) 저에게 많은 도움을 준 프로젝트입니다. 특히 최적화 부분에 대해서 많은 것을 생각하게 해준 프로젝트였고 최적화라는 것이 얼마나 힘든 것인지 느꼈답니다… 아직도 많이 부족하지만 3D 그래픽스의 기초 원리를 배운 것에 만족하고 물리엔진, 캐릭터엔진, 지형엔진 개발로 발을 옮기려고 합니다. :)</p>
+
+<p>구현사항은 아래와 같습니다.</p>
+
+<ol>
+  <li>깊이정렬</li>
+  <li>클리핑 ( 오브젝트, 뷰잉공간, 이미지공간 )</li>
+  <li>텍스춰매핑</li>
+  <li>흉내만 낸 고러드 쉐이딩</li>
+  <li>ambient 및 diffuse 라이팅 구현</li>
+  <li>obj 모델 파일 렌더링</li>
+  <li>md2 모델 파일 렌더링</li>
+</ol>
+
+<p>총 4번의 업그레이드를 지나오면서 위의 목표한 바를 구현하였습니다. <code class="highlighter-rouge">주의</code> 영상 소리 있음</p>
+
+<iframe width="640" height="480" src="http://www.youtube.com/embed/wUCMvPbU6Ag" frameborder="0"></iframe>
+
+<p>SGL의 히스토리</p>
+
+<h3 id="sgl4">SGL4</h3>
+
+<ol>
+  <li>좀 더 빠른 렌더링을 위해 DIBSECTION 대신 SDL 의 하드웨어 서피스를 사용.</li>
+  <li>좀 더 세분화된 클리핑을 지원</li>
+  <li>텍스춰 매핑 지원</li>
+  <li>라이팅을 더 정확하게 구현</li>
+</ol>
+
+<p><img src="http://localhost:4000/assets/images/sgl/sgl4_01_softdna.png" alt="" /></p>
+
+<h3 id="sgl3">SGL3</h3>
+
+<ol>
+  <li>깊이정렬 구현</li>
+  <li>벡페이스컬링 구현</li>
+</ol>
+
+<p><img src="http://localhost:4000/assets/images/sgl/sgl3_01_softdna.png" alt="" />
+<img src="http://localhost:4000/assets/images/sgl/sgl3_02_softdna.png" alt="" />
+<img src="http://localhost:4000/assets/images/sgl/sgl3_03_softdna.png" alt="" /></p>
+
+<h3 id="sgl2">SGL2</h3>
+
+<ol>
+  <li>OpenGL 의 인터페이스 흉내</li>
+  <li>삼각형으로 오브젝트 정의</li>
+  <li>플랫쉐이딩</li>
+  <li>카메라무브</li>
+  <li>단순한 라이팅</li>
+  <li>단순한 클리핑( 이미지 공간 ) 등등 기본 적인 것들</li>
+</ol>
+
+<p><img src="http://localhost:4000/assets/images/sgl/sgl2_01_softdna.png" alt="" />
+<img src="http://localhost:4000/assets/images/sgl/sgl2_02_softdna.png" alt="" />
+<img src="http://localhost:4000/assets/images/sgl/sgl2_03_softdna.png" alt="" />
+<img src="http://localhost:4000/assets/images/sgl/sgl2_04_softdna.png" alt="" />
+<img src="http://localhost:4000/assets/images/sgl/sgl2_05_softdna.png" alt="" /></p>
+
+<h3 id="sgl1">SGL1</h3>
+
+<ol>
+  <li>소프트웨러렌더러를 처음 만들겠다고 마음 먹고 구현 했던 초 간단 버전</li>
+  <li>첫 이름은 아톰3D 였어요. 3D 의 기본 Atom 이라고 생각해서 지은 이름이었답니다.</li>
+</ol>
+
+<p><img src="http://localhost:4000/assets/images/sgl/sgl1_softdna.png" alt="" /></p>
+
+
+		<div style='padding:20px 0; height: 40px'>
+    
+    	<div style='float:left'>
+        <a class="equalize" href="/instamemo/" title="Previous Post: Instamemo">
+                <b> ← Instamemo </b>
+        </a>
+		</div>
+    
+    <div style='float:right'>
+        <a class="equalize" href="/atar-story/" title="next Post: A* 데모 프로그램">
+                <b> A* 데모 프로그램 → </b>
+        </a>
+    </div>
+</div>    
+		
+      </section>
+    </div>
+    <footer>
+     <p></a></p>
+     <p>Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+
+    
+  </body>
+</html>
