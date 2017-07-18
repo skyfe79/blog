@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Instamemo"
-date:   2017-07-18 22:53:51 +0900
+date:   2017-07-18 00:00:00 +0900
 categories: projects
 ---
 
