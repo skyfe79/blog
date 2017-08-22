@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Burt.K : 코코아를 좋아하는 프로그래머입니다 ;)</title>
+    <title>String을 URL로 좀 더 쉽게 만들기 : Burt.K</title>
 
     <link href='https://fonts.googleapis.com/css?family=Lato:300italic,700italic,300,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="/assets/css/style.css?v=">
@@ -27,21 +27,20 @@
           <li><a href="/archive"><strong>아카이브</strong></a></li>
           <li><a href="/opensources"><strong>오픈소스</strong></a></li>
           <li><a href="/books"><strong>책모음</strong></a></li>
-        </ul>        
+        </ul>    
 
       </header>
       <section>
 
-      <div class="blog-index">  
-  
-  
-  <h1 class="entry-title">
 
-
-    <a href="/convert-string-to-url-more-easily">String을 URL로 좀 더 쉽게 만들기</a>
-
-</h1>
-<div class="entry-content"><p><a href="https://twitter.com/johnsundell">John Sundell</a> 트위터를 보던 중 유용한 팁이 있어서 적어 봅니다. Swift에서 String으로 URL을 만들려할 때 guard let 이나 if let 을 매번 써야 하는 불편함이 있습니다.</p>
+		<h1 class="entry-title">
+		
+		    <a href="/convert-string-to-url-more-easily">String을 URL로 좀 더 쉽게 만들기</a>
+		
+		
+		</h1>
+		
+      <p><a href="https://twitter.com/johnsundell">John Sundell</a> 트위터를 보던 중 유용한 팁이 있어서 적어 봅니다. Swift에서 String으로 URL을 만들려할 때 guard let 이나 if let 을 매번 써야 하는 불편함이 있습니다.</p>
 
 <div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="k">guard</span> <span class="k">let</span> <span class="nv">url</span> <span class="o">=</span> <span class="kt">URL</span><span class="p">(</span><span class="nv">string</span><span class="p">:</span> <span class="s">"http://blog.burt.pe.kr"</span><span class="p">)</span> <span class="k">else</span> <span class="p">{</span>
 	<span class="o">...</span>
@@ -110,24 +109,25 @@
   <li>위 주석 <code class="highlighter-rouge">1</code>과 <code class="highlighter-rouge">2</code>는 John Sundell이 만든 <a href="https://github.com/JohnSundell/Require">Require</a> 코드입니다.</li>
   <li><a href="https://twitter.com/johnsundell">John Sundell 트위터</a>에는 iOS 개발에 유용한 트윗과 gist 트윗이 많이 있습니다.</li>
 </ol>
-</div>
-    <div id="recent">
-  <div><b>다음글타래</b></div>
-  <ul class="posts">
-    
-      <li style='font-size: 13px'><span>22 Aug 2017</span> &raquo; <a href="/convert-string-to-url-more-easily">String을 URL로 좀 더 쉽게 만들기</a></li>
-    
-      <li style='font-size: 13px'><span>09 Aug 2017</span> &raquo; <a href="/show-camera-feed-on-playground/">플레이그라운드에서 카메라피드 보여주기</a></li>
-    
-      <li style='font-size: 13px'><span>04 Aug 2017</span> &raquo; <a href="/using-testdrive-to-make-playgroud-with-cocoapod/">XCode Playground에서 Cocoapod 쉽게 사용하기</a></li>
-    
-  </ul>
-  </div>
-</div>
 
+
+		<div style='padding:20px 0; height: 40px'>
+    
+    	<div style='float:left'>
+        <a class="equalize" href="/show-camera-feed-on-playground/" title="Previous Post: 플레이그라운드에서 카메라피드 보여주기">
+                <b> ← 플레이그라운드에서 카메라피드 보여주기 </b>
+        </a>
+		</div>
+    
+    <div style='float:right'>
+        <a class="equalize" href="/sgl-story/" title="next Post: SGL:소프트웨어 3D 렌러러 이야기">
+                <b> SGL:소프트웨어 3D 렌러러 이야기 → </b>
+        </a>
+    </div>
+</div>    
+		
       </section>
     </div>
-
     <footer>
      <p></a></p>
      <p>Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
