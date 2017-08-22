@@ -6,7 +6,7 @@ date:   2017-08-22 00:00:00 +0900
 categories: swift
 ---
 
-[John Sundell](https://twitter.com/johnsundell) 트위터를 보던 중 유용한 팁이 있어서 적어 봅니다. Swift에서 String으로 URL을 만들려할 때 guard let 이나 if let 을 매번 써야 하는 불편함이 있습니다.
+[John Sundell 트위터](https://twitter.com/johnsundell)를 보던 중 유용한 팁이 있어서 적어 봅니다. Swift에서 String으로 URL을 만들려할 때 guard let 이나 if let 을 매번 써야 하는 불편함이 있습니다.
 
 ```swift
 guard let url = URL(string: "http://blog.burt.pe.kr") else {
@@ -22,7 +22,7 @@ if let url = URL(string: "http://blog.burt.pe.kr") {
 
 타입안전성 때문이지만 때로는 번거롭기도 하죠. 아래처럼 할 수 있다면 어떨까요?
 
-```
+```swift
 let blogUrl : URL = "http://blog.burt.pe.kr"
 ```
 

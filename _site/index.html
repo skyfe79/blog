@@ -41,7 +41,7 @@
     <a href="/convert-string-to-url-more-easily">String을 URL로 좀 더 쉽게 만들기</a>
 
 </h1>
-<div class="entry-content"><p><a href="https://twitter.com/johnsundell">John Sundell</a> 트위터를 보던 중 유용한 팁이 있어서 적어 봅니다. Swift에서 String으로 URL을 만들려할 때 guard let 이나 if let 을 매번 써야 하는 불편함이 있습니다.</p>
+<div class="entry-content"><p><a href="https://twitter.com/johnsundell">John Sundell 트위터</a>를 보던 중 유용한 팁이 있어서 적어 봅니다. Swift에서 String으로 URL을 만들려할 때 guard let 이나 if let 을 매번 써야 하는 불편함이 있습니다.</p>
 
 <div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="k">guard</span> <span class="k">let</span> <span class="nv">url</span> <span class="o">=</span> <span class="kt">URL</span><span class="p">(</span><span class="nv">string</span><span class="p">:</span> <span class="s">"http://blog.burt.pe.kr"</span><span class="p">)</span> <span class="k">else</span> <span class="p">{</span>
 	<span class="o">...</span>
@@ -57,7 +57,7 @@
 
 <p>타입안전성 때문이지만 때로는 번거롭기도 하죠. 아래처럼 할 수 있다면 어떨까요?</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>let blogUrl : URL = "http://blog.burt.pe.kr"
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="k">let</span> <span class="nv">blogUrl</span> <span class="p">:</span> <span class="kt">URL</span> <span class="o">=</span> <span class="s">"http://blog.burt.pe.kr"</span>
 </code></pre>
 </div>
 
