@@ -1,0 +1,40 @@
+<p class="p1">
+  <span class="s1">콘솔환경에서 swift를 REPL 할 수 있다. RELP는 Read Eval Print Loop 의 줄임말이다. 문자 그대로 표현식을 읽고 출력하는 것의 반복이라는 뜻이다. 이것을 좀 더 쉽게 그림으로 표현해보자.</span><!--more-->
+</p>
+
+<p class="p1">
+  <a href="http://i1.wp.com/blog.burt.pe.kr/wp-content/uploads/2015/04/329F4C8D-6FED-4C75-8F28-82155DFF1FC6.png"><img class=" size-full wp-image-388 aligncenter" src="http://i1.wp.com/blog.burt.pe.kr/wp-content/uploads/2015/04/329F4C8D-6FED-4C75-8F28-82155DFF1FC6.png?resize=300%2C189" alt="REPL" data-recalc-dims="1" /></a>
+</p>
+
+<p class="p1">
+  <span class="s1">콘솔에서 swift의 REPL을 수행해 보자.</span>
+</p>
+
+<pre class="lang:default decode:true ">$ xcrun swift</pre>
+
+<p>아래처럼 실행된다.</p>
+
+<pre class="lang:default decode:true ">Welcome to Swift version 1.2. Type :help for assistance.
+  1&gt;</pre>
+
+<p>몇가지 표현식을 작성해 보자.</p>
+
+<pre class="lang:default decode:true ">1&gt; let x = 3
+x: Int = 3
+  2&gt; x * x
+$R0: Int = 9
+  3&gt; $R0 * x
+$R1: Int = 27
+  4&gt;</pre>
+
+<p class="p1">
+  <span class="s1">위처럼 이전 표현식의 결과를 담는 변수가 없을 경우에는 내부에 $R0, $R1 상수가 표현식의 반환값을 저장한다. 그 저장값을  표현식 3&gt; 처럼 다시 사용할 수 있다. 물론 특정 변수나 상수에 담을 수도 있다.</span>
+</p>
+
+<pre class="lang:default decode:true ">4&gt; let y = $R1 * x
+y: Int = 81
+  5&gt;</pre>
+
+<p class="p1">
+  <span class="s1">위처럼 swift를 콘솔에서 손쉽게 사용할 수 있다.</span>
+</p>

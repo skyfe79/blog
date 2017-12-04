@@ -1,0 +1,33 @@
+<p>배열로 vector를 초기화 해보자.<!--more--></p>
+
+<pre class="lang:default decode:true">$ vi printVector.cpp</pre>
+
+<pre class="lang:default decode:true">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;algorithm&gt;
+
+void printVector(std::vector&lt;int&gt;&amp; v);
+
+int main() {
+
+    int a[5] { 1, 2, 3, 4, 5 };
+
+    std::vector&lt;int&gt; v;
+
+    v.assign(a, a+5);
+
+
+    printVector(v);
+}
+
+
+void printVector(std::vector&lt;int&gt;&amp; v) {
+    std::for_each(v.begin(), v.end(), [](int e) { std::cout &lt;&lt; e &lt;&lt; ", "; });
+}
+</pre>
+
+<pre class="lang:default decode:true ">$ g++ printVector.cpp -std=c++11 -o printVector
+./printVector
+1, 2, 3, 4, 5,</pre>
+
+<p> </p>

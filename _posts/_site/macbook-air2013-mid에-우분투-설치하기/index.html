@@ -1,0 +1,20 @@
+<p>리눅스 머신을 갖기 위해 맥북에어 2013 mid 에 우분투를 설치했다. 설치하다 만난 문제점과 해결 방법을 정리한다.</p>
+
+<ul>
+  <li>Prepare to install 에서 멈추는 현상
+    <ul>
+      <li>우분투를 설치할 때 14.04 LTS 버전을 바로 설치하면 설치 준비 중 화면에서 무한 대기를 한다.</li>
+      <li>우분투 12.04 버전을 설치한 다음 14.04 로 업그레이드 한다. 이 방법이 가장 확실하다</li>
+    </ul>
+  </li>
+  <li>틸드(`) 키가 &lt; 키로 맵핑되는 버그
+    <ul>
+      <li>
+        <p>터미널을 열고 아래와 같이 입력한 후 실행한다. &lt;pre class="lang:default decode:true "&gt;&gt;&gt; sudo su -
+&gt;&gt; echo 0 &gt; /sys/module/hid_apple/parameters/iso_layout&lt;/pre&gt;</p>
+
+        <p> &lt;/li&gt; &lt;/ul&gt; &lt;/li&gt; &lt;/ul&gt;</p>
+      </li>
+    </ul>
+  </li>
+</ul>

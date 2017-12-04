@@ -1,0 +1,18 @@
+<p>우선 맥에서 사용할 수 있는 비디오 장치 목록 조회하기</p>
+
+<pre class="lang:default decode:true ">ffmpeg -f qtkit -list_devices true -i ""</pre>
+
+<p>결과</p>
+
+<pre class="lang:default decode:true">[QTKit input device @ 0x7fbb93c26a20] QTKit video devices:
+[QTKit input device @ 0x7fbb93c26a20] [0] FaceTime HD 카메라(내장형)</pre>
+
+<p>녹화하기</p>
+
+<pre class="lang:default decode:true ">ffmpeg -f qtkit -video_device_index 0 -i "" out.mpg</pre>
+
+<p>또는</p>
+
+<pre class="lang:default decode:true ">ffmpeg -f qtkit -i "default" out.mpg</pre>
+
+<p> </p>

@@ -1,0 +1,43 @@
+<ol>
+  <li>
+    <p>IntelliJ 의 설정 파일의 JVM 버전과 Yosemite에 설치된 java의 버전이 맞지 않아서 생기는 문제다.</p>
+  </li>
+  <li>응용프로그램으로 이동한다</li>
+  <li>IntelliJ IDEA 13 CE를 마우스로 선택한다</li>
+  <li>마우스 오른쪽 버튼을 눌러 컨텍스트 메뉴가 나오게 한다</li>
+  <li>‘패키지 내용 보기’ 메뉴를 실행한다</li>
+  <li>다음 파일을 연다</li>
+</ol>
+
+<!--more-->
+<ol>
+  <li>다음 파일을 연다</li>
+</ol>
+
+<pre class="lang:default decode:true">Contents &gt; Info.plist</pre>
+
+<ol>
+  <li>Yosemite에 설치된 자바의 버전을 확인한다</li>
+</ol>
+
+<pre class="lang:default decode:true ">$ java -version
+
+java version "1.7.0_65"</pre>
+
+<ol>
+  <li>JVMVersion 항목을 위의 Java 버전으로 설정한다.</li>
+</ol>
+
+<pre class="lang:default decode:true ">&lt;key&gt;JVMVersion&lt;/key&gt;
+&lt;string&gt;1.6*&lt;/string&gt;</pre>
+
+<p>을 아래처럼 수정한다.</p>
+
+<pre class="lang:xhtml decode:true">&lt;key&gt;JVMVersion&lt;/key&gt;
+&lt;string&gt;1.7*&lt;/string&gt;</pre>
+
+<p> </p>
+
+<p> </p>
+
+<p> </p>

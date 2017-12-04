@@ -1,0 +1,57 @@
+<p>따끈한 오픈소스 소식. <a href="https://github.com/tidwall/goswift">goswift</a>!</p>
+
+<p>Go언어의 장점을 Swift언어에 더해 iOS/Mac 프로젝트에서 Go언어의 장점을 사용할 수 있다. 추가한 Go언어의 기능은 아래와 같다.<!--more--></p>
+
+<ul>
+  <li>Goroutines</li>
+  <li>Defer</li>
+  <li>Panic, Recover</li>
+  <li>Channels
+    <ul>
+      <li>Buffered Channels</li>
+      <li>Select, Case, Default</li>
+      <li>Closing</li>
+    </ul>
+  </li>
+  <li>Sync Package
+    <ul>
+      <li>Mutex, Cond, Once, WaitGroup</li>
+    </ul>
+  </li>
+  <li>Error type</li>
+</ul>
+
+<p>swift로 고루틴과 채널을 사용하는 예제는 아래와 같다.</p>
+
+<pre class="lang:swift decode:true">func main() {
+    var jobs = Chan&lt;Int&gt;(buffer: 5)
+    var done = Chan&lt;Bool&gt;()
+
+    go {
+        for ;; {
+            var (j, more) = &lt;? jobs
+            if more {
+                println("received job \(j!)")
+            } else {
+                println("received all jobs")
+                done &lt;- true
+                return
+            }
+        }
+    }
+
+    for var j = 1; j &lt;= 3; j++ {
+        jobs &lt;- j
+        println("sent job \(j)")
+    }
+    close(jobs)
+    println("sent all jobs")
+
+    &lt;-done
+}</pre>
+
+<p>아래 주소에 좀 더 많은 예제가 있으니 살펴보자.</p>
+
+<ul>
+  <li><a href="https://github.com/tidwall/goswift/tree/master/examples">https://github.com/tidwall/goswift/tree/master/examples</a></li>
+</ul>

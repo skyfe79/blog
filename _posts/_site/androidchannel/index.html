@@ -1,0 +1,43 @@
+<p>안드로이드 프로그래밍을 하면서 Handler를 사용해서 메인 스레드와 워커 스레드간에 통신을 할 때, 작성해야하는 코드가 매번 부담이 되서 AndroidChannel이라는 라이브러리로 만들어 보았습니다.</p>
+
+<p>AndroidChannel을 사용하여 Ping-Pong 코드를 아래처럼 작성할 수 있습니다.<!--more--></p>
+
+<pre class="lang:java decode:true ">channel = new Channel(new Channel.UiCallback() {
+    @Override
+    public boolean handleUiMessage(Message msg) {
+
+        if(msg.what == PING) {
+            Log.d("TAG", "PING");
+            channel.toWorker().sendEmptyMessageDelayed(PONG, 1000);
+        }
+        return false;
+    }
+}, new Channel.WorkerCallback() {
+    @Override
+    public boolean handleWorkerMessage(Message msg) {
+
+        if(msg.what == PONG) {
+            Log.d("TAG", "PONG");
+            channel.toUI().sendEmptyMessageDelayed(PING, 1000);
+        }
+        return false;
+    }
+});
+channel.toUI().sendEmptyMessage(PING);</pre>
+
+<p>Handler를 사용해서 메시지를 주고 받는 간단한 코드입니다. 타이머가 필요할 경우 매번 코드를 작성하기가 그래서 AndroidChannel을 사용해서 타이머를 만들었습니다. 아래와 같이 타이머를 생성하고 사용할 수 있고 타이머 실행 중에 타이머 인터벌을 변경할 수 있습니다.</p>
+
+<pre class="lang:default decode:true">timer = new Timer(1000, new Timer.OnTimer() {
+  int count = 0;
+  @Override
+  public void onTimer(Timer timer) {
+      count++;
+      textView.setText("count : " + count);
+      if(count == 10) {
+          timer.resetInterval(2000);
+      }
+  }
+});
+timer.start();</pre>
+
+<p>AndroidChannel의 소스코드 및 사용법은 <a href="https://github.com/skyfe79/AndroidChannel">Github</a>에서 확인하실 수 있습니다. 이번에 <a href="http://sunghwanjo94.blogspot.kr/2015/07/jcenter.html">조성환님의 jCenter에 안드로이드 라이브러리 배포하기</a> 글을 참고해서 jcenter에 라이브러리를 배보해 보았는데요 정말 편하네요.</p>

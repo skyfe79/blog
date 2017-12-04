@@ -1,0 +1,127 @@
+<p>1부터 10000까지의 총합을 구하는 코드를 작성하고 하면 대부분 아래와 같이 작성할 것이다.</p>
+
+<pre class="lang:swift decode:true">var total = 0
+for x in 1...10000 {
+    total = total + x
+}</pre>
+
+<p>하지만 다르게 작성하는 법은 없을까?</p>
+
+<!--more-->
+
+<p>우선 생각해 볼 수 있는 것은 루프를 사용하지 않고 재귀를 사용하는 것이다.</p>
+
+<pre class="lang:swift decode:true ">func recursiveSum(n: Int) -&gt; Int {
+	if n == 1 {
+		return 1
+	}
+	return n + recursiveSum(n-1)
+}</pre>
+
+<p>하지만 재귀호출은 항상 베이스 상태 즉, 재귀 탈출 조건이 되기까지의 콜 스택을 유지해야 하기 때문에 항상 StackOverflow의 위험성을 가지고 있다.</p>
+
+<p>다른 방법은 더 없을까? fastSum이라는 알고리즘이 있는데 분할정복을 통해 덧셈을 아주 빠르게 수행할 수 있다. fastSum이라는 알고리즘을 보고 느낀 점은 뒷통수를 한대 맞은 느낌이랄까? 어떤 문제이든 더 나은 방법이 없다고 가정해 버리면 항상 제자리일 뿐이고 약간 다르게 생각해 보면 아주 멋진 해결책이 나를 기다리고 있을지도 모른다는 것이다.</p>
+
+<p>이 문제를 1부터 N까지의 총합으로 생각하고 이 문제를 나누어 [1…N/2]과 [N/2+1…N]의 합으로 생각해 보자.</p>
+
+<pre class="lang:default decode:true ">[1 + 2 + 3 + 4 + ... + N/2] + [1 + N/2, 2 + N/2, 3 + N/2 + ... + N/2 + N/2] 
+
+이 것은 다시
+
+[1 + 2 + 3 + 4 + ... + N/2] + [N/2 + N/2 + N/2 + ... + N/2] + [1 + 2 + 3 + ... + N/2]
+
+가 되며 [N/2 + N/2 + N/2 + ... + N/2] 의 갯수는 N/2개가 된다. 왜냐 처음에 [1...N]을 2로 나누었기 때문이다.
+
+그러면 2 * [1 + 2 + 3 + 4 + ... + N/2] + 2/N * 2/N 이 된다.
+</pre>
+
+<p>이 것을 코드로 작성하면 아래와 같다.</p>
+
+<pre class="lang:swift decode:true ">func fastSum(n: Int) -&gt; Int {
+    if n == 1 {
+        return 1
+    }
+    if n % 2 == 1 {
+        return fastSum(n-1) + n
+    }
+    return 2 * fastSum(n/2) + (n/2)*(n/2)
+}
+</pre>
+
+<p>이제 3가지 방법에 대해서 성능을 측정해 보자.</p>
+
+<p>우선 실행시간을 측정할 수 있는 함수를 작성한다.</p>
+
+<pre class="lang:swift decode:true ">func test(f: () -&gt; () ) {
+    let currentTime = NSDate()
+    f()
+    let finishTime = NSDate()
+    print(finishTime.timeIntervalSinceDate(currentTime))
+}
+</pre>
+
+<p>루프를 사용해 총합을 계산하는 함수를 작성한다.</p>
+
+<pre class="lang:swift decode:true ">func sum(n: Int) -&gt; Int {
+    var total = 0
+    for x in 1...n {
+        total += x
+    }
+    return total
+}
+</pre>
+
+<p>재귀만을 사용해 총합을 계산하는 함수를 작성한다.</p>
+
+<pre class="lang:swift decode:true ">func recursiveSum(n: Int) -&gt; Int {
+    
+    if n == 1 {
+        return 1
+    }
+    
+    return n + recursiveSum(n-1)
+}</pre>
+
+<p>위에서 정리한 분할정복을 사용하는 함수를 작성한다.</p>
+
+<pre class="lang:swift decode:true ">func fastSum(n: Int) -&gt; Int {
+    if n == 1 {
+        return 1
+    }
+    if n % 2 == 1 {
+        return fastSum(n-1) + n
+    }
+    return 2 * fastSum(n/2) + (n/2)*(n/2)
+}
+</pre>
+
+<p>각각 함수의 실행시간을 측정해 보자.</p>
+
+<pre class="lang:swift decode:true ">test {
+    sum(10000)
+}
+
+test {
+    recursiveSum(10000)
+}
+
+test {
+    fastSum(10000)
+}
+</pre>
+
+<p>측정 시간 결과는 아래와 같다.</p>
+
+<pre class="lang:default decode:true ">루프 - 1.30924600362778
+재귀 - 1.32626700401306
+분할정복 - 0.00304800271987915</pre>
+
+<p>물론 실행 횟수에도 차이가 있다.</p>
+
+<p>루프는 함수는 한번 실행하지만 덧셈을 총 10000번 실행한다. 즉, N번 실행한다.</p>
+
+<p>재귀 함수도 N번 함수가 호출된다.</p>
+
+<p>분할 정복은 약 18회정도 호출된다.</p>
+
+<p>이 알고리즘의 교훈은 무엇일까? 무엇이든 곱씹어 보라는 것은 아닐까?…</p>

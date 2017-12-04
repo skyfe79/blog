@@ -1,0 +1,20 @@
+<pre class="lang:xhtml decode:true">&lt;declare-styleable name="WatermarkButton"&gt;
+    &lt;attr name="watermarkImage" format="reference" /&gt;
+&lt;/declare-styleable&gt;</pre>
+
+<p>위처럼 속성을 선언하고 아래 코드처럼 접근할 때, null을 반환한다면</p>
+
+<pre class="lang:java mark:1 decode:true">TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.WatermarkButton);
+watermarkDrawable = typedArray.getDrawable(R.styleable.WatermarkButton_watermarkImage);
+typedArray.recycle();
+</pre>
+
+<p>해당 커스텀뷰를 선언한 xml로 이동하여 xml 네임스페이스를 제대로 적었는지 확인한다.</p>
+
+<pre class="lang:default decode:true ">xmlns:watermark="http://schemas.android.com/apk/res-auto"</pre>
+
+<p>이렇게 적어야 하는데 가끔 인텔리센스에 의해서</p>
+
+<pre class="lang:default decode:true ">xmlns:watermark="http://schemas.android.com/tools"</pre>
+
+<p>로 쓰여질 경우가 있다. 길고긴 삽질;</p>

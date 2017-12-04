@@ -1,0 +1,43 @@
+<p>안드로이드 앱을 작성하다 보면 여러 라이브러리를 사용하기 때문에 메서드 개수가 65K를 넘을 경우가 많습니다. 이 때는 multi dex 라는 기법으로 앱을 패키징하면 문제를 해결할 수 있습니다. 아래처럼 gradle 을 작성해 주시면 됩니다.<!--more--></p>
+
+<pre class="lang:default decode:true">android {
+    ...
+    defaultConfig {
+        ...
+        multiDexEnabled true
+        ...
+    }
+    ...
+}</pre>
+
+<p>위 한줄의 설정을 위해서 아래와 같은 환경 설정이 필요합니다.</p>
+
+<ul>
+  <li>AndroidStudio 9.x 이상( Android Stduio 1.0 RC2 를 카나리 채널에서 업데이트 받으세요 )</li>
+  <li>Gradel 2.1 이상</li>
+  <li>Android Build Took 2.1 이상</li>
+</ul>
+
+<p>그리고 Application 객체를 MultiDexApplication 로 부터 확장해야 합니다. 그리고 AndroidManifest.xml 의 Application 태그에 android:name 속성을 설정합니다.</p>
+
+<pre class="lang:default decode:true ">public class MyMultiDexApp extends MultiDexApplication {
+   ... 
+}</pre>
+
+<p>만약에 커스텀 Application 클래스를 사용하지 않는다면 AndroidManifest.xml 의 Application 태그에 아래처럼 작성해야 합니다.</p>
+
+<pre class="lang:default decode:true">&lt;application
+    android:name="android.support.multidex.MultiDexApplication"
+    .. &gt;
+ ..
+&lt;/application&gt;</pre>
+
+<p>그리고 MultiDexApplication 을 사용하기 위해서 com.android.support:multidex:1.0.0 모튤이 필요합니다.</p>
+
+<pre class="lang:default decode:true ">dependencies {
+    ...
+    compile 'com.android.support:multidex:1.0.0'
+    ...
+}</pre>
+
+<p>이렇게 하면 메서드 65K 제한 문제를 해결할 수 있습니다</p>

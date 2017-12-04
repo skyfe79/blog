@@ -1,0 +1,294 @@
+<h2 id="toc_1">UnsafePointer와 UnsafeMutablePointer</h2>
+
+<p>Swift에서 C언어의 레거시 API를 사용할 때, C API가 포인터를 담고 있는 경우 Swift에서는 아래의 두 가지 경우로 함수 시그니쳐가 변환되어 임포트 됩니다.</p>
+
+<ul>
+  <li><code class="highlighter-rouge">UnsafePointer&lt;T&gt;</code></li>
+  <li><code class="highlighter-rouge">UnsafeMutablePointer&lt;T&gt;</code></li>
+</ul>
+
+<p>C언어의 API 에서 함수의 인자에 <code class="highlighter-rouge">const</code>가 붙은 경우 <code class="highlighter-rouge">UnsafePointer&lt;T&gt;</code>가 되며 <code class="highlighter-rouge">const</code>가 없는 경우 <code class="highlighter-rouge">UnsafeMutablePointer&lt;T&gt;</code>가 됩니다.</p>
+
+<p>몇 가지 예를 들면 아래와 같습니다.</p>
+
+<pre class="lang:swift decode:true ">[C언어]
+void myFunction(const int *myConstIntPointer);
+
+[Swift]
+func myFunction(myConstIntPointer: UnsafePointer&lt;Int32&gt;)
+
+[C언어]
+void myOtherFunction(unsigned int *myUnsignedIntPointer);
+
+[Swift]
+func myOtherFunction(myUnsignedIntPointer: UnsafeMutablePointer&lt;UInt32&gt;)
+
+[C언어]
+void iTakeAVoidPointer(void *aVoidPointer);
+
+[Swift]
+func iTakeAVoidPointer(aVoidPointer: UnsafeMutablePointer&lt;Void&gt;)</pre>
+
+<p>C언어에서 포인터를 선언하기 위해서 아직 정의되지 않은 구조체의 타입을 미리 선언하는 경우가 있습니다. 아래처럼 말이죠.</p>
+
+<pre class="lang:c decode:true ">[C언어]
+struct SomeThing;
+void iTakeAnOpaquePointer(struct SomeThing *someThing);</pre>
+
+<p>이 경우 swift에서는 <code class="highlighter-rouge">COpaquePointer</code>로 변환되어 임포트 됩니다.</p>
+
+<pre class="lang:swift decode:true ">[Swift]
+func iTakeAnOpaquePointer(someThing: COpaquePointer)</pre>
+
+<p>Swift에는 C언어의 주소 참조 연산자와 비슷한 inout연산자가 있습니다. C언어에서 두 정수를 swap하는 함수를 만들 때, 포인터를 사용했듯이 swift에서도 inout연산자를 사용해 swap함수를 만들 수 있습니다.</p>
+
+<pre class="lang:swift decode:true ">func swap(inout a : Int, inout _ b : Int) {
+    let temp : Int = a
+    a = b
+    b = temp
+}
+
+var aa = 10
+var bb = 20
+swap(&amp;aa, &amp;bb)
+print("\(aa), \(bb)")
+ ==&gt; 20, 10</pre>
+
+<p>inout 으로 선언된 인자에 넘길 변수는 반드시 let이 아닌 var로 선언되어야 합니다. 이 성질은 C언어 포인터에도 비슷하게 적용됩니다. UnsafePointer에는 let으로 선언된 변수를 전달 할 수 있습니다. 물론 var로 선언된 변수를 전달할 수 있지만 특별한 변경이 없는 경우에는 컴파일러가 <code class="highlighter-rouge">Variable 'something' was naver mutated</code> 경고를 보여주며 let으로 변경할 것을 제안합니다. UnsafeMutablePointer에는 var로 선언된 변수만 전달할 수 있습니다. 그렇지 않은경우 컴파일 오류가 발생합니다.</p>
+
+<p>UnsafePointer와 UnsafeMutablePointer가 사용될 경우는 함수의 인자로 전달될 때뿐입니다. 아래처럼 변수의 주소를 얻어오는 연산은 Swift에서 허용되지 않습니다.</p>
+
+<pre class="lang:swift decode:true ">[Swift]
+let x = 42
+let y = &amp;x</pre>
+
+<p><strong><code class="highlighter-rouge">&amp;</code></strong>연사자를 함수 호출이 아닌 곳에서 사용하면 <strong><code class="highlighter-rouge">'&amp;' can only appear immediately in a call argument list</code></strong> 라는 컴파일 오류가 발생합니다.</p>
+
+<h2 id="toc_2">값을 전달 받는 C언어 함수</h2>
+
+<p>우선 값을 전달 받아 출력하는 C언어 함수를 작성해 보고 이 함수들이 어떻게 Swift로 임포트 되는지 살펴보겠습니다.</p>
+
+<pre class="lang:c decode:true ">void c_printByte(const unsigned char value);
+void c_printChar(const char value);
+void c_printInt(const int value);
+void c_printFloat(const float value);
+void c_printDouble(const double value);</pre>
+
+<p>위의 함수들은 Swift에서 아래처럼 임포트 됩니다.</p>
+
+<pre class="lang:swift decode:true ">func c_printByte(value: UInt8)
+func c_printChar(value: Int8)
+func c_printInt(value: Int32)
+func c_printFloat(value: Float)
+func c_printDouble(value: Double)</pre>
+
+<p>문자열을 출력하는 아래의 함수는 어떻게 변환될까요?</p>
+
+<pre class="lang:c decode:true ">void c_print(const char* msg);</pre>
+
+<p>위의 함수는 Swift에서 아래처럼 임포트 됩니다.</p>
+
+<pre class="lang:swift decode:true ">func c_print(msg: UnsafePointer&lt;Int8&gt;)</pre>
+
+<p>아래와 같은 C언어에서 정의한 구조체가 있을 경우는 어떨까요?</p>
+
+<pre class="lang:default decode:true ">struct Vertex {
+    float a;
+    float b;
+    float c;
+};</pre>
+
+<pre class="lang:c decode:true ">void c_printVertex(const struct Vertex vertex);</pre>
+
+<p>위의 C언어 함수는 Swift에서 아래처럼 임포트 됩니다.</p>
+
+<pre class="lang:swift decode:true ">func c_printVertex(vertex: Vertex)</pre>
+
+<p>그리고 아래처럼 사용할 수 있습니다.</p>
+
+<pre class="lang:swift decode:true ">let vertex = Vertex(a: 10, b: 20, c: 30)
+c_printVertex(vertex)</pre>
+
+<h2 id="toc_3">포인터를 전달받는 C언어 함수</h2>
+
+<p>포인터를 전달 받는 C언어 함수들은 어떻게 변환되어 임포트될까요? 아래의 함수들부터 살펴 보겠습니다.</p>
+
+<pre class="lang:c decode:true ">void c_transformByte(unsigned char* value);
+void c_transformChar(char *value);
+void c_transformInt(int* value);
+void c_transformFloat(float *value);
+void c_transformDouble(double* value);
+void c_transformVertex(struct Vertex *vertex);</pre>
+
+<p>각 타입의 포인터를 받아 값을 함수 내부에서 변환하는 C언어 함수입니다. 이 함수들은 Swift에서 아래와 같이 변환되어 임포트 됩니다.</p>
+
+<pre class="lang:swift decode:true ">func c_transformByte(value: UnsafeMutablePointer&lt;UInt8&gt;)
+func c_transformChar(value: UnsafeMutablePointer&lt;Int8&gt;)
+func c_transformInt(value: UnsafeMutablePointer&lt;Int32&gt;)
+func c_transformFloat(value: UnsafeMutablePointer&lt;Float&gt;)
+func c_transformDouble(value: UnsafeMutablePointer&lt;Double&gt;)
+func c_transformVertex(value: UnsafeMutablePointer&lt;Vertex&gt;)</pre>
+
+<p>위처럼 임포트 된 C언어 함수를 Swift에섯 아래처럼 사용할 수 있습니다.</p>
+
+<pre class="lang:swift decode:true ">var b : UInt8 = 100
+c_transformByte(&amp;b)
+print(b)
+        
+if let char = letterA.unicodeScalars.first {
+    if char.isASCII() {
+        // copy ascii code as mutable
+        var ch : Int8 = Int8(char.value)
+        c_transformChar(&amp;ch)
+        let result = String(UnicodeScalar(UInt8(ch)))
+        print(result)
+    }
+}
+
+var i : Int32 = 100
+c_transformInt(&amp;i)
+print(i)
+    
+var f : Float = 10.0
+c_transformFloat(&amp;f)
+print(f)
+    
+var d : Double = 1000.0
+c_transformDouble(&amp;d)
+print(d)
+    
+var v : Vertex = Vertex(a: 10, b: 20, c: 30)
+c_transformVertex(&amp;v)
+print(v)</pre>
+
+<p>결과는 아래와 같습니다.</p>
+
+<pre class="lang:default decode:true ">110
+B
+110
+20.0
+1010.0
+Vertex(a: 20.0, b: 40.0, c: 60.0)</pre>
+
+<h2 id="toc_4">void 포인터를 전달받는 C언어 함수</h2>
+
+<p>그렇다면 C언어의 void 포인터는 어떨까요?</p>
+
+<pre class="lang:c decode:true ">void c_printIntAsVoidPointer(void *value);
+void c_transformIntAsVoidPointer(void *value);</pre>
+
+<p>위의 C언어 함수는 swift에서 아래처럼 변환됩니다.</p>
+
+<pre class="lang:swift decode:true ">func c_printIntAsVoidPointer(value: UnsafeMutablePointer&lt;Void&gt;)
+func c_transformIntAsVoidPointer(value : UnsafeMutablePointer&lt;Void&gt;)</pre>
+
+<p>Swift에서 void 포인터 타입으로 전달되는 함수 인자의 정확한 타입을 알면 아래처럼 <strong><code class="highlighter-rouge">withUnsafePointer</code></strong> 또는 <strong><code class="highlighter-rouge">withUnsafeMutablePointer</code></strong>를 사용하는 것이 안전합니다.</p>
+
+<pre class="lang:swift decode:true ">var iv : Int32 = 100
+withUnsafeMutablePointer(&amp;iv) { (ptr:UnsafeMutablePointer&lt;Int32&gt;) -&gt; Void in
+    let voidPtr : UnsafeMutablePointer&lt;Void&gt; = unsafeBitCast(ptr, UnsafeMutablePointer&lt;Void&gt;.self)
+    c_transformIntAsVoidPointer(voidPtr)
+    print(iv)            
+}</pre>
+
+<p><strong><code class="highlighter-rouge">withUnsafeMutablePointer</code></strong>의 함수 시그니쳐는 아래와 같습니다.</p>
+
+<pre class="lang:swift decode:true ">withUnsafeMutablePointer(&amp;arg: T, body: UnsafeMutablePointer&lt;T&gt; throws -&gt; Result)</pre>
+
+<p>withUnsafeMutablePointer 이 함수는 arg의 포인터를 받아 body라는 클로져에 전달해 호출하고 그 결과를 Result타입으로 얻는 함수입니다. 위의 예제를 보면 iv변수의 포인터를 UnsafeMutablePointer의 ptr에 전달하고 ptr을 전달받은 body클로져는 unsafeBitCast를 사용해 Void 포인터로 변환해 c_transformIntAsVoidPointer를 호출합니다.</p>
+
+<p>여기서 <code class="highlighter-rouge">unsafeBitCast</code>는 아주 위험한 함수입니다. 잘 못 사용하면 메모리 크래쉬를 일으킵니다. 크기가 같으면 무조건 캐스팅하는 녀석이라고 보면 될 것 같습니다. 그렇다면 위의 예제에서 <code class="highlighter-rouge">unsafeBitCast</code>는 안전한가? 라고 물으면 “그렇다”입니다. 왜냐하면 어떤 포인터를 다른 포인터로 변환하기 때문입니다. 포인터는 어느 플랫폼에서나 크기가 같기 때문입니다. 따라서 inout 변수의 포인터를 우선 <code class="highlighter-rouge">UnsafePointer&lt;T&gt;</code>로 받고(T는 inout변수의 타입) 이것을 다시 <code class="highlighter-rouge">unsafeBitCast</code>를 사용해 C언어 함수에 필요한 void 포인터로 변경해야 합니다.</p>
+
+<p><strong><code class="highlighter-rouge">참고</code></strong> AnyObject를 상속받은 객체의 void 포인터를 얻는 UnsafeAddressOf 메서드도 있습니다.</p>
+
+<p>아래처럼 편의를 위해 2개의 inout 인자를 받는 <code class="highlighter-rouge">withUnsafePointers</code> 메서드도 있습니다.</p>
+
+<pre class="lang:swift decode:true ">var x: Int = 7
+var y: Double = 4
+
+withUnsafePointers(&amp;x, &amp;y, { (ptr1: UnsafePointer&lt;Int&gt;, ptr2: UnsafePointer&lt;Double&gt;) -&gt; Void in
+
+    var voidPtr1: UnsafePointer&lt;Void&gt; = unsafeBitCast(ptr1, UnsafePointer&lt;Void&gt;.self)
+    var voidPtr2: UnsafePointer&lt;Void&gt; = unsafeBitCast(ptr2, UnsafePointer&lt;Void&gt;.self)
+
+    takesTwoPointers(voidPtr1, voidPtr2)
+})</pre>
+
+<p>조심해야 할 점은 아래처럼 변환하면 안된다는 것입니다.</p>
+
+<pre class="lang:swift decode:true ">var x: Int = 7
+let xPtr = unsafeBitCast(x, UnsafePointer&lt;Void&gt;.self)
+print(xPtr)</pre>
+
+<p>이렇게 하면 xPtr값은 0x00000007이 되는데 이것은 값 7을 주소값으로 잘 못 변환한 것이 됩니다. 즉, 의미가 없거나 아주 위험한 포인터가 됩니다.</p>
+
+<pre class="lang:swift decode:true">var x: Int = 10
+let xPtr = unsafeBitCast(x, UnsafePointer&lt;Void&gt;.self)
+print(xPtr)</pre>
+
+<p>이렇게 하면 xPtr값은 0x0000000a 가 됩니다. 그렇다면 어떻게 x의 주소값을 얻을 수 있을까요? 아래처럼 하면 되지 않을까요?</p>
+
+<pre class="lang:swift decode:true ">var x: Int = 10
+let xPtr = unsafeBitCast(UnsafePointer&lt;Int&gt;(&amp;x), UnsafePointer&lt;Void&gt;.self)
+print(xPtr)</pre>
+
+<p>하지만 생각대로 되지 않습니다. UnsafePointer는 위처럼 inout 변수를 받는 생성자가 없습니다. 즉, x 변수의 주소를 얻는 방법은 <strong><code class="highlighter-rouge">withUnsafePointer</code></strong> 나 <strong><code class="highlighter-rouge">withUnsafeMutablePointer</code></strong>를 사용하는 것만 있습니다.</p>
+
+<h2 id="toc_5">배열을 전달받는 C언어 함수</h2>
+
+<p>아래처럼 정수 배열을 전달 받는 C언어 함수는 Swift로 어떻게 변환되어 임포트될까요?</p>
+
+<pre class="lang:c decode:true ">int c_sumIntArray(const int intArray[], int size);</pre>
+
+<p>아래처럼 임포트됩니다.</p>
+
+<pre class="lang:swift decode:true ">func c_sumIntArray(intArray: UnsafePointer&lt;Int32&gt;, size: Int32)</pre>
+
+<p>이 함수를 아래처럼 사용할 수 있습니다.</p>
+
+<pre class="lang:swift decode:true ">let sum123 = c_sumIntArray([1,2,3], 3) 
+print(sum123)
+
+let sum1to10 = c_sumIntArray(Array(1...10), 10)
+print(sum1to10)</pre>
+
+<h2 id="toc_6">구조체를 전달받는 C언어 함수</h2>
+
+<p>아래처럼 C언어의 Person 구조체를 정의해 보고 Swift언어에서 어떻게 임포트 되는지 알아봅시다.</p>
+
+<pre class="lang:swift decode:true ">struct Person {
+    char name[128];
+};</pre>
+
+<p>이 구조체를 swift에서 사용하려고 보면 아래처럼 임포트 되어 어떻게 사용할지 난감합니다.</p>
+
+<pre class="lang:swift decode:true ">Person.init(name: (Int8,Int8,Int8, ... ,Int8))</pre>
+
+<p>즉, name필드가 Int8을 128개 담고 있는 튜플로 변환됩니다. 그래서 name필드의 값을 설정하기가 매우 힘들다. 그럼 어떻게 name필드를 초기화할 수 있을까요? 답은 아주 간단합니다. 구조체를 C언어 함수에 전달하고 C언어 함수에서 해당 필드를 설정하는 것입니다. 이를 위해서는 값타입인 구조체의 포인터가 필요합니다. UnsafeMutablePointer의 alloc함수를 사용하면 변경가능한 포인터를 쉽게 얻을 수 있습니다.</p>
+
+<pre class="lang:swift decode:true">let mike = UnsafeMutablePointer&lt;Person&gt;.alloc(1)
+c_setPersonName(mike, "Mike")
+c_printPerson(mike.memory)
+mike.dealloc(1)</pre>
+
+<p>위에서 사용한 c_setPersonName, c_printPerson C언어 함수의 정의는 아래와 같습니다.</p>
+
+<pre class="lang:c decode:true ">void c_setPersonName(const struct Person* person, const char *name) {
+    strcpy(person-&gt;name, name);
+}
+
+void c_printPerson(const struct Person person) {
+    printf("person's name : %s", person.name);
+}
+</pre>
+
+<p>위의 예제에서 alloc은 힙메모리에 Person구조체를 위한 메모리를 생성합니다. alloc으로 사용한 힙메모리는 ARC(auto reference count)로 관리되지 않기 때문에 반드시 dealloc으로 사용한 힙메모리를 해지해야 합니다.</p>
+
+<p>이 글은 아래 참고자료를 편역하여 작성한 글입니다. 예제코드는 <a href="https://github.com/skyfe79/UsingSwiftAndCpp">https://github.com/skyfe79/UsingSwiftAndCpp</a>에서 받을 수 있습니다.</p>
+
+<h2 id="toc_7">참고자료</h2>
+
+<ul>
+  <li><a href="http://www.sitepoint.com/using-legacy-c-apis-swift/">Using Legacy C APIs with Swift</a></li>
+  <li><a href="https://github.com/skyfe79/UsingSwiftAndCpp">https://github.com/skyfe79/UsingSwiftAndCpp</a></li>
+</ul>

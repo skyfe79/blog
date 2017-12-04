@@ -1,0 +1,81 @@
+<p class="p1">
+  <span class="s1">반지름을 전달하면 원의 넓이를 반환하는 함수를 네이티브 코드로 작성해 보자. </span><!--more-->
+</p>
+
+<pre class="lang:default decode:true ">$ vi PassAndReturnFloat.cpp</pre>
+
+<pre class="lang:default decode:true ">#include &lt;jni.h&gt;
+
+jfloat circleArea
+(
+    JNIEnv      *env,
+    jobject     thiz,
+    jfloat      radius
+)
+{
+    return 3.141592 * radius * radius;
+}
+
+JNIEXPORT jint JNICALL JNI_OnLoad
+(
+    JavaVM      *vm,
+    void        *reserved
+)
+{
+    JNIEnv  *env;
+    if(vm-&gt;GetEnv(reinterpret_cast&lt;void**&gt;(&amp;env), JNI_VERSION_1_6)) {
+        return -1;
+    }
+    
+    JNINativeMethod nm {
+        const_cast&lt;char *&gt;("circleArea"),
+        const_cast&lt;char *&gt;("(F)F"),
+        reinterpret_cast&lt;void *&gt;(circleArea)
+    };
+    
+    jclass cls = env-&gt;FindClass("Client");
+    env-&gt;RegisterNatives(cls, &amp;nm, 1);
+    return JNI_VERSION_1_6;
+}</pre>
+
+<p class="p1">
+  <span class="s1">컴파일하고 라이브러리로 만든다</span>
+</p>
+
+<pre class="lang:default decode:true ">$ g++ "-I/System/Library/Frameworks/JavaVM.framework/Versions/Current/Headers/" -std=c++11 -c PassAndReturnFloat.cpp
+$ g++ -dynamiclib -o libpardouble.jnilib passandreturndouble.o</pre>
+
+<p class="p1">
+  <span class="s1">라이브러리를 사용하는 자바 코드를 작성한다.</span>
+</p>
+
+<pre class="lang:default decode:true ">$ vi Client.java</pre>
+
+<pre class="lang:default decode:true ">public class Client {
+
+    public native float circleArea(float radius);
+    
+    public static void main(String[] args) {
+        
+        Client client = new Client();
+        
+        System.out.println("circle radius is 1. The area is " + client.circleArea(1));
+        System.out.println("circle radius is 5. The area is " + client.circleArea(5));
+        
+    }
+    
+    static {
+        System.loadLibrary("parfloat");
+    }
+}</pre>
+
+<p class="p1">
+  <span class="s1">자바 코드를 컴파일하고 실행해 본다.</span>
+</p>
+
+<pre class="lang:default decode:true ">$ javac Client.java
+$ java Client
+circle radius is 1. The area is 3.141592
+circle radius is 5. The area is 78.5398</pre>
+
+<p> </p>

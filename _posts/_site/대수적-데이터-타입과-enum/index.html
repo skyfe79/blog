@@ -1,0 +1,221 @@
+<p>대수적 데이터 타입은 다른 데이터 타입을 조합 및 연산하여 하나의 새로운 집합을 정의할 때, 해당 집합을 대수적 데이터 타입이라고 한다. 쉽게 얘기해 집합을 정의하는 것이다.</p>
+
+<p>헤스켈에서 대표적인 대수적 데이터 타입은 Bool 타입이다.</p>
+
+<pre class="lang:haskell decode:true ">data Bool = True | False</pre>
+
+<p>Bool 타입은 True타입과 False타입이 모여 Bool이라는 집합을 정의한다고 생각할 수 있다. 대수적 데이터 타입의 몇 가지 예를 더 살펴보자.</p>
+
+<pre class="lang:haskell decode:true ">data Point = Point Int Int
+data Either a b = Left a | Right b</pre>
+
+<p>Point 집합은 Int Int 를 조합하여 만들어지는 집합이고 Either는 Left a 와 Right b 를 조합하여 만들어지는 집합니다.</p>
+
+<h2 id="대수적-데이터-타입이-왜-좋은가">대수적 데이터 타입이 왜 좋은가?</h2>
+
+<p>대수적 데이터 타입을 쓰면 패턴매칭과 재귀를 사용해 원하는 알고리즘을 쉽게 기술할 수 있기 때문이다. 이진 트리는 대표적인 재귀 타입인데 헤스켈로 트리를 정의해 보자.</p>
+
+<pre class="lang:haskell decode:true ">data Tree a = Leaf a 
+            | Node a (Tree a) (Tree a)</pre>
+
+<p>Tree집합은 Leaf와 Node로 조합되는 집합이다. Leaf는 자식이 없는 Node의 특수한 경우다. Node는 두 개의 트리를 자식으로 갖는다. 이 예제에서 Node는 무조건 2개의 자식을 갖는다고 가정하고 있다.</p>
+
+<p>위의 트리는 재귀를 사용하여 대수적 데이터 타입을 정의한 것이다. 이제 이 트리집합에서 특정 원소 a 가 존재하는지 검색하는 함수(알고리즘)를 기술해 보자.</p>
+
+<pre class="lang:haskell decode:true ">inTree :: Eq a =&gt; a -&gt; Tree a -&gt; Bool
+inTree x (Leaf a) = a == x
+inTree x (Node a l r) = x == a || (inTree x l) || (inTree x r)</pre>
+
+<p>패턴매칭과 재귀를 사용해 아주 간결하고 명확하게 알고리즘을 기술 할 수 있다.</p>
+
+<h2 id="swfit의-enum">Swfit의 Enum</h2>
+
+<p>Swift에서도 헤스켈처럼 대수적 데이터 타입을 정의하고 패턴 매칭을 사용해 알고리즘을 기술할 수 있을까? 그렇다 enum을 사용하면 가능하다. Swift 1.x 에서는 enum을 사용해 재귀적인 데이터 타입을 정의하기 어려웠지면 Swift 2.0 부터 indirect 키워드를 지원해 재귀적인 데이터 타입을 아주 쉽게 정의할 수 있다.</p>
+
+<p>indirect가 필요한 이유는 enum이 값 타입이기 때문에 컴파일러가 컴파일할 때 해당 enum의 크기를 정확하게 알아야 한다. 하지만 재귀적으로 정의되어 있으면 자신의 크기를 구하기 위해 다시 자신의 크기를 구하는 무한 재귀 루프에 빠져버린다. 그래서 C,C++에서는 트리, 리스트 같은 재귀 데이터 구조를 작성할 때 포인터를 사용했던 것이다.</p>
+
+<p>C, C++에 익숙한 사람들에게 enum은 단순히 플래그의 집합 정도로만 생각되기 쉽지만 Swift의 Enum은 패턴 매칭과 어울어져 Functional Programming에 다가가는 가교 역할을 하고 있다. 이제 Swift로 트리를 정의해 보고 트리를 검색하는 함수를 패턴 매칭을 사용해 기술 해 보자.</p>
+
+<pre class="lang:swift decode:true ">indirect enum Tree&lt;T&gt; {
+    case Leaf(T)
+    case Node(Tree&lt;T&gt;, T, Tree&lt;T&gt;)
+}</pre>
+
+<p>이렇게 정의한 트리는 아래처럼 사용할 수 있다.</p>
+
+<pre class="lang:swift decode:true ">let tree : Tree&lt;Int&gt; = Tree.Node(.Leaf(2), 4, .Leaf(5))
+let tree2 : Tree&lt;Int&gt; = Tree.Node(.Leaf(2), 3, .Node(.Leaf(4), 5, .Leaf(10)))</pre>
+
+<p>이제 트리를 검색하는 함수를 패턴매칭을 사용해 기술해 보자.</p>
+
+<pre class="lang:swift decode:true ">func inTree&lt;T: Equatable&gt;(ele: T, tree: Tree&lt;T&gt;) -&gt; Bool {
+    switch tree {
+    case .Leaf(let x):
+        return x == ele
+    case .Node(let left, let x, let right):
+        return x == ele || inTree(ele, tree: left) || inTree(ele, tree: right)
+    }
+}</pre>
+
+<p>함수를 사용해 보자.</p>
+
+<pre class="lang:swift decode:true ">inTree(5, tree: tree2) 
+=&gt; true
+inTree(1, tree: tree2) 
+=&gt; false</pre>
+
+<p>아주 근사하다!</p>
+
+<h2 id="kotlin의-data-class">Kotlin의 data class</h2>
+
+<p>Kotlin도 data class 와 when 패턴 매칭을 사용하면 헤스켈처럼 대수적 데이터 타입을 기술할 수 있다. 위의 내용을 Kotlin으로 표현해 본 것은 아래와 같다.</p>
+
+<pre class="lang:swift decode:true ">interface Tree&lt;T&gt;
+data class Leaf&lt;T&gt;(val value : T) : Tree&lt;T&gt;
+data class Node&lt;T&gt;(val left: Tree&lt;T&gt;, val value: T, val right: Tree&lt;T&gt;) : Tree&lt;T&gt;</pre>
+
+<p>트리를 검색하는 함수를 작성해 보자.</p>
+
+<pre class="lang:swift decode:true ">fun &lt;T&gt; inTree(t: Tree&lt;T&gt;, v : T) : Boolean  = when(t) {
+	is Leaf -&gt; t.value == v
+    is Node -&gt; t.value == v || inTree(t.left, v) || inTree(t.right, v) 
+    else -&gt; false
+}</pre>
+
+<p>이제 트리를 정의하고 트리에서 원소를 검색해 보자.</p>
+
+<pre class="lang:swift decode:true ">fun main(args: Array&lt;String&gt;) {
+    val tree = Node&lt;Int&gt;(Leaf(1), 2, Node(Leaf(3), 4, Leaf(5)))
+    print(inTree(tree, 3))
+    print(inTree(tree, 6))
+}</pre>
+
+<h2 id="binary-search-three">Binary Search Three</h2>
+
+<p>아래는 Swift로 작성한 BST 코드이다.</p>
+
+<pre class="lang:swift decode:true ">import Cocoa
+
+indirect enum BST&lt;T: Comparable&gt; {
+    case Leaf
+    case Node(BST&lt;T&gt;, T, BST&lt;T&gt;)
+}
+
+
+
+extension BST {
+    
+    init(_ value: T) {
+        self = .Node(.Leaf, value, .Leaf)
+    }
+    
+    init() {
+        self = .Leaf
+    }
+    
+    mutating func insert(x: T) {
+        switch self {
+        case .Leaf:
+            self = BST(x)
+        case .Node(var left, let v, var right):
+            if x &lt; v { left.insert(x) }
+            if x &gt; v { right.insert(x) }
+            self = .Node(left, v, right)
+        }
+    }
+    
+    func contains(x: T) -&gt; Bool {
+        switch self {
+        case .Leaf:
+            return false
+        case let .Node(_, y, _) where x == y:
+            return true
+        case let .Node(left, y, _) where x &lt; y:
+            return left.contains(x)
+        case let .Node(_, y, right) where x &gt; y:
+            return right.contains(x)
+        default:
+            return false
+        }
+    }
+    
+    
+    
+    var count: Int {
+        switch self {
+        case .Leaf:
+            return 0
+        case let .Node(left, _, right):
+            return left.count + 1 + right.count
+        }
+    }
+    
+    var elements: [T] {
+        switch self {
+        case .Leaf:
+            return []
+        case let .Node(left, x, right):
+            return left.elements + [x] + right.elements
+        }
+    }
+    
+    var isEmpty: Bool {
+        switch self {
+        case .Leaf:
+            return true
+        default:
+            return false
+        }
+    }
+    
+    var isBST: Bool {
+        switch self {
+        case .Leaf:
+            return true
+        case let .Node(left, x, right):
+            return left.elements.all { y in y &lt; x }
+                &amp;&amp; right.elements.all { y in y &gt; x }
+                &amp;&amp; left.isBST
+                &amp;&amp; right.isBST
+        }
+    }
+}
+
+extension Array {
+    func all&lt;T&gt; (predicate: (T) -&gt; Bool) -&gt; Bool {
+        for x in self {
+            let t = x as! T
+            if !predicate(t) {
+                return false
+            }
+        }
+        return true
+    }
+
+}
+
+var bst = BST.Node(.Leaf, 10, .Leaf)
+bst.insert(20)
+bst.insert(30)
+bst.insert(1)
+bst.contains(20)
+bst.contains(102)
+bst.elements
+bst.count
+bst.isEmpty
+bst.isBST</pre>
+
+<p> </p>
+
+<h2 id="참고">참고</h2>
+
+<ul>
+  <li><a href="http://thepurecoder.com/algebraic-data-types-in-swift/" target="_blank">http://thepurecoder.com/algebraic-data-types-in-swift/</a></li>
+  <li><a href="https://www.objc.io/books/functional-swift/">https://www.objc.io/books/functional-swift/</a>
+    <ul>
+      <li>이 책을 보면 BinarySearchTree와 Trie 의 예제를 볼 수 있다.</li>
+      <li>아래 주소는 이 책의 소스코드 중 functional data structure 의 예제 코드이다.</li>
+      <li><a href="https://github.com/objcio/functional-swift/blob/master/09-Purely-functional-data-structures.playground/Contents.swift">https://github.com/objcio/functional-swift/blob/master/09-Purely-functional-data-structures.playground/Contents.swift</a></li>
+    </ul>
+  </li>
+</ul>

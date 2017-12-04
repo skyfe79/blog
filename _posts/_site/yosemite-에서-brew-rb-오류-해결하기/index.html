@@ -1,0 +1,11 @@
+<p>맥을 Yosemite 로 업그레이드를 한 후 커맨드를 실행할 때 brew.rb 와 관련해서 아래와 같은 오류가 발생할 때가 있다.<!--more--></p>
+
+<pre class="lang:default decode:true ">/usr/local/bin/brew: /usr/local/Library/brew.rb: /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/bin/ruby: bad interpreter: No such file or directory
+/usr/local/bin/brew: line 26: /usr/local/Library/brew.rb: Undefined error: 0</pre>
+
+<p>이것을 해결하려 할 때 brew update로는 해결 되지 않는다. 아래처럼 git pull 을 통해서 통째로 업그레이드 해야 한다.</p>
+
+<pre class="lang:default decode:true ">cd /usr/local/Library
+git pull origin master</pre>
+
+<p> </p>

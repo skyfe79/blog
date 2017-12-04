@@ -1,0 +1,39 @@
+<ul>
+  <li><a href="http://glew.sourceforge.net/index.html">glew</a> 를 다운로드 한다.</li>
+  <li>압축을 푼다. <glew-root-dir> 이라 가정한다.</glew-root-dir></li>
+</ul>
+
+<!--more-->
+
+<pre class="lang:default mark:6-8,23-25 decode:true">make
+sudo -s
+make install
+
+install -d -m 0755 "/usr/include/GL"
+install -m 0644 include/GL/wglew.h "/usr/include/GL/"
+install -m 0644 include/GL/glew.h "/usr/include/GL/"
+install -m 0644 include/GL/glxew.h "/usr/include/GL/"
+ar cr lib/libGLEW.a tmp/darwin/default/static/glew.o
+strip -x lib/libGLEW.a
+sed \
+		-e "s|@prefix@|/usr|g" \
+		-e "s|@libdir@|/usr/lib|g" \
+		-e "s|@exec_prefix@|/usr/bin|g" \
+		-e "s|@includedir@|/usr/include/GL|g" \
+		-e "s|@version@|1.11.0|g" \
+		-e "s|@cflags@||g" \
+		-e "s|@libname@|GLEW|g" \
+		-e "s|@requireslib@|glu|g" \
+		&lt; glew.pc.in &gt; glew.pc
+install -d -m 0755 "/usr/lib"
+install -m 0644 lib/libGLEW.1.11.0.dylib "/usr/lib/"
+ln -sf libGLEW.1.11.0.dylib "/usr/lib/libGLEW.1.11.dylib"
+ln -sf libGLEW.1.11.0.dylib "/usr/lib/libGLEW.dylib"
+install -m 0644 lib/libGLEW.a "/usr/lib/"
+install -d -m 0755 "/usr/lib"
+install -d -m 0755 "/usr/lib/pkgconfig"
+install -m 0644 glew.pc "/usr/lib/pkgconfig/"</pre>
+
+<ul>
+  <li> XCode 에서 사용방법은 <a href="http://blog.burt.pe.kr/xcode-%EC%97%90%EC%84%9C-glfw-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0/%20">XCode에서 GLFW  사용하기</a> 글을 참고한다.</li>
+</ul>

@@ -1,0 +1,52 @@
+<p>vector<int> v 가 있을 때, v를 배열로 변경하는 방법은 아래와 같다.<!--more--></int></p>
+
+<pre class="lang:default decode:true ">//C++11 이전
+const int* vp = &amp;v[0];
+
+//C++11 이후
+cosnt int* vp = v.data();</pre>
+
+<p>예제로 확인해 보자.</p>
+
+<pre class="lang:default decode:true ">$ vi printVector.cpp</pre>
+
+<pre class="lang:default decode:true ">#include &lt;vector&gt;
+#include &lt;iostream&gt;
+
+using namespace std;
+
+void printArray(const int*, int);
+
+int main() {
+
+    vector&lt;int&gt; v = { 1, 2, 3, 4, 5 };
+
+
+
+    int *vp = &amp;v[0];
+
+    printArray(vp, 5);
+
+    int *vpp = v.data();
+    printArray(vpp, 5);
+
+    return 0;
+}
+
+
+void printArray(const int* array, int size) {
+    cout &lt;&lt; "vp : ";
+    for(int i=0; i&lt;size; i++) {
+        cout &lt;&lt; array[i] &lt;&lt; ", ";
+    }
+    cout &lt;&lt; endl;
+}</pre>
+
+<p>컴파일 하고 실행해 보자.</p>
+
+<pre class="lang:default decode:true ">$ g++ printArray.cpp -std=c++11 -o printArray
+./printArray
+1, 2, 3, 4, 5,
+1, 2, 3, 4, 5,</pre>
+
+<p> </p>

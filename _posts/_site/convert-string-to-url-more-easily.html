@@ -1,0 +1,69 @@
+<p><a href="https://twitter.com/johnsundell">John Sundell 트위터</a>를 보던 중 유용한 팁이 있어서 적어 봅니다. Swift에서 String으로 URL을 만들려할 때 guard let 이나 if let 을 매번 써야 하는 불편함이 있습니다.</p>
+
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="k">guard</span> <span class="k">let</span> <span class="nv">url</span> <span class="o">=</span> <span class="kt">URL</span><span class="p">(</span><span class="nv">string</span><span class="p">:</span> <span class="s">"http://blog.burt.pe.kr"</span><span class="p">)</span> <span class="k">else</span> <span class="p">{</span>
+	<span class="o">...</span>
+<span class="p">}</span>
+
+<span class="n">or</span>
+
+<span class="k">if</span> <span class="k">let</span> <span class="nv">url</span> <span class="o">=</span> <span class="kt">URL</span><span class="p">(</span><span class="nv">string</span><span class="p">:</span> <span class="s">"http://blog.burt.pe.kr"</span><span class="p">)</span> <span class="p">{</span>
+	<span class="o">...</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>타입안전성 때문이지만 때로는 번거롭기도 하죠. 아래처럼 할 수 있다면 어떨까요?</p>
+
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="k">let</span> <span class="nv">blogUrl</span> <span class="p">:</span> <span class="kt">URL</span> <span class="o">=</span> <span class="s">"http://blog.burt.pe.kr"</span>
+</code></pre>
+</div>
+
+<p>이렇게 하려면 URL을 아래처럼 확장하면 됩니다.</p>
+
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="kd">extension</span> <span class="kt">URL</span><span class="p">:</span> <span class="kt">ExpressibleByStringLiteral</span> <span class="p">{</span>
+    <span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="n">stringLiteral</span> <span class="nv">value</span><span class="p">:</span> <span class="kt">StaticString</span><span class="p">)</span> <span class="p">{</span>
+        
+        <span class="k">guard</span> <span class="k">let</span> <span class="nv">url</span> <span class="o">=</span> <span class="kt">URL</span><span class="p">(</span><span class="nv">string</span><span class="p">:</span> <span class="s">"</span><span class="se">\(</span><span class="n">value</span><span class="se">)</span><span class="s">"</span><span class="p">),</span> <span class="n">url</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="k">else</span> <span class="p">{</span>
+        
+        	  <span class="c1">// 1</span>
+            <span class="k">let</span> <span class="nv">exception</span> <span class="o">=</span> <span class="kt">NSException</span><span class="p">(</span>
+                <span class="nv">name</span><span class="p">:</span> <span class="o">.</span><span class="n">invalidArgumentException</span><span class="p">,</span>
+                <span class="nv">reason</span><span class="p">:</span> <span class="s">"Invalid URL </span><span class="se">\(</span><span class="n">value</span><span class="se">)</span><span class="s">"</span><span class="p">,</span>
+                <span class="nv">userInfo</span><span class="p">:</span> <span class="kc">nil</span>
+            <span class="p">)</span>
+            
+            <span class="n">exception</span><span class="o">.</span><span class="nf">raise</span><span class="p">()</span>
+            
+            <span class="c1">// 2</span>
+            <span class="nf">preconditionFailure</span><span class="p">(</span><span class="s">"Invalid URL </span><span class="se">\(</span><span class="n">value</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
+        <span class="p">}</span>
+        <span class="k">self</span> <span class="o">=</span> <span class="n">url</span>
+    <span class="p">}</span>
+    
+    <span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="n">extendedGraphemeClusterLiteral</span> <span class="nv">value</span><span class="p">:</span> <span class="kt">StaticString</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">self</span><span class="o">.</span><span class="nf">init</span><span class="p">(</span><span class="nv">stringLiteral</span><span class="p">:</span> <span class="n">value</span><span class="p">)</span>
+    <span class="p">}</span>
+    
+    <span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="n">unicodeScalarLiteral</span> <span class="nv">value</span><span class="p">:</span> <span class="kt">StaticString</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">self</span><span class="o">.</span><span class="nf">init</span><span class="p">(</span><span class="nv">stringLiteral</span><span class="p">:</span> <span class="n">value</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+
+<span class="k">let</span> <span class="nv">url</span><span class="p">:</span> <span class="kt">URL</span> <span class="o">=</span> <span class="s">"https://blog.burt.pe.kr"</span>
+<span class="k">let</span> <span class="nv">task</span> <span class="o">=</span> <span class="kt">URLSession</span><span class="o">.</span><span class="n">shared</span><span class="o">.</span><span class="nf">dataTask</span><span class="p">(</span><span class="nv">with</span><span class="p">:</span> <span class="s">"https://www.google.com"</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p><code class="highlighter-rouge">주석 1</code> String에서 URL로 변경할 수 없을 때 Swift throw를 사용하지 않고 Foundation NSException을 만들어 예외를 던집니다. swift throw를 사용하면 함수에 throw를 표시해 줘야 하고 호출하는 쪽에서 try-catch를 사용해야 하기 때문에 이를 피하기 위함입니다.</p>
+
+<p><code class="highlighter-rouge">주석 2</code> guard else 블록 내에서 return을 해야 끝이 나는데 생성자에서 guard 문이므로 빈 return 을 호출할 수 없습니다. 그래서 preconditionFailure() 함수를 사용해서 프로그램을 멈춥니다.</p>
+
+<p><code class="highlighter-rouge">주의</code> 편리하지만  <code class="highlighter-rouge">let url: URL = "https://blog.burt.pe.kr"</code> 을 보면 타입 불일치 같아서 어딘가 어색하네요. 외부에서 얻은 데이터 중에 URL 문자열 중 오류가 있을 경우에는 프로그램을 멈추지 않고 안전하게 보호 할 수 있어야 하는데 위 확장은 프로그램을 멈추게 하므로 실전에서 쓰기는 약간 애매합니다. 그냥 재미로 봅시다 :)</p>
+
+<h3 id="참고사항">참고사항</h3>
+
+<ol>
+  <li>위 주석 <code class="highlighter-rouge">1</code>과 <code class="highlighter-rouge">2</code>는 John Sundell이 만든 <a href="https://github.com/JohnSundell/Require">Require</a> 코드입니다.</li>
+  <li><a href="https://twitter.com/johnsundell">John Sundell 트위터</a>에는 iOS 개발에 유용한 트윗과 gist 트윗이 많이 있습니다.</li>
+</ol>

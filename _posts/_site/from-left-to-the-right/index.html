@@ -1,0 +1,176 @@
+<p>안드로이드 프로젝트를 진행하면서 항상 고민했던 점은 Java가 안드로이드에 어울리는 언어인가? 였다. iOS를 개발하면서 즐겨 사용했던 “카테고리”, “null 객체에 메시지를 보낼 수 있음으로 해서 피할 수 있는  Null Pointer Exception(NPE)” 등이 그리웠기 때문이다. 또한 애플이 Swift를 발표하는 것을 보며 안드로이드에서도 좀 더 유연하고 간결한 언어가 있었으면 좋겠다라는 바램이 있었다.</p>
+
+<p>처음에 살펴본 것은 Xamarin 이었지만 너무 비싼 가격이 부담스러웠고 디펜던시 관리 등이 어려울 것 같아 포기했다. 그리고 개인적으로 한 언어로 크로스플랫폼 앱을 만드는 것보다는 해당 플랫폼의 고유한 언어를 사용해서 개발하는 것이 더 낫다라고 믿고 있다.</p>
+
+<p>그러던 차에 Scala를 알게 되었고 Scaloid를 살펴보던 중 Kotlin(<a href="http://kotlinlang.org/">http://kotlinlang.org/</a>)이라는 언어를 알게 되었다. Kotlin은 IntelliJ사가 만들고 있는 언어로 JVM위에서 동작하며 Java와 100%호환성을 보장하고 있다. Kotlin은 Scala보다 간결하기 때문에 좀 더 쉽고 빠르게 배울 수 있는 언어이다. 또한 IntelliJ사가 개발하고 있는 언어이기 때문에 AndroidStudio나 IntelliJ 같은 IDE지원이 풍부하다.</p>
+
+<p>가장 마음에 들었던 점은 NPE를 막기 위한 Optional Value와 Objective-C의 카테고리와 유사한 확장 기능, 그리고 람다였다.</p>
+
+<h3 id="npe">NPE</h3>
+
+<p>예를 들어 Java에서 다음 메서드가 있다고 가정해 보자.</p>
+
+<pre class="lang:java decode:true">public void printString(String value) {
+    System.out.println(value)
+}</pre>
+
+<p>위의 함수에서 value 는 null일 수도 있고 아닐 수도 있다. 즉, 아래처럼 호출할 수 있다.</p>
+
+<pre class="lang:default decode:true ">printString(null)
+printString("Hello")</pre>
+
+<p>그러나 null을 String 값으로 받는 것은 우리가 원하는 것이 아니고 NPE의 원인이 된다.  그래서 NPE 를 막으려면 항상 방어적인 코드를 작성해야 한다.</p>
+
+<pre class="lang:default decode:true">public void printString(String value) {
+    if(value != null)
+        System.out.println(value)
+}</pre>
+
+<p>방어 코드를 많이 작성하다 보면 코드 리딩이 쉽지 않고 코드가 지져분해 진다. Kotlin으로 같은 기능을 하는 함수를 작성해 보자</p>
+
+<pre class="lang:default decode:true">fun printString(val msg : String) {
+   println(msg)
+}</pre>
+
+<p>위의 함수처럼 선언을 하면 msg에 null을 아예 넣을 수가 없다. 컴파일이 되지 않는다. 즉 함수 내에서는 msg가 null이 아님을 보장하는 것이다. 따라서 함수 내부에서는 방어적인 코드 없이 구현에만 신경 쓸 수 있다. 외부에서 null이 입력된다면 그것은 이 함수를 사용하는 개발자나 시스템에게 책임이 있는 것이다.</p>
+
+<pre class="lang:default decode:true ">println(null) //불가능!
+println("Hello") //가능</pre>
+
+<h3 id="확장"> 확장</h3>
+
+<p>확장은 기존 클래스를 상속하지 않고 메서드를 추가할 수 있는 기능이다. iOS앱을 개발해본 사람은 아마 카테고리 기능에 익숙할 것이고 그 카테고리가 얼마나 큰 편리함을 가져다 주는지 알 것이다. 한가지 예를 들면, 코드 안에서 dp 를 pixel 단위로 변환하거나 pixel을 dp 단위로 변환하는 코드가 있을 수 있다. 만약 아래처럼 수치 데이터 형에 확장을 작성하면 좀 더 간결하게 코드를 작성할 수 있다.</p>
+
+<pre class="lang:default decode:true ">public fun Int.toPx(context: Context): Int = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, this.toFloat(), context.getResources().getDisplayMetrics()).toInt()
+public fun Float.toPx(context: Context): Float = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, this, context.getResources().getDisplayMetrics())
+
+public fun Int.toDp(activity: Activity): Int {
+    val metrics = DisplayMetrics()
+    activity.getWindowManager().getDefaultDisplay().getMetrics(metrics)
+    return Math.ceil((this/metrics.density).toDouble()).toInt()
+}
+
+public fun Float.toDp(activity: Activity): Float {
+    val metrics = DisplayMetrics()
+    activity.getWindowManager().getDefaultDisplay().getMetrics(metrics)
+    return Math.ceil((this/metrics.density).toDouble()).toFloat()
+}</pre>
+
+<p>위의 확장 코드를 사용하면 아래처럼 코드를 작성할 수 있다.</p>
+
+<pre class="lang:default decode:true">val tdp = 7.toDp(this@SomeActivity)
+val tpx = 16.toPx(this@SomeActivity)</pre>
+
+<p>Async로 작성해야 되는 코드를 좀 더 간결하게 작성하고 싶다면 아래처럼 확장을 작성해서 사용하면 된다.</p>
+
+<pre class="lang:default decode:true ">private val uiHandler = Handler(Looper.getMainLooper())
+
+
+public fun Any?.mainThread(runnable: () -&gt; Unit) {
+    uiHandler.post(runnable)
+}
+
+public fun Any?.async(runnable: () -&gt; Unit) {
+    Thread(runnable).start()
+}
+
+public fun Any?.async(executor: ExecutorService, runnable: () -&gt; Unit): Future&lt;out Any?&gt; {
+    return executor.submit(runnable)
+}</pre>
+
+<p>위처럼 확장을 작성하면 아래처럼 코드를 작성할 수 있다.</p>
+
+<pre class="lang:default decode:true  ">async {
+    doSomething1()
+    doSomething2()
+    mainThread {
+        doSomethingOnMainThread()
+    }
+}
+
+// Excutor 랑 같이 사용
+val ex = ScheduledThreadPoolExecutor(10)
+
+async(ex){
+    v("async #0")
+    val a = async(ex) {
+        Thread.sleep(1000)
+        10
+    }
+    v("return : " + a)
+
+    async {
+        v("async #0-#1")
+    }
+
+    mainThread {
+        v("mainThread #0")
+        async{
+            v("async - mainThread")
+            mainThread {
+                v("async - mainthread - mainthread")
+            }
+        }
+    }
+}</pre>
+
+<p>코드가 정말 간결해 짐을 알 수 있다.</p>
+
+<h3 id="람다">람다</h3>
+
+<p>Kotlin은 람다와 클로져를 지원한다. 람다는 함수를 데이터처럼 다룰 수 있는 것이고 클로져는 람다 주위의 변수를 수정할 수 있는 람다다. 람다를 활용해 안드로이드의 Bundle을 작성하는 예를 만들어 보자</p>
+
+<pre class="lang:default decode:true">public inline fun Bundle(body: Bundle.() -&gt; Unit): Bundle {
+    val bundle = Bundle()
+    bundle.body()
+    return bundle
+}</pre>
+
+<p>위같은 함수가 있으면 아래처럼 코드를 작성할 수 있다.</p>
+
+<pre class="lang:default decode:true">val bundle = Bundle {
+        putInt("age", 30)
+        putString("name", "BurtK")
+}
+
+println("age " + bundle.getInt("age"))</pre>
+
+<p>Handler 관련 함수도 만들어 보자</p>
+
+<pre class="lang:default decode:true ">public fun handler(handleMessage: (Message) -&gt; Boolean): Handler {
+    return Handler { msg -&gt; handleMessage(msg) }
+}
+public fun Handler.post(action: () -&gt; Unit): Boolean = post(Runnable(action))</pre>
+
+<p>이제 아래처럼 쓸 수 있다.</p>
+
+<pre class="lang:default decode:true">val h = handler { msg -&gt; "do something"; true }
+h.post {
+    println("Hello")
+}
+</pre>
+
+<p>Kotlin 을 신규 프로젝트에 진행하면서 익숙해 지는데 걸린 시간은 고작 3일 이었고 Kotlin으로 신규앱을 작성하는데 걸린 시간은 7일정도였다. 그 이유는 기존에 사용하던 Java코드를 그대로 가져다 사용할 수 있었기 때문이었다.</p>
+
+<p>이 글에서 적은  Kotlin의 유용함은 사실 100분의 1도 되지 않는다. Kotlin은 웹개발 언어로도 활발히 사용되고 있다. 그리고 Swift에 약간 익숙한 사람이라면 Kotlin과 Swift의 문법이 거의 대동소이 함을 알 수 있고 Scala와도 많이 닮아있음을 알 수 있다. Kotlin이 Android 개발의 Swift언어로 급부상할 것이라고 생각한다.</p>
+
+<p>끝으로 이 글의 제목을 From Left To The Right라고 적은 이유는 요즘 대세로 떠오르고 있는 언어들이 타입 추정 기능 등으로 타입 지정이 모두 오른쪽으로 이동했기 때문이다. 기존의 Java나 C, C++언어들이 아래처럼 타입을 선언했다.</p>
+
+<pre class="lang:default decode:true">int a = 0
+const int b = 0
+cosnt char* msg = "Hello"</pre>
+
+<p>하지만 왼쪽 부분에 상수 여부와 데이터 타입 등의 정보를 혼합해 놓아서 포인터 등이 들어가면 변수 선언문이 매우 복잡해 진다. 그러나  Scala, Kotlin, Swift, Go 등은 아래처럼 그 둘을 분리해 놓았고 타입 추정을 지원하기 때문에 상수인지 변수인지만 적어도 될 만큼 변수 선언문이 무척 간결해졌다</p>
+
+<pre class="lang:default decode:true">//scala, kotlin
+var a = 0
+val b : Int = 0
+
+//swift
+let a = 0
+var b : Int = 0
+
+//go
+const a * char = "Hello"</pre>
+
+<p>여러분도 From Left to the Right 하는 즐거움을 만끽하길 바란다.</p>

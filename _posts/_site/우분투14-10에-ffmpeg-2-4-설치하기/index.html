@@ -1,0 +1,128 @@
+<h3 id="필요한-패키지-설치하기">필요한 패키지 설치하기</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>sudo apt-get install \
+ yasm \
+ frei0r-plugins-dev \
+ gnutls-bin \
+ libgnutls-dev \
+ libass-dev \
+ libgsm1-dev \
+ libmp3lame-dev \
+ libopencv-dev \
+ libopenjpeg-dev \
+ libopus-dev \
+ libpulse-dev \
+ libschroedinger-dev \
+ libsoxr-dev \
+ libspeex-dev \
+ libtheora-dev \
+ libv4l-dev \
+ libvorbis-dev \
+ libvpx-dev \
+ libx264-dev \
+ libxvidcore-dev \
+ libopenal-dev \
+ libcdio-paranoia-dev 
+</code></pre>
+</div>
+
+<h3 id="ffmpeg-24-소스코드-받기">FFmpeg 2.4 소스코드 받기</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>wget http://www.ffmpeg.org/releases/ffmpeg-2.4.tar.bz2
+</code></pre>
+</div>
+
+<h3 id="압축을-풀고-폴더로-이동">압축을 풀고 폴더로 이동</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>tar xf ffmpeg-2.4.tar.bz2
+cd ffmpeg-2.4/
+</code></pre>
+</div>
+
+<h3 id="컴파일-구성하기기">컴파일 구성하기기</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>./configure \
+	--prefix=/usr \
+	--bindir=/usr/bin \
+	--datadir=/usr/share/ffmpeg \
+	--incdir=/usr/include/ffmpeg \
+	--libdir=/usr/lib/x86_64-linux-gnu/ \
+	--mandir=/usr/share/man \
+	--arch=x86_64 \
+	--optflags='-O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches -m64 -mtune=generic' \
+	--enable-bzlib \
+	--disable-crystalhd \
+	--enable-frei0r \
+	--enable-gnutls \
+	--enable-libass \
+	--enable-libcdio \
+	--enable-libdc1394 \
+	--disable-indev=jack \
+	--enable-libfreetype \
+	--enable-libgsm \
+	--enable-libmp3lame \
+	--enable-openal \
+	--enable-libopencv \
+	--enable-libopenjpeg \
+	--enable-libopus \
+	--enable-libpulse \
+	--enable-libschroedinger \
+	--enable-libsoxr \
+	--enable-libspeex \
+	--enable-libtheora \
+	--enable-libvorbis \
+	--enable-libv4l2 \
+	--enable-libvpx \
+	--enable-libx264 \
+	--enable-libxvid \
+	--enable-x11grab \
+	--enable-avfilter \
+	--enable-avresample \
+	--enable-postproc \
+	--enable-pthreads \
+	--disable-static \
+	--enable-shared \
+	--enable-gpl \
+	--disable-debug \
+	--disable-stripping \
+	--shlibdir=/usr/lib/x86_64-linux-gnu/ \
+	--enable-runtime-cpudetect
+</code></pre>
+</div>
+
+<h3 id="컴파일-및-설치하기">컴파일 및 설치하기</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>sudo make
+sudo make install
+</code></pre>
+</div>
+
+<h3 id="실행해-보기">실행해 보기</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$ ffmpeg
+
+ffmpeg version 2.4 Copyright (c) 2000-2014 the FFmpeg developers
+  built on Nov  4 2014 03:52:05 with gcc 4.9.1 (Ubuntu 4.9.1-16ubuntu6)
+  configuration: --prefix=/usr --bindir=/usr/bin --datadir=/usr/share/ffmpeg --incdir=/usr/include/ffmpeg --libdir=/usr/lib/x86_64-linux-gnu/ --mandir=/usr/share/man --arch=x86_64 --optflags='-O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches -m64 -mtune=generic' --enable-bzlib --disable-crystalhd --enable-frei0r --enable-gnutls --enable-libass --enable-libcdio --enable-libdc1394 --disable-indev=jack --enable-libfreetype --enable-libgsm --enable-libmp3lame --enable-openal --enable-libopencv --enable-libopenjpeg --enable-libopus --enable-libpulse --enable-libschroedinger --enable-libsoxr --enable-libspeex --enable-libtheora --enable-libvorbis --enable-libv4l2 --enable-libvpx --enable-libx264 --enable-libxvid --enable-x11grab --enable-avfilter --enable-avresample --enable-postproc --enable-pthreads --disable-static --enable-shared --enable-gpl --disable-debug --disable-stripping --shlibdir=/usr/lib/x86_64-linux-gnu/ --enable-runtime-cpudetect
+  libavutil      54.  7.100 / 54.  7.100
+  libavcodec     56.  1.100 / 56.  1.100
+  libavformat    56.  4.101 / 56.  4.101
+  libavdevice    56.  0.100 / 56.  0.100
+  libavfilter     5.  1.100 /  5.  1.100
+  libavresample   2.  1.  0 /  2.  1.  0
+  libswscale      3.  0.100 /  3.  0.100
+  libswresample   1.  1.100 /  1.  1.100
+  libpostproc    53.  0.100 / 53.  0.100
+Hyper fast Audio and Video encoder
+usage: ffmpeg [options] [[infile options] -i infile]... {[outfile options] outfile}...
+
+Use -h to get full help or, even better, run 'man ffmpeg'
+</code></pre>
+</div>
+
+<h4 id="참고">참고</h4>
+
+<ol>
+  <li><a href="https://trac.ffmpeg.org/wiki/CompilationGuide/Ubuntu">https://trac.ffmpeg.org/wiki/CompilationGuide/Ubuntu</a></li>
+  <li><a href="http://www.youtube.com/watch?v=MRrGNIuLJ40">http://www.youtube.com/watch?v=MRrGNIuLJ40</a></li>
+</ol>
