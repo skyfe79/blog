@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "최신 안드로이드 NDK 튜토리얼"
-permalink: /digital-video-tech
+permalink: /modern-android-ndk
 date:   2017-12-04 09:14:00 +0900
 categories: android
 ---
