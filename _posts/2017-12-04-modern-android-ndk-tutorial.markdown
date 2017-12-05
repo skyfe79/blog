@@ -8,9 +8,9 @@ categories: android
 
 `[출처]` : [https://medium.com/@jrejaud/modern-android-ndk-tutorial-630bc11829a2](https://medium.com/@jrejaud/modern-android-ndk-tutorial-630bc11829a2)
 
-이 글에서는 Android Studio2.2이상에서 Android NDK를 사용하여 C 또는 C++ 코드를 사용하는 기본 내용을 다룹니다. 제가 NDK를 시작했을 때 어려움을 겪었기에 다양한 곳에서 비운 정보들을 이 글 하나로 요약했습니다.(접근 가능한 정보들은 글 하단에 링크로 적어 두었습니다.)
+이 글에서는 Android Studio2.2이상에서 Android NDK를 사용하여 C 또는 C++ 코드를 사용하는 기본 내용을 다룹니다. 제가 NDK를 시작했을 때 어려움을 겪었기에 다양한 곳에서 배운 정보들을 이 글 하나로 요약했습니다.(접근 가능한 정보들은 글 하단에 링크로 적어 두었습니다.)
 
-이 글은 C 보다는 c++에 좀 더 중점을 두어 작성했습니다.
+이 글은 C 보다는 C++에 좀 더 중점을 두어 작성했습니다.
 
  * 시작하기(NDK 개발환경 구성하기)
  * 자바에서 호출 할 수 있는 네이티브 메서드 만들기
